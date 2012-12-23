@@ -1,0 +1,4 @@
+0 TCG
+1 OCG
+3 OCG/TCG
+4 Anime
