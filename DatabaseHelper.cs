@@ -34,30 +34,29 @@ namespace DevPro_CardManager
             }
         }
 
-        public static string ExecuteStringCommand(SQLiteCommand command, int columncount)
+        public static List<string[]> ExecuteStringCommand(SQLiteCommand command, int columncount)
         {
             try
             {
-                string value = null;
-                    SQLiteDataReader reader = command.ExecuteReader();
+                List<string[]> values = new List<string[]>();
+                SQLiteDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        for(int i = 0; i < columncount + 1; i ++)
+                        List<string> row = new List<string>();
+                        for(int i = 0;i < reader.FieldCount; i++)
                         {
-                            if (value == null)
-                                value = reader.GetString(i);
-                            else
-                                value += "," + reader.GetString(i);
+                            row.Add(reader[i].ToString());
                         }
+                        values.Add(row.ToArray());
                     }
                     reader.Close();
-                return (value ?? "not found");
+                return values;
 
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                return string.Empty;
+                return new List<string[]>();
             }
         }
 

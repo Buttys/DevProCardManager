@@ -17,23 +17,24 @@ namespace DevPro_CardManager
 {
     public partial class Main_frm : Form
     {
-        public const string cdbdir = @"Language\\English\\cards.cdb";
+        public const string cdbdir = @"cards.cdb";
         List<int> SetCodes;
         List<int> Formats;
         List<int> CardRaces;
         List<int> CardAttributes;
         int LoadedCard = 0;
+        Dictionary<int, CardInfos> CardData = new Dictionary<int,CardInfos>();
 
         public Main_frm()
         {
             InitializeComponent();
-            LoadData(cdbdir, "SELECT id, ot, alias, setcode, type, level, race, attribute, atk, def, category FROM datas", cdbdata);
-            LoadData(cdbdir, "SELECT id, name, desc, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, str14, str15, str16 FROM texts", cdbenglishtext);
-            LoadData(@"Language\\French\\cards.cdb", "SELECT id, name, desc, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, str14, str15, str16 FROM texts", cdbfrenchtext);
-            LoadData(@"Language\\German\\cards.cdb", "SELECT id, name, desc, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, str14, str15, str16 FROM texts", cdbgermantext);
+            LoadData(cdbdir);
             SetDataTypes();
 
             BanList.SelectedIndexChanged += new EventHandler(BanList_SelectedIndexChanged);
+            SearchInput.TextChanged += new EventHandler(SearchInput_TextChanged);
+            CardListBox.DrawItem += new DrawItemEventHandler(CardList_DrawItem);
+            CardListBox.DoubleClick += new EventHandler(CardList_DoubleClick);
         }
 
         private void SetDataTypes()
@@ -49,6 +50,49 @@ namespace DevPro_CardManager
             CardTypeList.Items.AddRange(Enum.GetNames(typeof(CardType)));
 
 
+        }
+
+        private void SearchInput_TextChanged(object sender, EventArgs e)
+        {
+            if (SearchInput.Text != "Search" && SearchInput.Text != "")
+            {
+                CardListBox.Items.Clear();
+                foreach (int card in CardData.Keys)
+                {
+                    if (CardData[card].Id.ToString().ToLower().StartsWith(SearchInput.Text.ToLower()) ||
+                        CardData[card].Name.ToLower().StartsWith(SearchInput.Text.ToLower()))
+                    {
+                        CardListBox.Items.Add(CardData[card].Id.ToString());
+                    }
+                }
+
+            }
+            if (SearchInput.Text == "")
+                CardListBox.Items.Clear();
+        }
+
+        private void CardList_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+
+            bool selected = ((e.State & DrawItemState.Selected) == DrawItemState.Selected);
+
+            int index = e.Index;
+            if (index >= 0 && index < CardListBox.Items.Count)
+            {
+                string text = CardListBox.Items[index].ToString();
+                Graphics g = e.Graphics;
+
+                CardInfos card = CardData[Int32.Parse(text)];
+
+                g.FillRectangle((selected) ?new SolidBrush(Color.Blue): new SolidBrush(Color.White), e.Bounds);
+
+                // Print text
+                g.DrawString((card.Name == "" ? card.Id.ToString():card.Name), e.Font, (selected) ? Brushes.White : Brushes.Black,
+                    CardListBox.GetItemRectangle(index).Location);
+            }
+
+            e.DrawFocusRectangle();
         }
 
         private void LoadSetCodesFromFile(string filedir)
@@ -149,36 +193,15 @@ namespace DevPro_CardManager
 
         private bool LoadCard(int cardid)
         {
-
-            DataGridViewRow datarow = null;
-            DataGridViewRow textrow = null;
-            foreach (DataGridViewRow row in cdbdata.Rows)
-            {
-                if (row.Cells["id"].Value == null) continue;
-                if (row.Cells["id"].Value.ToString() == cardid.ToString())
-                {
-                    datarow = row;
-                }
-            }
-            foreach (DataGridViewRow row in cdbenglishtext.Rows)
-            {
-                if (row.Cells["id"].Value == null) continue;
-                if (row.Cells["id"].Value.ToString() == cardid.ToString())
-                {
-                    textrow = row;
-                }
-            }
-
-            if (datarow == null && textrow == null)
-            {
-                MessageBox.Show("Card not found.");
+            if (!CardData.ContainsKey(cardid))
                 return false;
-            }
 
-            CardInfos info = new CardInfos(datarow, textrow);
+            Clearbtn_Click(null, EventArgs.Empty);
+            CardInfos info = CardData[cardid];
+
             CardID.Text = info.Id.ToString();
             Alias.Text = info.AliasId.ToString();
-            for (int i = 0; i < Formats.Count;i++ )
+            for (int i = 0; i < Formats.Count; i++)
             {
                 if (Formats[i] == info.Ot)
                 {
@@ -215,13 +238,27 @@ namespace DevPro_CardManager
             this.SetCodeLst.SelectedIndex = index;
             index = this.SetCodes.IndexOf(info.SetCode >> 0x10);
             this.OtherSetCodeLst.SelectedIndex = index;
-           
+
             SetCategoryCheckBoxs(info.Category);
 
             LoadedCard = info.Id;
 
             return true;
+        }
 
+        private void CardList_DoubleClick(object sender, EventArgs e)
+        {
+            if (CardListBox.SelectedIndex >= 0)
+            {
+                if (!LoadCard(Int32.Parse(CardListBox.SelectedItem.ToString())))
+                {
+                    MessageBox.Show("Error Loading card", "Error", MessageBoxButtons.OK);
+                }
+                else
+                {
+                    LoadCardImage(Int32.Parse(CardListBox.SelectedItem.ToString()));
+                }
+            }
         }
 
         private void SetCardTypes(CardType[] types)
@@ -336,7 +373,7 @@ namespace DevPro_CardManager
             }
         }
 
-        private void LoadData(string dataloc, string sqlcommand, DataGridView grid)
+        private void LoadData(string dataloc)
         {
             string str = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
             string str2 = Path.Combine(str, dataloc);
@@ -345,20 +382,28 @@ namespace DevPro_CardManager
                 MessageBox.Show(dataloc + " not found.");
                 return;
             }
+                        //LoadData(cdbdir, "SELECT id, ot, alias, setcode, type, level, race, attribute, atk, def, category FROM datas", cdbdata);
+            //LoadData(cdbdir, "SELECT id, name, desc, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, str14, str15, str16 FROM texts", cdbenglishtext);
+            
+
+
             SQLiteConnection connection = new SQLiteConnection("Data Source=" + str2);
             connection.Open();
-            SQLiteCommand command = new SQLiteCommand(sqlcommand, connection);
-            SQLiteDataAdapter data = new SQLiteDataAdapter(command);
-            DataSet dataset = new DataSet();
-            try
+
+            SQLiteCommand datacommand = new SQLiteCommand("SELECT id, ot, alias, setcode, type, level, race, attribute, atk, def, category FROM datas", connection);
+            SQLiteCommand textcommand = new SQLiteCommand("SELECT id, name, desc, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, str14, str15, str16 FROM texts", connection);
+            List<string[]> datas = DatabaseHelper.ExecuteStringCommand(datacommand,11);
+            List<string[]> texts = DatabaseHelper.ExecuteStringCommand(textcommand, 19);
+
+            foreach (string[] row in datas)
             {
-                data.Fill(dataset);
-                DataTable table = dataset.Tables[0];
-                grid.DataSource = table;
+                if(!CardData.ContainsKey(Int32.Parse(row[0])))
+                    CardData.Add(Int32.Parse(row[0]), new CardInfos(row));
             }
-            catch(Exception ex)
+            foreach (string[] row in texts)
             {
-                MessageBox.Show(ex.Message);
+                if (CardData.ContainsKey(Int32.Parse(row[0])))
+                    CardData[Int32.Parse(row[0])].SetCardText(row);
             }
             connection.Close();
         }
@@ -375,27 +420,6 @@ namespace DevPro_CardManager
             }
         }
 
-        private void LoadCardBtn_Click(object sender, EventArgs e)
-        {
-            Clearbtn_Click(null, EventArgs.Empty);
-            if (LoadCardIDtxt.Text == "")
-                MessageBox.Show("Please input card id");
-            else
-            {
-                int cardid = 0;
-                if (!Int32.TryParse(LoadCardIDtxt.Text,out cardid))
-                {
-                    MessageBox.Show("Incorrect ID format");
-                    return;
-                }
-
-                if (LoadCard(cardid))
-                {
-                    LoadCardImage(cardid);
-                }
-            }
-        }
-
         private void Clearbtn_Click(object sender, EventArgs e)
         {
 
@@ -407,8 +431,8 @@ namespace DevPro_CardManager
             Level.SelectedIndex = -1;
             Race.SelectedIndex = -1;
             CardAttribute.SelectedIndex = -1;
-            ATK.Clear();
-            DEF.Clear();
+            ATK.Text = "0";
+            DEF.Text = "0";
             CardName.Clear();
             CardDescription.Clear();
             EffectList.Items.Clear();
@@ -687,45 +711,26 @@ namespace DevPro_CardManager
                 else
                 {
                     string[] parts = line.Split(' ');
+                    if (!CardData.ContainsKey(Int32.Parse(parts[0])))
+                        continue;
+
+                    if (CardData[Int32.Parse(parts[0])].Name == "")
+                        continue;
+
+
                     if (!Banlists.ContainsKey(BanList.Items[BanList.Items.Count - 1].ToString()))
                     {
                         Banlists.Add(BanList.Items[BanList.Items.Count - 1].ToString(), new List<BanListCard>());
                         Banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(
-                            new BanListCard() { id = Int32.Parse(parts[0]), banvalue = Int32.Parse(parts[1]), name = GetCardNameFromID(parts[0]) });
+                            new BanListCard() { id = Int32.Parse(parts[0]), banvalue = Int32.Parse(parts[1]), name =  CardData[Int32.Parse(parts[0])].Name });
                     }
                     else
                     {
                         Banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(
-                            new BanListCard() { id = Int32.Parse(parts[0]), banvalue = Int32.Parse(parts[1]), name = GetCardNameFromID(parts[0]) });
+                            new BanListCard() { id = Int32.Parse(parts[0]), banvalue = Int32.Parse(parts[1]), name = CardData[Int32.Parse(parts[0])].Name });
                     }
-                    //CardList.Items.Add(GetCardNameFromID(parts[0]));
                 }
             }
-        }
-
-        private string GetCardNameFromID(string id)
-        {
-            foreach (DataGridViewRow row in cdbenglishtext.Rows)
-            {
-                if (row.Cells["id"].Value == null) continue;
-                if (row.Cells["id"].Value.ToString() == id)
-                {
-                    return row.Cells["name"].Value.ToString();
-                }
-            }
-            return id;
-        }
-        private int GetCardIDFromName(string name)
-        {
-            foreach (DataGridViewRow row in cdbenglishtext.Rows)
-            {
-                if (row.Cells["name"].Value == null) continue;
-                if (row.Cells["name"].Value.ToString() == name)
-                {
-                    return Int32.Parse(row.Cells["id"].Value.ToString());
-                }
-            }
-            return 0;
         }
 
         private void BanList_SelectedIndexChanged(object sender, EventArgs e)
@@ -738,6 +743,24 @@ namespace DevPro_CardManager
                 {
                     CardList.Items.Add(card.name);
                 }
+            }
+        }
+
+        private void SearchInput_Enter(object sender, EventArgs e)
+        {
+            if (SearchInput.Text == "Search")
+            {
+                SearchInput.Text = "";
+                SearchInput.ForeColor = SystemColors.WindowText;
+            }
+        }
+
+        private void SearchInput_Leave(object sender, EventArgs e)
+        {
+            if (SearchInput.Text == "")
+            {
+                SearchInput.Text = "Search";
+                SearchInput.ForeColor = SystemColors.WindowFrame;
             }
         }
     }

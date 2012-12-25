@@ -32,7 +32,17 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.BanList = new System.Windows.Forms.ListBox();
+            this.CardList = new System.Windows.Forms.ListBox();
+            this.LoadBanListBtn = new System.Windows.Forms.Button();
+            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.AddBanCardBtn = new System.Windows.Forms.Button();
+            this.DeleteBanedCardBtn = new System.Windows.Forms.Button();
+            this.BanID = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.EditorTab = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -81,35 +91,16 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.CategoryList = new System.Windows.Forms.CheckedListBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.LoadCardBtn = new System.Windows.Forms.Button();
             this.CardImg = new System.Windows.Forms.PictureBox();
             this.LoadImageBtn = new System.Windows.Forms.Button();
-            this.LoadCardIDtxt = new System.Windows.Forms.TextBox();
-            this.TableTab = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
-            this.DataTabs = new System.Windows.Forms.TabControl();
-            this.CardData = new System.Windows.Forms.TabPage();
-            this.cdbdata = new System.Windows.Forms.DataGridView();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.cdbenglishtext = new System.Windows.Forms.DataGridView();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.cdbfrenchtext = new System.Windows.Forms.DataGridView();
-            this.GermanTextTab = new System.Windows.Forms.TabPage();
-            this.cdbgermantext = new System.Windows.Forms.DataGridView();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.BanList = new System.Windows.Forms.ListBox();
-            this.CardList = new System.Windows.Forms.ListBox();
-            this.LoadBanListBtn = new System.Windows.Forms.Button();
-            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
-            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-            this.AddBanCardBtn = new System.Windows.Forms.Button();
-            this.DeleteBanedCardBtn = new System.Windows.Forms.Button();
-            this.BanID = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.SearchInput = new System.Windows.Forms.TextBox();
+            this.CardListBox = new System.Windows.Forms.ListBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.menuStrip1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
+            this.tableLayoutPanel9.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
             this.EditorTab.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -126,21 +117,7 @@
             this.groupBox6.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CardImg)).BeginInit();
-            this.TableTab.SuspendLayout();
-            this.tableLayoutPanel10.SuspendLayout();
-            this.DataTabs.SuspendLayout();
-            this.CardData.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cdbdata)).BeginInit();
-            this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cdbenglishtext)).BeginInit();
-            this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cdbfrenchtext)).BeginInit();
-            this.GermanTextTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cdbgermantext)).BeginInit();
-            this.tabPage1.SuspendLayout();
-            this.tableLayoutPanel8.SuspendLayout();
-            this.tableLayoutPanel9.SuspendLayout();
-            this.flowLayoutPanel3.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -166,17 +143,125 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
             // 
-            // tabControl1
+            // tabPage1
             // 
-            this.tabControl1.Controls.Add(this.EditorTab);
-            this.tabControl1.Controls.Add(this.TableTab);
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 24);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(794, 586);
-            this.tabControl1.TabIndex = 1;
+            this.tabPage1.Controls.Add(this.tableLayoutPanel8);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(786, 560);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Banlist Editor";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.ColumnCount = 2;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.02543F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.97456F));
+            this.tableLayoutPanel8.Controls.Add(this.BanList, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.CardList, 1, 1);
+            this.tableLayoutPanel8.Controls.Add(this.LoadBanListBtn, 0, 0);
+            this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel9, 1, 0);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 2;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.301158F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 91.69884F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(780, 554);
+            this.tableLayoutPanel8.TabIndex = 0;
+            // 
+            // BanList
+            // 
+            this.BanList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BanList.FormattingEnabled = true;
+            this.BanList.Location = new System.Drawing.Point(3, 48);
+            this.BanList.Name = "BanList";
+            this.BanList.Size = new System.Drawing.Size(173, 503);
+            this.BanList.TabIndex = 0;
+            // 
+            // CardList
+            // 
+            this.CardList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CardList.FormattingEnabled = true;
+            this.CardList.Location = new System.Drawing.Point(182, 48);
+            this.CardList.Name = "CardList";
+            this.CardList.Size = new System.Drawing.Size(595, 503);
+            this.CardList.TabIndex = 1;
+            // 
+            // LoadBanListBtn
+            // 
+            this.LoadBanListBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LoadBanListBtn.Location = new System.Drawing.Point(52, 11);
+            this.LoadBanListBtn.Name = "LoadBanListBtn";
+            this.LoadBanListBtn.Size = new System.Drawing.Size(75, 23);
+            this.LoadBanListBtn.TabIndex = 2;
+            this.LoadBanListBtn.Text = "Load Banlist";
+            this.LoadBanListBtn.UseVisualStyleBackColor = true;
+            this.LoadBanListBtn.Click += new System.EventHandler(this.LoadBanListBtn_Click);
+            // 
+            // tableLayoutPanel9
+            // 
+            this.tableLayoutPanel9.ColumnCount = 3;
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
+            this.tableLayoutPanel9.Controls.Add(this.flowLayoutPanel3, 2, 0);
+            this.tableLayoutPanel9.Controls.Add(this.BanID, 0, 0);
+            this.tableLayoutPanel9.Controls.Add(this.comboBox1, 1, 0);
+            this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel9.Location = new System.Drawing.Point(182, 3);
+            this.tableLayoutPanel9.Name = "tableLayoutPanel9";
+            this.tableLayoutPanel9.RowCount = 1;
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(595, 39);
+            this.tableLayoutPanel9.TabIndex = 3;
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Controls.Add(this.AddBanCardBtn);
+            this.flowLayoutPanel3.Controls.Add(this.DeleteBanedCardBtn);
+            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(423, 3);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(169, 33);
+            this.flowLayoutPanel3.TabIndex = 3;
+            // 
+            // AddBanCardBtn
+            // 
+            this.AddBanCardBtn.Location = new System.Drawing.Point(3, 3);
+            this.AddBanCardBtn.Name = "AddBanCardBtn";
+            this.AddBanCardBtn.Size = new System.Drawing.Size(75, 23);
+            this.AddBanCardBtn.TabIndex = 1;
+            this.AddBanCardBtn.Text = "Add";
+            this.AddBanCardBtn.UseVisualStyleBackColor = true;
+            // 
+            // DeleteBanedCardBtn
+            // 
+            this.DeleteBanedCardBtn.Location = new System.Drawing.Point(84, 3);
+            this.DeleteBanedCardBtn.Name = "DeleteBanedCardBtn";
+            this.DeleteBanedCardBtn.Size = new System.Drawing.Size(75, 23);
+            this.DeleteBanedCardBtn.TabIndex = 2;
+            this.DeleteBanedCardBtn.Text = "Delete";
+            this.DeleteBanedCardBtn.UseVisualStyleBackColor = true;
+            // 
+            // BanID
+            // 
+            this.BanID.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.BanID.Location = new System.Drawing.Point(3, 9);
+            this.BanID.Name = "BanID";
+            this.BanID.Size = new System.Drawing.Size(258, 20);
+            this.BanID.TabIndex = 1;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(283, 9);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 2;
             // 
             // EditorTab
             // 
@@ -450,6 +535,7 @@
             this.ATK.Name = "ATK";
             this.ATK.Size = new System.Drawing.Size(189, 20);
             this.ATK.TabIndex = 29;
+            this.ATK.Text = "0";
             // 
             // DEF
             // 
@@ -458,6 +544,7 @@
             this.DEF.Name = "DEF";
             this.DEF.Size = new System.Drawing.Size(189, 20);
             this.DEF.TabIndex = 30;
+            this.DEF.Text = "0";
             // 
             // groupBox4
             // 
@@ -747,31 +834,21 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.LoadCardBtn, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.CardImg, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.LoadImageBtn, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.LoadCardIDtxt, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.SearchInput, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.CardListBox, 0, 3);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 4;
+            this.tableLayoutPanel2.RowCount = 5;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 254F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(171, 548);
             this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // LoadCardBtn
-            // 
-            this.LoadCardBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.LoadCardBtn.Location = new System.Drawing.Point(48, 311);
-            this.LoadCardBtn.Name = "LoadCardBtn";
-            this.LoadCardBtn.Size = new System.Drawing.Size(75, 23);
-            this.LoadCardBtn.TabIndex = 3;
-            this.LoadCardBtn.Text = "Load Card";
-            this.LoadCardBtn.UseVisualStyleBackColor = true;
-            this.LoadCardBtn.Click += new System.EventHandler(this.LoadCardBtn_Click);
             // 
             // CardImg
             // 
@@ -795,262 +872,39 @@
             this.LoadImageBtn.Text = "Set Image";
             this.LoadImageBtn.UseVisualStyleBackColor = true;
             // 
-            // LoadCardIDtxt
+            // SearchInput
             // 
-            this.LoadCardIDtxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LoadCardIDtxt.Location = new System.Drawing.Point(3, 286);
-            this.LoadCardIDtxt.Name = "LoadCardIDtxt";
-            this.LoadCardIDtxt.Size = new System.Drawing.Size(165, 20);
-            this.LoadCardIDtxt.TabIndex = 2;
+            this.SearchInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SearchInput.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.SearchInput.Location = new System.Drawing.Point(3, 286);
+            this.SearchInput.Name = "SearchInput";
+            this.SearchInput.Size = new System.Drawing.Size(165, 20);
+            this.SearchInput.TabIndex = 2;
+            this.SearchInput.Text = "Search";
+            this.SearchInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.SearchInput.Enter += new System.EventHandler(this.SearchInput_Enter);
+            this.SearchInput.Leave += new System.EventHandler(this.SearchInput_Leave);
             // 
-            // TableTab
+            // CardListBox
             // 
-            this.TableTab.Controls.Add(this.tableLayoutPanel10);
-            this.TableTab.Location = new System.Drawing.Point(4, 22);
-            this.TableTab.Name = "TableTab";
-            this.TableTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TableTab.Size = new System.Drawing.Size(786, 560);
-            this.TableTab.TabIndex = 1;
-            this.TableTab.Text = "Table Editor";
-            this.TableTab.UseVisualStyleBackColor = true;
+            this.CardListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CardListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.CardListBox.FormattingEnabled = true;
+            this.CardListBox.Location = new System.Drawing.Point(3, 311);
+            this.CardListBox.Name = "CardListBox";
+            this.CardListBox.Size = new System.Drawing.Size(165, 179);
+            this.CardListBox.TabIndex = 4;
             // 
-            // tableLayoutPanel10
+            // tabControl1
             // 
-            this.tableLayoutPanel10.ColumnCount = 1;
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel10.Controls.Add(this.DataTabs, 0, 0);
-            this.tableLayoutPanel10.Controls.Add(this.groupBox3, 0, 1);
-            this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel10.Name = "tableLayoutPanel10";
-            this.tableLayoutPanel10.RowCount = 2;
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 78.88087F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.11913F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(780, 554);
-            this.tableLayoutPanel10.TabIndex = 0;
-            // 
-            // DataTabs
-            // 
-            this.DataTabs.Controls.Add(this.CardData);
-            this.DataTabs.Controls.Add(this.tabPage3);
-            this.DataTabs.Controls.Add(this.tabPage4);
-            this.DataTabs.Controls.Add(this.GermanTextTab);
-            this.DataTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DataTabs.Location = new System.Drawing.Point(3, 3);
-            this.DataTabs.Name = "DataTabs";
-            this.DataTabs.SelectedIndex = 0;
-            this.DataTabs.Size = new System.Drawing.Size(774, 431);
-            this.DataTabs.TabIndex = 6;
-            // 
-            // CardData
-            // 
-            this.CardData.Controls.Add(this.cdbdata);
-            this.CardData.Location = new System.Drawing.Point(4, 22);
-            this.CardData.Name = "CardData";
-            this.CardData.Padding = new System.Windows.Forms.Padding(3);
-            this.CardData.Size = new System.Drawing.Size(766, 405);
-            this.CardData.TabIndex = 0;
-            this.CardData.Text = "Data";
-            this.CardData.UseVisualStyleBackColor = true;
-            // 
-            // cdbdata
-            // 
-            this.cdbdata.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.cdbdata.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cdbdata.Location = new System.Drawing.Point(3, 3);
-            this.cdbdata.Name = "cdbdata";
-            this.cdbdata.Size = new System.Drawing.Size(760, 399);
-            this.cdbdata.TabIndex = 2;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.cdbenglishtext);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(766, 405);
-            this.tabPage3.TabIndex = 1;
-            this.tabPage3.Text = "English Text";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // cdbenglishtext
-            // 
-            this.cdbenglishtext.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.cdbenglishtext.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cdbenglishtext.Location = new System.Drawing.Point(3, 3);
-            this.cdbenglishtext.Name = "cdbenglishtext";
-            this.cdbenglishtext.Size = new System.Drawing.Size(760, 399);
-            this.cdbenglishtext.TabIndex = 2;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.cdbfrenchtext);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(766, 405);
-            this.tabPage4.TabIndex = 2;
-            this.tabPage4.Text = "French Text";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // cdbfrenchtext
-            // 
-            this.cdbfrenchtext.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.cdbfrenchtext.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cdbfrenchtext.Location = new System.Drawing.Point(3, 3);
-            this.cdbfrenchtext.Name = "cdbfrenchtext";
-            this.cdbfrenchtext.Size = new System.Drawing.Size(760, 399);
-            this.cdbfrenchtext.TabIndex = 0;
-            // 
-            // GermanTextTab
-            // 
-            this.GermanTextTab.Controls.Add(this.cdbgermantext);
-            this.GermanTextTab.Location = new System.Drawing.Point(4, 22);
-            this.GermanTextTab.Name = "GermanTextTab";
-            this.GermanTextTab.Padding = new System.Windows.Forms.Padding(3);
-            this.GermanTextTab.Size = new System.Drawing.Size(766, 405);
-            this.GermanTextTab.TabIndex = 3;
-            this.GermanTextTab.Text = "German Text";
-            this.GermanTextTab.UseVisualStyleBackColor = true;
-            // 
-            // cdbgermantext
-            // 
-            this.cdbgermantext.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.cdbgermantext.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cdbgermantext.Location = new System.Drawing.Point(3, 3);
-            this.cdbgermantext.Name = "cdbgermantext";
-            this.cdbgermantext.Size = new System.Drawing.Size(760, 399);
-            this.cdbgermantext.TabIndex = 0;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(3, 440);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(774, 111);
-            this.groupBox3.TabIndex = 7;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Search Options";
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.tableLayoutPanel8);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(786, 560);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "Banlist Editor";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel8
-            // 
-            this.tableLayoutPanel8.ColumnCount = 2;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.02543F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.97456F));
-            this.tableLayoutPanel8.Controls.Add(this.BanList, 0, 1);
-            this.tableLayoutPanel8.Controls.Add(this.CardList, 1, 1);
-            this.tableLayoutPanel8.Controls.Add(this.LoadBanListBtn, 0, 0);
-            this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel9, 1, 0);
-            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 2;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.301158F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 91.69884F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(780, 554);
-            this.tableLayoutPanel8.TabIndex = 0;
-            // 
-            // BanList
-            // 
-            this.BanList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BanList.FormattingEnabled = true;
-            this.BanList.Location = new System.Drawing.Point(3, 48);
-            this.BanList.Name = "BanList";
-            this.BanList.Size = new System.Drawing.Size(173, 503);
-            this.BanList.TabIndex = 0;
-            // 
-            // CardList
-            // 
-            this.CardList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CardList.FormattingEnabled = true;
-            this.CardList.Location = new System.Drawing.Point(182, 48);
-            this.CardList.Name = "CardList";
-            this.CardList.Size = new System.Drawing.Size(595, 503);
-            this.CardList.TabIndex = 1;
-            // 
-            // LoadBanListBtn
-            // 
-            this.LoadBanListBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LoadBanListBtn.Location = new System.Drawing.Point(52, 11);
-            this.LoadBanListBtn.Name = "LoadBanListBtn";
-            this.LoadBanListBtn.Size = new System.Drawing.Size(75, 23);
-            this.LoadBanListBtn.TabIndex = 2;
-            this.LoadBanListBtn.Text = "Load Banlist";
-            this.LoadBanListBtn.UseVisualStyleBackColor = true;
-            this.LoadBanListBtn.Click += new System.EventHandler(this.LoadBanListBtn_Click);
-            // 
-            // tableLayoutPanel9
-            // 
-            this.tableLayoutPanel9.ColumnCount = 3;
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
-            this.tableLayoutPanel9.Controls.Add(this.flowLayoutPanel3, 2, 0);
-            this.tableLayoutPanel9.Controls.Add(this.BanID, 0, 0);
-            this.tableLayoutPanel9.Controls.Add(this.comboBox1, 1, 0);
-            this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel9.Location = new System.Drawing.Point(182, 3);
-            this.tableLayoutPanel9.Name = "tableLayoutPanel9";
-            this.tableLayoutPanel9.RowCount = 1;
-            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(595, 39);
-            this.tableLayoutPanel9.TabIndex = 3;
-            // 
-            // flowLayoutPanel3
-            // 
-            this.flowLayoutPanel3.Controls.Add(this.AddBanCardBtn);
-            this.flowLayoutPanel3.Controls.Add(this.DeleteBanedCardBtn);
-            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(423, 3);
-            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(169, 33);
-            this.flowLayoutPanel3.TabIndex = 3;
-            // 
-            // AddBanCardBtn
-            // 
-            this.AddBanCardBtn.Location = new System.Drawing.Point(3, 3);
-            this.AddBanCardBtn.Name = "AddBanCardBtn";
-            this.AddBanCardBtn.Size = new System.Drawing.Size(75, 23);
-            this.AddBanCardBtn.TabIndex = 1;
-            this.AddBanCardBtn.Text = "Add";
-            this.AddBanCardBtn.UseVisualStyleBackColor = true;
-            // 
-            // DeleteBanedCardBtn
-            // 
-            this.DeleteBanedCardBtn.Location = new System.Drawing.Point(84, 3);
-            this.DeleteBanedCardBtn.Name = "DeleteBanedCardBtn";
-            this.DeleteBanedCardBtn.Size = new System.Drawing.Size(75, 23);
-            this.DeleteBanedCardBtn.TabIndex = 2;
-            this.DeleteBanedCardBtn.Text = "Delete";
-            this.DeleteBanedCardBtn.UseVisualStyleBackColor = true;
-            // 
-            // BanID
-            // 
-            this.BanID.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.BanID.Location = new System.Drawing.Point(3, 9);
-            this.BanID.Name = "BanID";
-            this.BanID.Size = new System.Drawing.Size(258, 20);
-            this.BanID.TabIndex = 1;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(283, 9);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 2;
+            this.tabControl1.Controls.Add(this.EditorTab);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 24);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(794, 586);
+            this.tabControl1.TabIndex = 1;
             // 
             // Main_frm
             // 
@@ -1067,7 +921,11 @@
             this.Text = "DevPro CardManager";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tableLayoutPanel8.ResumeLayout(false);
+            this.tableLayoutPanel9.ResumeLayout(false);
+            this.tableLayoutPanel9.PerformLayout();
+            this.flowLayoutPanel3.ResumeLayout(false);
             this.EditorTab.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
@@ -1088,22 +946,7 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CardImg)).EndInit();
-            this.TableTab.ResumeLayout(false);
-            this.tableLayoutPanel10.ResumeLayout(false);
-            this.DataTabs.ResumeLayout(false);
-            this.CardData.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.cdbdata)).EndInit();
-            this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.cdbenglishtext)).EndInit();
-            this.tabPage4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.cdbfrenchtext)).EndInit();
-            this.GermanTextTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.cdbgermantext)).EndInit();
-            this.tabPage1.ResumeLayout(false);
-            this.tableLayoutPanel8.ResumeLayout(false);
-            this.tableLayoutPanel9.ResumeLayout(false);
-            this.tableLayoutPanel9.PerformLayout();
-            this.flowLayoutPanel3.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1114,7 +957,17 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+        private System.Windows.Forms.ListBox BanList;
+        private System.Windows.Forms.ListBox CardList;
+        private System.Windows.Forms.Button LoadBanListBtn;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.Button AddBanCardBtn;
+        private System.Windows.Forms.Button DeleteBanedCardBtn;
+        private System.Windows.Forms.TextBox BanID;
+        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TabPage EditorTab;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
@@ -1157,39 +1010,17 @@
         private System.Windows.Forms.Button MoveEffectUp;
         private System.Windows.Forms.Button MoveEffectDown;
         private System.Windows.Forms.Button AddEffectbtn;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.PictureBox CardImg;
-        private System.Windows.Forms.TabPage TableTab;
-        private System.Windows.Forms.Button LoadImageBtn;
-        private System.Windows.Forms.Button LoadCardBtn;
-        private System.Windows.Forms.TextBox LoadCardIDtxt;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
-        private System.Windows.Forms.ListBox BanList;
-        private System.Windows.Forms.ListBox CardList;
-        private System.Windows.Forms.Button LoadBanListBtn;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
-        private System.Windows.Forms.TextBox BanID;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
-        private System.Windows.Forms.Button AddBanCardBtn;
-        private System.Windows.Forms.Button DeleteBanedCardBtn;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckedListBox CardTypeList;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.CheckedListBox CategoryList;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
-        private System.Windows.Forms.TabControl DataTabs;
-        private System.Windows.Forms.TabPage CardData;
-        private System.Windows.Forms.DataGridView cdbdata;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.DataGridView cdbenglishtext;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.DataGridView cdbfrenchtext;
-        private System.Windows.Forms.TabPage GermanTextTab;
-        private System.Windows.Forms.DataGridView cdbgermantext;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.PictureBox CardImg;
+        private System.Windows.Forms.Button LoadImageBtn;
+        private System.Windows.Forms.TextBox SearchInput;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.ListBox CardListBox;
 
     }
 }
