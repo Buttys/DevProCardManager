@@ -387,6 +387,7 @@
             this.Alias.Name = "Alias";
             this.Alias.Size = new System.Drawing.Size(189, 20);
             this.Alias.TabIndex = 1;
+            this.Alias.Text = "0";
             // 
             // label1
             // 
@@ -871,6 +872,7 @@
             this.LoadImageBtn.TabIndex = 1;
             this.LoadImageBtn.Text = "Set Image";
             this.LoadImageBtn.UseVisualStyleBackColor = true;
+            this.LoadImageBtn.Click += new System.EventHandler(this.LoadImageBtn_Click);
             // 
             // SearchInput
             // 

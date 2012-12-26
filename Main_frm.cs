@@ -17,7 +17,7 @@ namespace DevPro_CardManager
 {
     public partial class Main_frm : Form
     {
-        public const string cdbdir = @"cards.cdb";
+        string LoadedImage = "";
         List<int> SetCodes;
         List<int> Formats;
         List<int> CardRaces;
@@ -28,7 +28,7 @@ namespace DevPro_CardManager
         public Main_frm()
         {
             InitializeComponent();
-            LoadData(cdbdir);
+            LoadData(@"Language\\English\\cards.cdb");
             SetDataTypes();
 
             BanList.SelectedIndexChanged += new EventHandler(BanList_SelectedIndexChanged);
@@ -60,7 +60,7 @@ namespace DevPro_CardManager
                 foreach (int card in CardData.Keys)
                 {
                     if (CardData[card].Id.ToString().ToLower().StartsWith(SearchInput.Text.ToLower()) ||
-                        CardData[card].Name.ToLower().StartsWith(SearchInput.Text.ToLower()))
+                        CardData[card].Name.ToLower().Contains(SearchInput.Text.ToLower()))
                     {
                         CardListBox.Items.Add(CardData[card].Id.ToString());
                     }
@@ -424,7 +424,7 @@ namespace DevPro_CardManager
         {
 
             CardID.Clear();
-            Alias.Clear();
+            Alias.Text = "0";
             CardFormats.SelectedIndex = -1;
             SetCodeLst.SelectedIndex = -1;
             OtherSetCodeLst.SelectedIndex = -1;
@@ -447,6 +447,7 @@ namespace DevPro_CardManager
             }
             LoadedCard = 0;
             CardImg.Image = Resources.unknown;
+            LoadedImage = "";
         }
 
         private void DeleteEffectbtn_Click(object sender, EventArgs e)
@@ -498,11 +499,13 @@ namespace DevPro_CardManager
             if (EffectList.Items.Count == 16)
             {
                 MessageBox.Show("No more items can be added.");
+                EffectInput.Clear();
                 return;
             }
 
             EffectList.Items.Insert(EffectList.Items.Count, EffectInput.Text);
             EffectList.SelectedIndex = EffectList.Items.Count -1;
+            EffectInput.Clear();
         }
 
         private int GetCardFormat()
@@ -571,9 +574,10 @@ namespace DevPro_CardManager
 
         private void SaveCardbtn_Click(object sender, EventArgs e)
         {
-            SaveCardtoCDB(cdbdir);//english
+            SaveCardtoCDB(@"Language\\English\\cards.cdb");//english
             SaveCardtoCDB(@"Language\\French\\cards.cdb");//French
             SaveCardtoCDB(@"Language\\German\\cards.cdb");//German
+            SaveImage(CardID.Text);
         }
 
         private void SaveCardtoCDB(string cdbpath)
@@ -684,6 +688,18 @@ namespace DevPro_CardManager
             connection.Close();
             MessageBox.Show("Card Saved");
         }
+        public void SaveImage(string cardid)
+        {
+            if (LoadedImage != "")
+            {
+                // Save card image
+                ImageResizer.SaveImage(CardImg.Image,
+                        "pics\\" + cardid + ".jpg", 177, 254);
+                //Save card thumbnail
+                ImageResizer.SaveImage(CardImg.Image,
+                        "pics\\thumbnail\\" + cardid + ".jpg", 44, 64);
+            }
+        }
 
         Dictionary<string, List<BanListCard>> Banlists;
 
@@ -761,6 +777,24 @@ namespace DevPro_CardManager
             {
                 SearchInput.Text = "Search";
                 SearchInput.ForeColor = SystemColors.WindowFrame;
+            }
+        }
+
+        private void LoadImageBtn_Click(object sender, EventArgs e)
+        {
+            LoadedImage = "";
+            string imagepath = ImageResizer.OpenFileWindow("Set Image ", "", "(*png)|*PNG|(*jpg)|*JPG;");
+            if (imagepath != null)
+            {
+                if (File.Exists(imagepath))
+                {
+                    CardImg.Image = Image.FromFile(imagepath);
+                    LoadedImage = imagepath;
+                }
+                else
+                {
+                    CardImg.Image = Resources.unknown;
+                }
             }
         }
     }

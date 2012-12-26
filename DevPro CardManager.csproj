@@ -39,6 +39,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.SQLite">
       <HintPath>..\..\..\..\..\Dropbox\Dev Projects\Buttys Projects\DevProLauncher\System.Data.SQLite.dll</HintPath>
     </Reference>
@@ -55,6 +56,7 @@
     <Compile Include="CardInfo.cs" />
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="Enums\CardType.cs" />
+    <Compile Include="ImageResizer.cs" />
     <Compile Include="Main_frm.cs">
       <SubType>Form</SubType>
     </Compile>
