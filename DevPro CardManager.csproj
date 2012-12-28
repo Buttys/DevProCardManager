@@ -53,7 +53,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BanListEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BanListEditor.Designer.cs">
+      <DependentUpon>BanListEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="CardInfo.cs" />
+    <Compile Include="CDBEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CDBEditor.Designer.cs">
+      <DependentUpon>CDBEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="Enums\CardType.cs" />
     <Compile Include="ImageResizer.cs" />
@@ -65,6 +77,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BanListEditor.resx">
+      <DependentUpon>BanListEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CDBEditor.resx">
+      <DependentUpon>CDBEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main_frm.resx">
       <DependentUpon>Main_frm.cs</DependentUpon>
     </EmbeddedResource>
