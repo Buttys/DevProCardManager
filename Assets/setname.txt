@@ -156,3 +156,5 @@
 0x101 奇迹同调融合相关怪兽
 0x102 暗黑融合限定怪兽
 0x83 Gimmick Puppet
+0x84 Phantom Beastcraft
+0x85 BK
