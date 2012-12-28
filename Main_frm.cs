@@ -562,7 +562,7 @@ namespace DevPro_CardManager
             if (CardTypeList.GetItemCheckState(17) == CheckState.Checked)
                 code += (int)CardType.Field;
             if (CardTypeList.GetItemCheckState(18) == CheckState.Checked)
-                code += (int)CardType.Monster;
+                code += (int)CardType.Counter;
             if (CardTypeList.GetItemCheckState(19) == CheckState.Checked)
                 code += (int)CardType.Flip;
             if (CardTypeList.GetItemCheckState(20) == CheckState.Checked)
@@ -680,13 +680,52 @@ namespace DevPro_CardManager
             command.Parameters.Add(new SQLiteParameter("@id", cardid));
             command.Parameters.Add(new SQLiteParameter("@name", CardName.Text));
             command.Parameters.Add(new SQLiteParameter("@des", CardDescription.Text));
-            for (int i = 0; i < 17; i++)
+            List<SQLiteParameter> parameters = new List<SQLiteParameter>();
+            for (int i = 0; i < 16; i++)
             {
-                command.Parameters.Add(new SQLiteParameter("@str" + i, (i < EffectList.Items.Count ? EffectList.Items[i].ToString() : string.Empty)));
+                parameters.Add(new SQLiteParameter("@str" + (i+1),(i < EffectList.Items.Count ? EffectList.Items[i].ToString():string.Empty)));
             }
+            command.Parameters.AddRange(parameters.ToArray());
             DatabaseHelper.ExecuteNonCommand(command);
             connection.Close();
             MessageBox.Show("Card Saved");
+
+            if (CardData.ContainsKey(cardid))
+            {
+                CardData[cardid] = new CardInfos(new string[] { cardid.ToString(), (CardFormats.SelectedItem == null ? ot.ToString() : GetCardFormat().ToString()),cardalias.ToString(),GetSetCode().ToString(),GetTypeCode().ToString(),
+                    (Level.SelectedItem == null ? "0" : Level.SelectedItem.ToString().Substring(1)), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : CardRaces[Race.SelectedIndex].ToString())),
+                (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : CardAttributes[CardAttribute.SelectedIndex].ToString())),atk.ToString(),def.ToString(),GetCategoryNumber().ToString()});
+                
+                List<string> cardtextarray = new List<string>();
+                cardtextarray.Add(cardid.ToString());
+                cardtextarray.Add(CardName.Text);
+                cardtextarray.Add(CardDescription.Text);
+
+                for (int i = 0; i < 17; i++)
+                {
+                    cardtextarray.Add((i < EffectList.Items.Count ? EffectList.Items[i].ToString() : string.Empty));
+                }
+
+                CardData[cardid].SetCardText(cardtextarray.ToArray());
+            }
+            else
+            {
+                CardData.Add(cardid, new CardInfos(new string[] { cardid.ToString(), (CardFormats.SelectedItem == null ? ot.ToString() : GetCardFormat().ToString()),cardalias.ToString(),GetSetCode().ToString(),GetTypeCode().ToString(),
+                    (Level.SelectedItem == null ? "0" : Level.SelectedItem.ToString().Substring(1)), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : CardRaces[Race.SelectedIndex].ToString())),
+                (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : CardAttributes[CardAttribute.SelectedIndex].ToString())),atk.ToString(),def.ToString(),GetCategoryNumber().ToString()}));
+
+                List<string> cardtextarray = new List<string>();
+                cardtextarray.Add(cardid.ToString());
+                cardtextarray.Add(CardName.Text);
+                cardtextarray.Add(CardDescription.Text);
+
+                for (int i = 0; i < 17; i++)
+                {
+                    cardtextarray.Add((i < EffectList.Items.Count ? EffectList.Items[i].ToString() : string.Empty));
+                }
+                
+                CardData[cardid].SetCardText(cardtextarray.ToArray());
+            }
         }
         public void SaveImage(string cardid)
         {
