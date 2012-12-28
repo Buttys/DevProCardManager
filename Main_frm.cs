@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
@@ -17,9 +16,6 @@ namespace DevPro_CardManager
 {
     public partial class Main_frm : Form
     {
-
-        
-
         public Main_frm()
         {
             InitializeComponent();
@@ -35,8 +31,6 @@ namespace DevPro_CardManager
         {
             MessageBox.Show("Created by Damien Lawford AKA Buttys" + Environment.NewLine + "Email: killerdamo@virginmedia.com" + Environment.NewLine+
                 "Creator of DevPro Launcher/Server Software - http://dev.ygopro-online.net/" + Environment.NewLine + "CardManager Source code: https://github.com/Buttys/DevProCardManager" 
-                
-                
                 , "About", MessageBoxButtons.OK);
         }
 

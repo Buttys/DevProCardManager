@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.IO;
-using System.Data.Linq;
 using System.Windows.Forms;
 
 namespace DevPro_CardManager
@@ -60,17 +58,6 @@ namespace DevPro_CardManager
             fileStream.Close();
             return buffer;
         }
-
-        public static Image BinaryToImage(Binary binaryData)
-        {
-            if (binaryData == null) return null;
-
-            byte[] buffer = binaryData.ToArray();
-            MemoryStream memStream = new MemoryStream();
-            memStream.Write(buffer, 0, buffer.Length);
-            return Image.FromStream(memStream);
-        }
-
         public static string OpenFileWindow(string title, string startpath, string filefilter)
         {
             OpenFileDialog dialog = new OpenFileDialog();
