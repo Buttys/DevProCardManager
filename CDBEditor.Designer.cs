@@ -706,6 +706,7 @@
             this.LoadImageBtn.TabIndex = 1;
             this.LoadImageBtn.Text = "Set Image";
             this.LoadImageBtn.UseVisualStyleBackColor = true;
+            this.LoadImageBtn.Click += new System.EventHandler(this.LoadImageBtn_Click);
             // 
             // SearchInput
             // 

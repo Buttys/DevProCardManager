@@ -764,7 +764,7 @@ namespace DevPro_CardManager
         private void LoadImageBtn_Click(object sender, EventArgs e)
         {
             LoadedImage = "";
-            string imagepath = ImageResizer.OpenFileWindow("Set Image ", "", "(*png)|*PNG|(*jpg)|*JPG;");
+            string imagepath = ImageResizer.OpenFileWindow("Set Image ", "", "Images|*.jpg;*.jpeg;*.png;");
             if (imagepath != null)
             {
                 if (File.Exists(imagepath))
