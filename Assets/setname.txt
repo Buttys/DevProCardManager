@@ -158,3 +158,5 @@
 0x83 Gimmick Puppet
 0x84 Phantom Beastcraft
 0x85 BK
+0x86 Chaos Xyz
+0x87 Number C

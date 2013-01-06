@@ -643,7 +643,7 @@
             "Control",
             "Change ATK/DEF",
             "Piercing",
-            "Repeart Attack",
+            "Repeat Attack",
             "Limit Attack",
             "Direct Attack",
             "Special Summon",

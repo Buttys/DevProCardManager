@@ -17,12 +17,16 @@ namespace DevPro_CardManager
             TopLevel = false;
             Dock = DockStyle.Fill;
             Visible = true;
+            LoadBanList();
             BanList.SelectedIndexChanged += new EventHandler(BanList_SelectedIndexChanged);
+            if (BanList.Items.Count > 0)
+                BanList.SelectedIndex = 0;
+
         }
 
         Dictionary<string, List<BanListCard>> Banlists;
 
-        private void LoadBanListBtn_Click(object sender, EventArgs e)
+        private void LoadBanList()
         {
             Banlists = new Dictionary<string, List<BanListCard>>();
             if (!File.Exists("lflist.conf"))
