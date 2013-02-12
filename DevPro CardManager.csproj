@@ -39,7 +39,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\..\..\..\Dropbox\Dev Projects\Buttys Projects\DevProLauncher\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\..\..\Dropbox\Dev Projects\buttys projects\DevProLauncher\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
