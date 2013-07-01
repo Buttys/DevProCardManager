@@ -44,12 +44,11 @@
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.BanList = new System.Windows.Forms.ListBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.SearchList = new System.Windows.Forms.ListBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.SearchBox = new DevPro_CardManager.Components.SearchBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.Savebtn = new System.Windows.Forms.Button();
+            this.BanAnimeCardsBtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -58,9 +57,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.tableLayoutPanel7.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel8
@@ -70,7 +67,8 @@
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 594F));
             this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel2, 1, 0);
             this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel1, 0, 0);
-            this.tableLayoutPanel8.Controls.Add(this.panel1, 1, 1);
+            this.tableLayoutPanel8.Controls.Add(this.label4, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.flowLayoutPanel1, 1, 1);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
@@ -115,6 +113,7 @@
             // SemiLimitedList
             // 
             this.SemiLimitedList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SemiLimitedList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.SemiLimitedList.FormattingEnabled = true;
             this.SemiLimitedList.IntegralHeight = false;
             this.SemiLimitedList.Location = new System.Drawing.Point(3, 20);
@@ -150,6 +149,7 @@
             // LimitedList
             // 
             this.LimitedList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LimitedList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.LimitedList.FormattingEnabled = true;
             this.LimitedList.IntegralHeight = false;
             this.LimitedList.Location = new System.Drawing.Point(3, 19);
@@ -185,6 +185,7 @@
             // BannedList
             // 
             this.BannedList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BannedList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.BannedList.FormattingEnabled = true;
             this.BannedList.IntegralHeight = false;
             this.BannedList.Location = new System.Drawing.Point(3, 18);
@@ -207,7 +208,7 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.groupBox2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.SearchBox, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -264,71 +265,56 @@
             this.textBox1.Text = "Add BanList";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // groupBox2
+            // SearchBox
             // 
-            this.groupBox2.Controls.Add(this.tableLayoutPanel7);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(3, 252);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(194, 345);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Search/Add";
+            this.SearchBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SearchBox.Location = new System.Drawing.Point(3, 252);
+            this.SearchBox.Name = "SearchBox";
+            this.SearchBox.Size = new System.Drawing.Size(194, 345);
+            this.SearchBox.TabIndex = 1;
+            this.SearchBox.TabStop = false;
+            this.SearchBox.Text = "Search";
             // 
-            // tableLayoutPanel7
+            // label4
             // 
-            this.tableLayoutPanel7.ColumnCount = 1;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Controls.Add(this.SearchList, 0, 0);
-            this.tableLayoutPanel7.Controls.Add(this.textBox2, 0, 1);
-            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-            this.tableLayoutPanel7.RowCount = 2;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.4908F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.509202F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(188, 326);
-            this.tableLayoutPanel7.TabIndex = 0;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Location = new System.Drawing.Point(3, 606);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(200, 32);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Drag and Drop to add items to the banlist";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // SearchList
+            // flowLayoutPanel1
             // 
-            this.SearchList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchList.FormattingEnabled = true;
-            this.SearchList.IntegralHeight = false;
-            this.SearchList.Location = new System.Drawing.Point(3, 3);
-            this.SearchList.Name = "SearchList";
-            this.SearchList.Size = new System.Drawing.Size(182, 289);
-            this.SearchList.TabIndex = 0;
+            this.flowLayoutPanel1.Controls.Add(this.Savebtn);
+            this.flowLayoutPanel1.Controls.Add(this.BanAnimeCardsBtn);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(209, 609);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(588, 26);
+            this.flowLayoutPanel1.TabIndex = 9;
             // 
-            // textBox2
+            // Savebtn
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.textBox2.Location = new System.Drawing.Point(3, 298);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(182, 20);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.Text = "Search";
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Savebtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Savebtn.Location = new System.Drawing.Point(510, 3);
+            this.Savebtn.Name = "Savebtn";
+            this.Savebtn.Size = new System.Drawing.Size(75, 23);
+            this.Savebtn.TabIndex = 9;
+            this.Savebtn.Text = "Save";
+            this.Savebtn.UseVisualStyleBackColor = true;
             // 
-            // panel1
+            // BanAnimeCardsBtn
             // 
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(209, 609);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(588, 26);
-            this.panel1.TabIndex = 7;
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(510, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Save";
-            this.button1.UseVisualStyleBackColor = true;
+            this.BanAnimeCardsBtn.Location = new System.Drawing.Point(398, 3);
+            this.BanAnimeCardsBtn.Name = "BanAnimeCardsBtn";
+            this.BanAnimeCardsBtn.Size = new System.Drawing.Size(106, 23);
+            this.BanAnimeCardsBtn.TabIndex = 10;
+            this.BanAnimeCardsBtn.Text = "Ban Anime Cards";
+            this.BanAnimeCardsBtn.UseVisualStyleBackColor = true;
+            this.BanAnimeCardsBtn.Click += new System.EventHandler(this.BanAnimeCardsBtn_Click);
             // 
             // BanListEditor
             // 
@@ -351,10 +337,7 @@
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.tableLayoutPanel7.ResumeLayout(false);
-            this.tableLayoutPanel7.PerformLayout();
-            this.panel1.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -374,14 +357,13 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.ListBox BanList;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
-        private System.Windows.Forms.ListBox SearchList;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button1;
+        private Components.SearchBox SearchBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Button Savebtn;
+        private System.Windows.Forms.Button BanAnimeCardsBtn;
     }
 }

@@ -75,11 +75,12 @@
             this.CardTypeList = new System.Windows.Forms.CheckedListBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.CategoryList = new System.Windows.Forms.CheckedListBox();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.CardImg = new System.Windows.Forms.PictureBox();
             this.LoadImageBtn = new System.Windows.Forms.Button();
-            this.SearchInput = new System.Windows.Forms.TextBox();
-            this.CardListBox = new System.Windows.Forms.ListBox();
+            this.SearchBox = new DevPro_CardManager.Components.SearchBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -93,6 +94,7 @@
             this.tableLayoutPanel5.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CardImg)).BeginInit();
             this.SuspendLayout();
@@ -122,6 +124,7 @@
             this.tableLayoutPanel3.Controls.Add(this.flowLayoutPanel2, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.groupBox5, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel5, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.flowLayoutPanel3, 0, 2);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(180, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -450,9 +453,9 @@
             // 
             // Clearbtn
             // 
-            this.Clearbtn.Location = new System.Drawing.Point(202, 3);
+            this.Clearbtn.Location = new System.Drawing.Point(194, 3);
             this.Clearbtn.Name = "Clearbtn";
-            this.Clearbtn.Size = new System.Drawing.Size(75, 23);
+            this.Clearbtn.Size = new System.Drawing.Size(83, 23);
             this.Clearbtn.TabIndex = 0;
             this.Clearbtn.Text = "Clear";
             this.Clearbtn.UseVisualStyleBackColor = true;
@@ -460,9 +463,9 @@
             // 
             // SaveCardbtn
             // 
-            this.SaveCardbtn.Location = new System.Drawing.Point(121, 3);
+            this.SaveCardbtn.Location = new System.Drawing.Point(105, 3);
             this.SaveCardbtn.Name = "SaveCardbtn";
-            this.SaveCardbtn.Size = new System.Drawing.Size(75, 23);
+            this.SaveCardbtn.Size = new System.Drawing.Size(83, 23);
             this.SaveCardbtn.TabIndex = 1;
             this.SaveCardbtn.Text = "Save Card";
             this.SaveCardbtn.UseVisualStyleBackColor = true;
@@ -470,9 +473,9 @@
             // 
             // DeleteBtn
             // 
-            this.DeleteBtn.Location = new System.Drawing.Point(40, 3);
+            this.DeleteBtn.Location = new System.Drawing.Point(16, 3);
             this.DeleteBtn.Name = "DeleteBtn";
-            this.DeleteBtn.Size = new System.Drawing.Size(75, 23);
+            this.DeleteBtn.Size = new System.Drawing.Size(83, 23);
             this.DeleteBtn.TabIndex = 2;
             this.DeleteBtn.Text = "Delete Card";
             this.DeleteBtn.UseVisualStyleBackColor = true;
@@ -665,23 +668,40 @@
             this.CategoryList.Size = new System.Drawing.Size(152, 193);
             this.CategoryList.TabIndex = 0;
             // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Controls.Add(this.button1);
+            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 502);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(328, 30);
+            this.flowLayoutPanel3.TabIndex = 7;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(213, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(112, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Open/Create Script";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.CardImg, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.LoadImageBtn, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.SearchInput, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.CardListBox, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.SearchBox, 0, 2);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 5;
+            this.tableLayoutPanel2.RowCount = 4;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 254F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 216F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(171, 527);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
@@ -708,26 +728,15 @@
             this.LoadImageBtn.UseVisualStyleBackColor = true;
             this.LoadImageBtn.Click += new System.EventHandler(this.LoadImageBtn_Click);
             // 
-            // SearchInput
+            // SearchBox
             // 
-            this.SearchInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchInput.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.SearchInput.Location = new System.Drawing.Point(3, 286);
-            this.SearchInput.Name = "SearchInput";
-            this.SearchInput.Size = new System.Drawing.Size(165, 20);
-            this.SearchInput.TabIndex = 2;
-            this.SearchInput.Text = "Search";
-            this.SearchInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // CardListBox
-            // 
-            this.CardListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CardListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.CardListBox.FormattingEnabled = true;
-            this.CardListBox.Location = new System.Drawing.Point(3, 311);
-            this.CardListBox.Name = "CardListBox";
-            this.CardListBox.Size = new System.Drawing.Size(165, 158);
-            this.CardListBox.TabIndex = 4;
+            this.SearchBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SearchBox.Location = new System.Drawing.Point(3, 286);
+            this.SearchBox.Name = "SearchBox";
+            this.SearchBox.Size = new System.Drawing.Size(165, 210);
+            this.SearchBox.TabIndex = 2;
+            this.SearchBox.TabStop = false;
+            this.SearchBox.Text = "Search";
             // 
             // CDBEditor
             // 
@@ -754,8 +763,8 @@
             this.tableLayoutPanel5.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
+            this.flowLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CardImg)).EndInit();
             this.ResumeLayout(false);
 
@@ -813,7 +822,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.PictureBox CardImg;
         private System.Windows.Forms.Button LoadImageBtn;
-        private System.Windows.Forms.TextBox SearchInput;
-        private System.Windows.Forms.ListBox CardListBox;
+        private Components.SearchBox SearchBox;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.Button button1;
     }
 }

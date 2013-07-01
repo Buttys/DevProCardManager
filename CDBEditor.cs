@@ -30,11 +30,7 @@ namespace DevPro_CardManager
             TopLevel = false;
             Dock = DockStyle.Fill;
             Visible = true;
-            SearchInput.TextChanged += new EventHandler(SearchInput_TextChanged);
-            SearchInput.Enter += new EventHandler(SearchInput_Enter);
-            SearchInput.Leave += new EventHandler(SearchInput_Leave);
-            CardListBox.DrawItem += new DrawItemEventHandler(CardList_DrawItem);
-            CardListBox.DoubleClick += new EventHandler(CardList_DoubleClick);
+            SearchBox.List.DoubleClick += new EventHandler(CardList_DoubleClick);
             SetDataTypes();
             LoadData(cdbdir);
         }
@@ -52,48 +48,6 @@ namespace DevPro_CardManager
             CardTypeList.Items.AddRange(Enum.GetNames(typeof(CardType)));
 
 
-        }
-        private void SearchInput_TextChanged(object sender, EventArgs e)
-        {
-            if (SearchInput.Text != "Search" && SearchInput.Text != "")
-            {
-                CardListBox.Items.Clear();
-                foreach (int card in Program.CardData.Keys)
-                {
-                    if (Program.CardData[card].Id.ToString().ToLower().StartsWith(SearchInput.Text.ToLower()) ||
-                        Program.CardData[card].Name.ToLower().Contains(SearchInput.Text.ToLower()))
-                    {
-                        CardListBox.Items.Add(Program.CardData[card].Id.ToString());
-                    }
-                }
-
-            }
-            if (SearchInput.Text == "")
-                CardListBox.Items.Clear();
-        }
-
-        private void CardList_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            e.DrawBackground();
-
-            bool selected = ((e.State & DrawItemState.Selected) == DrawItemState.Selected);
-
-            int index = e.Index;
-            if (index >= 0 && index < CardListBox.Items.Count)
-            {
-                string text = CardListBox.Items[index].ToString();
-                Graphics g = e.Graphics;
-
-                CardInfos card = Program.CardData[Int32.Parse(text)];
-
-                g.FillRectangle((selected) ? new SolidBrush(Color.Blue) : new SolidBrush(Color.White), e.Bounds);
-
-                // Print text
-                g.DrawString((card.Name == "" ? card.Id.ToString() : card.Name), e.Font, (selected) ? Brushes.White : Brushes.Black,
-                    CardListBox.GetItemRectangle(index).Location);
-            }
-
-            e.DrawFocusRectangle();
         }
 
         private void LoadSetCodesFromFile(string filedir)
@@ -249,15 +203,16 @@ namespace DevPro_CardManager
 
         private void CardList_DoubleClick(object sender, EventArgs e)
         {
-            if (CardListBox.SelectedIndex >= 0)
+            ListBox list = (ListBox)sender;
+            if (list.SelectedIndex >= 0)
             {
-                if (!LoadCard(Int32.Parse(CardListBox.SelectedItem.ToString())))
+                if (!LoadCard(Int32.Parse(list.SelectedItem.ToString())))
                 {
                     MessageBox.Show("Error Loading card", "Error", MessageBoxButtons.OK);
                 }
                 else
                 {
-                    LoadCardImage(Int32.Parse(CardListBox.SelectedItem.ToString()));
+                    LoadCardImage(Int32.Parse(list.SelectedItem.ToString()));
                 }
             }
         }
@@ -738,26 +693,6 @@ namespace DevPro_CardManager
                 //Save card thumbnail
                 ImageResizer.SaveImage(CardImg.Image,
                         "pics\\thumbnail\\" + cardid + ".jpg", 44, 64);
-            }
-        }
-
-
-
-        private void SearchInput_Enter(object sender, EventArgs e)
-        {
-            if (SearchInput.Text == "Search")
-            {
-                SearchInput.Text = "";
-                SearchInput.ForeColor = SystemColors.WindowText;
-            }
-        }
-
-        private void SearchInput_Leave(object sender, EventArgs e)
-        {
-            if (SearchInput.Text == "")
-            {
-                SearchInput.Text = "Search";
-                SearchInput.ForeColor = SystemColors.WindowFrame;
             }
         }
 

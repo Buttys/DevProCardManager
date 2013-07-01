@@ -24,7 +24,14 @@ namespace DevPro_CardManager
 
             TabPage banlisted = new TabPage() { Name = "Banlist Editor", Text = "Banlist Editor" };
             banlisted.Controls.Add(new BanListEditor());
-            TabControl.TabPages.AddRange(new TabPage[]{ editor, banlisted });
+
+            TabPage animegen = new TabPage() { Name = "Anime List ID Gen", Text = "Anime List ID Gen" };
+            animegen.Controls.Add(new AnimeCardListGen());
+
+            TabPage IDConverter = new TabPage() { Name = "ID Converter", Text = "ID Converter" };
+            IDConverter.Controls.Add(new IDConverter());
+
+            TabControl.TabPages.AddRange(new TabPage[] { editor, banlisted, animegen,IDConverter });
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

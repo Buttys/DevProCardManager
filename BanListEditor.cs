@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using YGOPro_Launcher.CardDatabase;
 
 namespace DevPro_CardManager
 {
@@ -18,9 +19,25 @@ namespace DevPro_CardManager
             Dock = DockStyle.Fill;
             Visible = true;
             LoadBanList();
+     
             BanList.SelectedIndexChanged += new EventHandler(BanList_SelectedIndexChanged);
             if (BanList.Items.Count > 0)
                 BanList.SelectedIndex = 0;
+
+            BannedList.AllowDrop = true;
+            LimitedList.AllowDrop = true;
+            SemiLimitedList.AllowDrop = true;
+            
+            SearchBox.List.MouseDown += new MouseEventHandler(SearchList_MouseDown);
+            BannedList.DragEnter += new DragEventHandler(List_DragEnter);
+            LimitedList.DragEnter += new DragEventHandler(List_DragEnter);
+            SemiLimitedList.DragEnter += new DragEventHandler(List_DragEnter);
+            BannedList.DragDrop += new DragEventHandler(List_DragDrop);
+            LimitedList.DragDrop += new DragEventHandler(List_DragDrop);
+            SemiLimitedList.DragDrop += new DragEventHandler(List_DragDrop);
+            BannedList.DrawItem += new DrawItemEventHandler(List_DrawItem);
+            LimitedList.DrawItem += new DrawItemEventHandler(List_DrawItem);
+            SemiLimitedList.DrawItem += new DrawItemEventHandler(List_DrawItem);
 
         }
 
@@ -30,22 +47,16 @@ namespace DevPro_CardManager
         {
             Banlists = new Dictionary<string, List<BanListCard>>();
             if (!File.Exists("lflist.conf"))
-            {
                 return;
-            }
 
             StreamReader reader = new StreamReader(File.OpenRead("lflist.conf"));
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
-                if (line == null || line == "") continue;
+                if (line == null || line == "" || line.StartsWith("#")) continue;
                 if (line.StartsWith("!"))
                 {
                     BanList.Items.Add(line.Substring(1));
-                }
-                else if (line.StartsWith("#"))
-                {
-
                 }
                 else
                 {
@@ -72,6 +83,45 @@ namespace DevPro_CardManager
             }
         }
 
+        private void SearchList_MouseDown(object sender, MouseEventArgs e)
+        {
+            ListBox list = (ListBox)sender;
+            int indexOfItem = list.IndexFromPoint(e.X, e.Y);
+            if (indexOfItem >= 0 && indexOfItem < list.Items.Count)
+            {
+                list.DoDragDrop(list.Items[indexOfItem], DragDropEffects.Copy);
+            }
+        }
+        private void List_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy; 
+        }
+        private void List_DragDrop(object sender, DragEventArgs e)
+        {
+            ListBox list = (ListBox)sender;
+            int indexOfItemUnderMouseToDrop = list.IndexFromPoint(list.PointToClient(new Point(e.X, e.Y)));
+            if (e.Data.GetDataPresent(DataFormats.StringFormat))
+            {
+                if (!BannedList.Items.Contains(e.Data.GetData(DataFormats.Text)) && !LimitedList.Items.Contains(e.Data.GetData(DataFormats.Text))
+                        && !SemiLimitedList.Items.Contains(e.Data.GetData(DataFormats.Text)))
+                {
+                    if (indexOfItemUnderMouseToDrop >= 0 && indexOfItemUnderMouseToDrop < list.Items.Count)
+                        list.Items.Insert(indexOfItemUnderMouseToDrop, e.Data.GetData(DataFormats.Text));
+                    else
+                        list.Items.Add(e.Data.GetData(DataFormats.Text));
+                }
+                else
+                {
+                    if (BannedList.Items.Contains(e.Data.GetData(DataFormats.Text)))
+                        MessageBox.Show(e.Data.GetData(DataFormats.Text) + " is already contained in the Banned list.");
+                    else if (LimitedList.Items.Contains(e.Data.GetData(DataFormats.Text)))
+                        MessageBox.Show(e.Data.GetData(DataFormats.Text) + " is already contained in the Limited list.");
+                    else if (SemiLimitedList.Items.Contains(e.Data.GetData(DataFormats.Text)))
+                        MessageBox.Show(e.Data.GetData(DataFormats.Text) + " is already contained in the SemiLimited list.");
+                }
+            }
+        }
+
         private void BanList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (BanList.SelectedItem == null) return;
@@ -83,15 +133,53 @@ namespace DevPro_CardManager
                 foreach (BanListCard card in Banlists[BanList.SelectedItem.ToString()])
                 {
                     if (card.banvalue == 0)
-                        BannedList.Items.Add(card.name);
+                        BannedList.Items.Add(card.id);
                     else if (card.banvalue == 1)
-                        LimitedList.Items.Add(card.name);
+                        LimitedList.Items.Add(card.id);
                     else if (card.banvalue == 2)
-                        SemiLimitedList.Items.Add(card.name);
+                        SemiLimitedList.Items.Add(card.id);
                 }
             }
         }
 
+        private void List_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            ListBox list = (ListBox)sender;
+            e.DrawBackground();
+
+            bool selected = ((e.State & DrawItemState.Selected) == DrawItemState.Selected);
+
+            int index = e.Index;
+            if (index >= 0 && index < list.Items.Count)
+            {
+                string text = list.Items[index].ToString();
+                Graphics g = e.Graphics;
+
+                CardInfos card = Program.CardData[Int32.Parse(text)];
+
+                g.FillRectangle((selected) ? new SolidBrush(Color.Blue) : new SolidBrush(Color.White), e.Bounds);
+
+                // Print text
+                g.DrawString((card.Name == "" ? card.Id.ToString() : card.Name), e.Font, (selected) ? Brushes.White : Brushes.Black,
+                    list.GetItemRectangle(index).Location);
+            }
+
+            e.DrawFocusRectangle();
+        }
+
+        private void BanAnimeCardsBtn_Click(object sender, EventArgs e)
+        {
+            foreach (int id in Program.CardData.Keys)
+            {
+                if (Program.CardData[id].Ot == 4)
+                    if (!BannedList.Items.Contains(id))
+                    {
+                        BannedList.Items.Add(id);
+                        Banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(
+                            new BanListCard() { id = id, banvalue = 0, name = Program.CardData[id].Name });
+                    }
+            }
+        }
     }
     public class BanListCard
     {
