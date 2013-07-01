@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -83,6 +84,47 @@ namespace DevPro_CardManager
             }
         }
 
+        private void SaveBanList()
+        {
+            using (StreamWriter writer = new StreamWriter(File.OpenWrite("banlist.txt")))
+            {
+                writer.WriteLine("#Built using DevPro card editor.");
+                for (int i = 0; i < BanList.Items.Count; i++)
+                {
+                    writer.WriteLine("!{0}", BanList.Items[i].ToString());
+                    try
+                    {
+                        var forbidden = Banlists[BanList.Items[i].ToString()].FindAll(x => x.banvalue == 0);
+                        var limited = Banlists[BanList.Items[i].ToString()].FindAll(x => x.banvalue == 1);
+                        var semiLimited = Banlists[BanList.Items[i].ToString()].FindAll(x => x.banvalue == 2);
+
+                        writer.WriteLine("#forbidden");
+                        foreach (var banListCard in forbidden)
+                        {
+                            writer.WriteLine("{0} {1}", banListCard.id, banListCard.banvalue);
+                        }
+
+                        writer.WriteLine("#limit");
+                        foreach (var banListCard in limited)
+                        {
+                            writer.WriteLine("{0} {1}", banListCard.id, banListCard.banvalue);
+                        }
+
+                        writer.WriteLine("#semi limit");
+                        foreach (var banListCard in semiLimited)
+                        {
+                            writer.WriteLine("{0} {1}", banListCard.id, banListCard.banvalue);
+                        }
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        Debug.WriteLine("Unlimited was probably hit, good idea to check it out.");
+                    }
+                }
+            }
+
+        }
+
         private void SearchList_MouseDown(object sender, MouseEventArgs e)
         {
             ListBox list = (ListBox)sender;
@@ -120,7 +162,7 @@ namespace DevPro_CardManager
                         MessageBox.Show(e.Data.GetData(DataFormats.Text) + " is already contained in the SemiLimited list.");
                 }
             }
-        }
+        } 
 
         private void BanList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -179,6 +221,11 @@ namespace DevPro_CardManager
                             new BanListCard() { id = id, banvalue = 0, name = Program.CardData[id].Name });
                     }
             }
+        }
+
+        private void Savebtn_Click(object sender, EventArgs e)
+        {
+            SaveBanList();
         }
     }
     public class BanListCard
