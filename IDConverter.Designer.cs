@@ -44,7 +44,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.NewId = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.ConvertButton = new System.Windows.Forms.Button();
             this.SearchBox = new DevPro_CardManager.Components.SearchBox();
             this.tableLayoutPanel8.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -253,7 +253,7 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.button1);
+            this.flowLayoutPanel1.Controls.Add(this.ConvertButton);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(369, 480);
@@ -261,14 +261,16 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(361, 26);
             this.flowLayoutPanel1.TabIndex = 4;
             // 
-            // button1
+            // ConvertButton
             // 
-            this.button1.Location = new System.Drawing.Point(283, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Convert";
-            this.button1.UseVisualStyleBackColor = true;
+            this.ConvertButton.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.ConvertButton.Location = new System.Drawing.Point(283, 3);
+            this.ConvertButton.Name = "ConvertButton";
+            this.ConvertButton.Size = new System.Drawing.Size(75, 23);
+            this.ConvertButton.TabIndex = 0;
+            this.ConvertButton.Text = "Convert";
+            this.ConvertButton.UseVisualStyleBackColor = true;
+            this.ConvertButton.Click += new System.EventHandler(this.ConvertButton_Click);
             // 
             // SearchBox
             // 
@@ -321,7 +323,7 @@
         private System.Windows.Forms.CheckBox imagechk;
         private System.Windows.Forms.CheckBox cdbchk;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button ConvertButton;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Button AddButton;
         private Components.SearchBox SearchBox;
