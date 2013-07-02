@@ -30,7 +30,7 @@
         {
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.button2 = new System.Windows.Forms.Button();
+            this.AddButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -39,13 +39,13 @@
             this.scriptchk = new System.Windows.Forms.CheckBox();
             this.imagechk = new System.Windows.Forms.CheckBox();
             this.cdbchk = new System.Windows.Forms.CheckBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.UpdateCardsList = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.SearchBox = new DevPro_CardManager.Components.SearchBox();
+            this.NewId = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.ConvertButton = new System.Windows.Forms.Button();
+            this.SearchBox = new DevPro_CardManager.Components.SearchBox();
             this.tableLayoutPanel8.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -78,7 +78,7 @@
             // 
             // flowLayoutPanel2
             // 
-            this.flowLayoutPanel2.Controls.Add(this.button2);
+            this.flowLayoutPanel2.Controls.Add(this.AddButton);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 480);
@@ -86,14 +86,15 @@
             this.flowLayoutPanel2.Size = new System.Drawing.Size(360, 26);
             this.flowLayoutPanel2.TabIndex = 5;
             // 
-            // button2
+            // AddButton
             // 
-            this.button2.Location = new System.Drawing.Point(282, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "Add";
-            this.button2.UseVisualStyleBackColor = true;
+            this.AddButton.Location = new System.Drawing.Point(282, 3);
+            this.AddButton.Name = "AddButton";
+            this.AddButton.Size = new System.Drawing.Size(75, 23);
+            this.AddButton.TabIndex = 0;
+            this.AddButton.Text = "Add";
+            this.AddButton.UseVisualStyleBackColor = true;
+            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
             // 
             // tableLayoutPanel3
             // 
@@ -124,7 +125,7 @@
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Controls.Add(this.groupBox4, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.listBox1, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.UpdateCardsList, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -201,15 +202,15 @@
             this.cdbchk.Text = "CDB";
             this.cdbchk.UseVisualStyleBackColor = true;
             // 
-            // listBox1
+            // UpdateCardsList
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.IntegralHeight = false;
-            this.listBox1.Location = new System.Drawing.Point(3, 3);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(343, 369);
-            this.listBox1.TabIndex = 0;
+            this.UpdateCardsList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UpdateCardsList.FormattingEnabled = true;
+            this.UpdateCardsList.IntegralHeight = false;
+            this.UpdateCardsList.Location = new System.Drawing.Point(3, 3);
+            this.UpdateCardsList.Name = "UpdateCardsList";
+            this.UpdateCardsList.Size = new System.Drawing.Size(343, 369);
+            this.UpdateCardsList.TabIndex = 0;
             // 
             // tableLayoutPanel1
             // 
@@ -230,7 +231,7 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.textBox1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.NewId, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 434);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -239,16 +240,37 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(354, 34);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
-            // textBox1
+            // NewId
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.textBox1.Location = new System.Drawing.Point(3, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(348, 20);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "New ID";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NewId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NewId.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.NewId.Location = new System.Drawing.Point(3, 3);
+            this.NewId.Name = "NewId";
+            this.NewId.Size = new System.Drawing.Size(348, 20);
+            this.NewId.TabIndex = 2;
+            this.NewId.Text = "New ID";
+            this.NewId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.ConvertButton);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(369, 480);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(361, 26);
+            this.flowLayoutPanel1.TabIndex = 4;
+            // 
+            // ConvertButton
+            // 
+            this.ConvertButton.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.ConvertButton.Location = new System.Drawing.Point(283, 3);
+            this.ConvertButton.Name = "ConvertButton";
+            this.ConvertButton.Size = new System.Drawing.Size(75, 23);
+            this.ConvertButton.TabIndex = 0;
+            this.ConvertButton.Text = "Convert";
+            this.ConvertButton.UseVisualStyleBackColor = true;
+            this.ConvertButton.Click += new System.EventHandler(this.ConvertButton_Click);
             // 
             // SearchBox
             // 
@@ -259,25 +281,6 @@
             this.SearchBox.TabIndex = 4;
             this.SearchBox.TabStop = false;
             this.SearchBox.Text = "Search";
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Controls.Add(this.button1);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(369, 480);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(361, 26);
-            this.flowLayoutPanel1.TabIndex = 4;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(283, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Convert";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // IDConverter
             // 
@@ -309,20 +312,20 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox NewId;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox UpdateCardsList;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private System.Windows.Forms.CheckBox scriptchk;
         private System.Windows.Forms.CheckBox imagechk;
         private System.Windows.Forms.CheckBox cdbchk;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button ConvertButton;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button AddButton;
         private Components.SearchBox SearchBox;
     }
 }

@@ -36,7 +36,7 @@ namespace DevPro_CardManager
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Created by Damien Lawford AKA Buttys" + Environment.NewLine + "Email: killerdamo@virginmedia.com" + Environment.NewLine+
+            MessageBox.Show("Created by Damien Lawford AKA Buttys" + Environment.NewLine + "Modifications by Rahul Parkar AKA Idiot211" + Environment.NewLine + "Email: killerdamo@virginmedia.com" + Environment.NewLine+
                 "Creator of DevPro Launcher/Server Software - http://dev.ygopro-online.net/" + Environment.NewLine + "CardManager Source code: https://github.com/Buttys/DevProCardManager" 
                 , "About", MessageBoxButtons.OK);
         }
