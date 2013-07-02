@@ -82,11 +82,12 @@ namespace DevPro_CardManager
                     }
                 }
             }
+            reader.Close();
         }
 
         private void SaveBanList()
         {
-            using (StreamWriter writer = new StreamWriter(File.OpenWrite("banlist.txt")))
+            using (StreamWriter writer = new StreamWriter(File.OpenWrite("lflist.conf")))
             {
                 writer.WriteLine("#Built using DevPro card editor.");
                 for (int i = 0; i < BanList.Items.Count; i++)
