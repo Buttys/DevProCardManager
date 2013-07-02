@@ -305,6 +305,7 @@
             this.Savebtn.TabIndex = 9;
             this.Savebtn.Text = "Save";
             this.Savebtn.UseVisualStyleBackColor = true;
+            this.Savebtn.Click += new System.EventHandler(this.Savebtn_Click);
             // 
             // BanAnimeCardsBtn
             // 
