@@ -368,7 +368,10 @@ namespace DevPro_CardManager
         {
             if (File.Exists("pics//" + id + ".jpg"))
             {
-                CardImg.Image = Image.FromFile("pics//" + id + ".jpg");
+                using (FileStream stream = new FileStream("pics//" + id + ".jpg", FileMode.Open, FileAccess.Read))
+                {
+                    CardImg.Image = Image.FromStream(stream);
+                }
             }
             else
             {
@@ -704,7 +707,10 @@ namespace DevPro_CardManager
             {
                 if (File.Exists(imagepath))
                 {
-                    CardImg.Image = Image.FromFile(imagepath);
+                    using (FileStream stream = new FileStream(imagepath, FileMode.Open, FileAccess.Read))
+                    {
+                        CardImg.Image = Image.FromStream(stream);
+                    }
                     LoadedImage = imagepath;
                 }
                 else
@@ -744,7 +750,7 @@ namespace DevPro_CardManager
             Checkcommand.Parameters.Add(new SQLiteParameter("@id", cardid));
             if (DatabaseHelper.ExecuteIntCommand(Checkcommand) == 1)
             {
-                if (MessageBox.Show("Are you sure you want to delete "+Program.CardData[cardid].Name +"?", "Found", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                if (MessageBox.Show("Are you sure you want to delete " + Program.CardData[cardid].Name + "?", "Found", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
                 {
                     return;
                 }
