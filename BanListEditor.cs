@@ -54,10 +54,11 @@ namespace DevPro_CardManager
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
-                if (line == null || line == "" || line.StartsWith("#")) continue;
+                if (string.IsNullOrEmpty(line)|| line.StartsWith("#")) continue;
                 if (line.StartsWith("!"))
                 {
-                    BanList.Items.Add(line.Substring(1));
+                    if (!BanList.Items.Contains(line.Substring(1)))
+                        BanList.Items.Add(line.Substring(1));
                 }
                 else
                 {
@@ -124,6 +125,8 @@ namespace DevPro_CardManager
                 }
             }
 
+            MessageBox.Show("Save Complete");
+
         }
 
         private void SearchList_MouseDown(object sender, MouseEventArgs e)
@@ -155,12 +158,13 @@ namespace DevPro_CardManager
                 }
                 else
                 {
+                    int cardid = Int32.Parse((string)e.Data.GetData(DataFormats.Text));
                     if (BannedList.Items.Contains(e.Data.GetData(DataFormats.Text)))
-                        MessageBox.Show(e.Data.GetData(DataFormats.Text) + " is already contained in the Banned list.");
+                        MessageBox.Show(Program.CardData[cardid].Name + " is already contained in the Banned list.");
                     else if (LimitedList.Items.Contains(e.Data.GetData(DataFormats.Text)))
-                        MessageBox.Show(e.Data.GetData(DataFormats.Text) + " is already contained in the Limited list.");
+                        MessageBox.Show(Program.CardData[cardid].Name + " is already contained in the Limited list.");
                     else if (SemiLimitedList.Items.Contains(e.Data.GetData(DataFormats.Text)))
-                        MessageBox.Show(e.Data.GetData(DataFormats.Text) + " is already contained in the SemiLimited list.");
+                        MessageBox.Show(Program.CardData[cardid].Name + " is already contained in the SemiLimited list.");
                 }
             }
         } 

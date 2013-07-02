@@ -138,6 +138,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gemfusion.ico" />
+    <Content Include="System.Data.SQLite.dll" />
     <None Include="Resources\unknown.jpg" />
   </ItemGroup>
   <ItemGroup />
