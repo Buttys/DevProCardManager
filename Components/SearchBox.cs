@@ -27,22 +27,22 @@ namespace DevPro_CardManager.Components
 
         public SearchBox()
         {
-            this.Dock = DockStyle.Fill;
+            Dock = DockStyle.Fill;
             TableLayoutPanel panel = new TableLayoutPanel();
             panel.ColumnCount = 1;
-            panel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             panel.Controls.Add(SearchList, 0, 0);
             panel.Controls.Add(SearchInput, 0, 1);
-            panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel.Dock = DockStyle.Fill;
             panel.RowCount = 2;
-            panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 86.60714F));
-            panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            panel.RowStyles.Add(new RowStyle(SizeType.Percent, 86.60714F));
+            panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
 
-            SearchInput.Enter += new EventHandler(SearchInput_Enter);
-            SearchInput.Leave += new EventHandler(SearchInput_Leave);
-            SearchInput.TextChanged += new EventHandler(SearchInput_TextChanged);
+            SearchInput.Enter += SearchInput_Enter;
+            SearchInput.Leave += SearchInput_Leave;
+            SearchInput.TextChanged += SearchInput_TextChanged;
 
-            SearchList.DrawItem += new DrawItemEventHandler(SearchList_DrawItem);
+            SearchList.DrawItem += SearchList_DrawItem;
 
             this.Controls.Add(panel);
         }

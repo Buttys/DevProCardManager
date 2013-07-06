@@ -205,6 +205,7 @@
             // UpdateCardsList
             // 
             this.UpdateCardsList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UpdateCardsList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.UpdateCardsList.FormattingEnabled = true;
             this.UpdateCardsList.IntegralHeight = false;
             this.UpdateCardsList.Location = new System.Drawing.Point(3, 3);
