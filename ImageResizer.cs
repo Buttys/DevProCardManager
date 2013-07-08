@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -17,9 +15,9 @@ namespace DevPro_CardManager
 
             if (width > 0 && height > 0)
             {
-                Image.GetThumbnailImageAbort myCallback =
+                var myCallback =
                 new Image.GetThumbnailImageAbort(ThumbnailCallback);
-                Image imageToSave = originalImage.GetThumbnailImage
+                var imageToSave = originalImage.GetThumbnailImage
                     (width, height, myCallback, IntPtr.Zero);
                 imageToSave.Save(filePath, System.Drawing.Imaging.ImageFormat.Jpeg);
             }
@@ -36,7 +34,7 @@ namespace DevPro_CardManager
 
             if (width > 0 && height > 0)
             {
-                Image.GetThumbnailImageAbort myCallback =
+                var myCallback =
                 new Image.GetThumbnailImageAbort(ThumbnailCallback);
                 Image imageToSave = originalImage.GetThumbnailImage
                     (width, height, myCallback, IntPtr.Zero);
@@ -52,15 +50,15 @@ namespace DevPro_CardManager
 
         public static byte[] ImageToBinary(string imagePath)
         {
-            FileStream fileStream = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
-            byte[] buffer = new byte[fileStream.Length];
+            var fileStream = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
+            var buffer = new byte[fileStream.Length];
             fileStream.Read(buffer, 0, (int)fileStream.Length);
             fileStream.Close();
             return buffer;
         }
         public static string OpenFileWindow(string title, string startpath, string filefilter)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
+            var dialog = new OpenFileDialog();
             dialog.InitialDirectory = startpath;
             dialog.Title = title;
             dialog.Filter = filefilter;

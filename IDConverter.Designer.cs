@@ -1,6 +1,6 @@
 ﻿namespace DevPro_CardManager
 {
-    partial class IDConverter
+    sealed partial class IDConverter
     {
         /// <summary>
         /// Required designer variable.
@@ -43,9 +43,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.NewId = new System.Windows.Forms.TextBox();
+            this.SearchBox = new DevPro_CardManager.Components.SearchBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.ConvertButton = new System.Windows.Forms.Button();
-            this.SearchBox = new DevPro_CardManager.Components.SearchBox();
             this.tableLayoutPanel8.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -252,6 +252,16 @@
             this.NewId.Text = "New ID";
             this.NewId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // SearchBox
+            // 
+            this.SearchBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SearchBox.Location = new System.Drawing.Point(3, 3);
+            this.SearchBox.Name = "SearchBox";
+            this.SearchBox.Size = new System.Drawing.Size(354, 425);
+            this.SearchBox.TabIndex = 4;
+            this.SearchBox.TabStop = false;
+            this.SearchBox.Text = "Search";
+            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.ConvertButton);
@@ -272,16 +282,6 @@
             this.ConvertButton.Text = "Convert";
             this.ConvertButton.UseVisualStyleBackColor = true;
             this.ConvertButton.Click += new System.EventHandler(this.ConvertButton_Click);
-            // 
-            // SearchBox
-            // 
-            this.SearchBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchBox.Location = new System.Drawing.Point(3, 3);
-            this.SearchBox.Name = "SearchBox";
-            this.SearchBox.Size = new System.Drawing.Size(354, 425);
-            this.SearchBox.TabIndex = 4;
-            this.SearchBox.TabStop = false;
-            this.SearchBox.Text = "Search";
             // 
             // IDConverter
             // 

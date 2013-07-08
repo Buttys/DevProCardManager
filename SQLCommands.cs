@@ -19,8 +19,8 @@ namespace DevPro_CardManager
         {
             try
             {
-                SQLiteCommand command = new SQLiteCommand("UPDATE datas SET id=@updatedId WHERE id=@cardId", connection);
-                SQLiteCommand command2 = new SQLiteCommand("UPDATE texts SET id=@updatedId WHERE id=@cardId", connection);
+                var command = new SQLiteCommand("UPDATE datas SET id=@updatedId WHERE id=@cardId", connection);
+                var command2 = new SQLiteCommand("UPDATE texts SET id=@updatedId WHERE id=@cardId", connection);
 
                 command.Parameters.Add(new SQLiteParameter("@updatedId", updatedId));
                 command2.Parameters.Add(new SQLiteParameter("@updatedId", updatedId));
@@ -45,7 +45,7 @@ namespace DevPro_CardManager
         {
             try
             {
-                SQLiteCommand command = null;
+                SQLiteCommand command;
                 if (updateid != cardid)
                 {
                     command = new SQLiteCommand("INSERT INTO datas(id,ot,alias,setcode,type,atk,def,level,race,attribute,category)" +
@@ -84,7 +84,7 @@ namespace DevPro_CardManager
         {
             try
             {
-                SQLiteCommand command = new SQLiteCommand(commandstring);
+                var command = new SQLiteCommand(commandstring);
                 DatabaseHelper.ExecuteNonCommand(command);
                 return true;
             }

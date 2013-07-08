@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using YGOPro_Launcher.CardDatabase;
 
 namespace DevPro_CardManager
 {
@@ -17,7 +16,7 @@ namespace DevPro_CardManager
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main_frm());
+            Application.Run(new MainFrm());
         }
     }
 }

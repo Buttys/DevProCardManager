@@ -1,6 +1,6 @@
 ﻿namespace DevPro_CardManager
 {
-    partial class CDBEditor
+    sealed partial class CDBEditor
     {
         /// <summary>
         /// Required designer variable.

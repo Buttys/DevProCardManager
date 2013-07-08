@@ -1,6 +1,6 @@
 ﻿namespace DevPro_CardManager
 {
-    partial class BanListEditor
+    sealed partial class BanListEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -43,12 +43,13 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.BanList = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.BanListInput = new System.Windows.Forms.TextBox();
             this.SearchBox = new DevPro_CardManager.Components.SearchBox();
             this.label4 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.Savebtn = new System.Windows.Forms.Button();
             this.BanAnimeCardsBtn = new System.Windows.Forms.Button();
+            this.Clearbtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -234,7 +235,7 @@
             this.tableLayoutPanel6.ColumnCount = 1;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel6.Controls.Add(this.BanList, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.textBox1, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.BanListInput, 0, 1);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -254,16 +255,16 @@
             this.BanList.Size = new System.Drawing.Size(182, 187);
             this.BanList.TabIndex = 0;
             // 
-            // textBox1
+            // BanListInput
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.textBox1.Location = new System.Drawing.Point(3, 196);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(182, 20);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "Add BanList";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.BanListInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BanListInput.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.BanListInput.Location = new System.Drawing.Point(3, 196);
+            this.BanListInput.Name = "BanListInput";
+            this.BanListInput.Size = new System.Drawing.Size(182, 20);
+            this.BanListInput.TabIndex = 2;
+            this.BanListInput.Text = "Add BanList";
+            this.BanListInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // SearchBox
             // 
@@ -289,6 +290,7 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.Savebtn);
             this.flowLayoutPanel1.Controls.Add(this.BanAnimeCardsBtn);
+            this.flowLayoutPanel1.Controls.Add(this.Clearbtn);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(209, 609);
@@ -316,6 +318,16 @@
             this.BanAnimeCardsBtn.Text = "Ban Anime Cards";
             this.BanAnimeCardsBtn.UseVisualStyleBackColor = true;
             this.BanAnimeCardsBtn.Click += new System.EventHandler(this.BanAnimeCardsBtn_Click);
+            // 
+            // Clearbtn
+            // 
+            this.Clearbtn.Location = new System.Drawing.Point(317, 3);
+            this.Clearbtn.Name = "Clearbtn";
+            this.Clearbtn.Size = new System.Drawing.Size(75, 23);
+            this.Clearbtn.TabIndex = 11;
+            this.Clearbtn.Text = "Clear";
+            this.Clearbtn.UseVisualStyleBackColor = true;
+            this.Clearbtn.Click += new System.EventHandler(this.Clearbtn_Click);
             // 
             // BanListEditor
             // 
@@ -360,11 +372,12 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.ListBox BanList;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox BanListInput;
         private Components.SearchBox SearchBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button Savebtn;
         private System.Windows.Forms.Button BanAnimeCardsBtn;
+        private System.Windows.Forms.Button Clearbtn;
     }
 }

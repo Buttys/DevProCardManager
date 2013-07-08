@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Collections.Generic;
-using System.Text;
 using System.Data.SQLite;
 using System.Windows.Forms;
 
@@ -37,11 +36,11 @@ namespace DevPro_CardManager
         {
             try
             {
-                List<string[]> values = new List<string[]>();
+                var values = new List<string[]>();
                 SQLiteDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        List<string> row = new List<string>();
+                        var row = new List<string>();
                         for(int i = 0;i < reader.FieldCount; i++)
                         {
                             row.Add(reader[i].ToString());

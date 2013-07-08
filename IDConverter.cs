@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using YGOPro_Launcher.CardDatabase;
 
 namespace DevPro_CardManager
 {
-    public partial class IDConverter : Form
+    public sealed partial class IDConverter : Form
     {
         //string[] definition
         //[0] = Old card ID
@@ -44,23 +44,23 @@ namespace DevPro_CardManager
                 return;
             }
 
-            if (Program.CardData.ContainsKey(newId) || updateCards.Exists(x => x[1] == newId.ToString()))
+            if (Program.CardData.ContainsKey(newId) || updateCards.Exists(x => x[1] == newId.ToString(CultureInfo.InvariantCulture)))
             {
                 MessageBox.Show("New Id is already been used.", "Error!", MessageBoxButtons.OK);
                 return;
             }
 
             int selectedCardId = Convert.ToInt32(SearchBox.List.SelectedItem.ToString());
-            if (updateCards.Exists(x => x[0] == selectedCardId.ToString()))
+            if (updateCards.Exists(x => x[0] == selectedCardId.ToString(CultureInfo.InvariantCulture)))
             {
                 MessageBox.Show("Card already in list to be changed", "Error!", MessageBoxButtons.OK);
                 return;
             }
             
 
-            string[] cardToUpdate = new string[2];
-            cardToUpdate[0] = selectedCardId.ToString();
-            cardToUpdate[1] = newId.ToString();
+            var cardToUpdate = new string[2];
+            cardToUpdate[0] = selectedCardId.ToString(CultureInfo.InvariantCulture);
+            cardToUpdate[1] = newId.ToString(CultureInfo.InvariantCulture);
 
             UpdateCardsList.Items.Add(cardToUpdate);
         }
@@ -84,7 +84,7 @@ namespace DevPro_CardManager
                         return;
                     }
 
-                    SQLiteConnection connection = new SQLiteConnection("Data Source=" + str2);
+                    var connection = new SQLiteConnection("Data Source=" + str2);
                     connection.Open();
 
                     SQLiteCommands.UpdateCardId(updateCard[0], updateCard[1], connection);
@@ -158,7 +158,7 @@ namespace DevPro_CardManager
             int index = e.Index;
             if (index >= 0 && index < UpdateCardsList.Items.Count)
             {
-                string[] data = (string[])UpdateCardsList.Items[index];
+                var data = (string[])UpdateCardsList.Items[index];
                 Graphics g = e.Graphics;
 
                 CardInfos card = Program.CardData[Int32.Parse(data[0])];

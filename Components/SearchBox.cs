@@ -1,23 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
-using YGOPro_Launcher.CardDatabase;
 
 namespace DevPro_CardManager.Components
 {
-    public class SearchBox : GroupBox
+    public sealed class SearchBox : GroupBox
     {
-        private object Searchlock = new object();
-        private ListBox SearchList = new ListBox() 
+        private readonly object _searchlock = new object();
+        private readonly ListBox _searchList = new ListBox 
         { 
             Dock = DockStyle.Fill, 
             IntegralHeight = false, 
             DrawMode = DrawMode.OwnerDrawFixed 
         };
-        private TextBox SearchInput = new TextBox()
+        private readonly TextBox _searchInput = new TextBox
         {
             Dock = DockStyle.Fill,
             Text = "Search",
@@ -28,67 +26,73 @@ namespace DevPro_CardManager.Components
         public SearchBox()
         {
             Dock = DockStyle.Fill;
-            TableLayoutPanel panel = new TableLayoutPanel();
-            panel.ColumnCount = 1;
+            var panel = new TableLayoutPanel {ColumnCount = 1};
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            panel.Controls.Add(SearchList, 0, 0);
-            panel.Controls.Add(SearchInput, 0, 1);
+            panel.Controls.Add(_searchList, 0, 0);
+            panel.Controls.Add(_searchInput, 0, 1);
             panel.Dock = DockStyle.Fill;
             panel.RowCount = 2;
             panel.RowStyles.Add(new RowStyle(SizeType.Percent, 86.60714F));
             panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
 
-            SearchInput.Enter += SearchInput_Enter;
-            SearchInput.Leave += SearchInput_Leave;
-            SearchInput.TextChanged += SearchInput_TextChanged;
+            _searchInput.Enter += SearchInput_Enter;
+            _searchInput.Leave += SearchInput_Leave;
+            _searchInput.TextChanged += SearchInput_TextChanged;
 
-            SearchList.DrawItem += SearchList_DrawItem;
+            _searchList.DrawItem += SearchList_DrawItem;
 
-            this.Controls.Add(panel);
+            Controls.Add(panel);
         }
 
         private void SearchInput_Enter(object sender, EventArgs e)
         {
-            if (SearchInput.Text == "Search")
+            if (_searchInput.Text == "Search")
             {
-                SearchInput.Text = "";
-                SearchInput.ForeColor = SystemColors.WindowText;
+                _searchInput.Text = "";
+                _searchInput.ForeColor = SystemColors.WindowText;
             }
         }
 
         private void SearchInput_Leave(object sender, EventArgs e)
         {
-            if (SearchInput.Text == "")
+            if (_searchInput.Text == "")
             {
-                SearchInput.Text = "Search";
-                SearchInput.ForeColor = SystemColors.WindowFrame;
+                _searchInput.Text = "Search";
+                _searchInput.ForeColor = SystemColors.WindowFrame;
             }
         }
 
         private void SearchInput_TextChanged(object sender, EventArgs e)
         {
-            lock (Searchlock)
+            lock (_searchlock)
             {
-                if (SearchInput.Text == "")
+                if (_searchInput.Text == "")
                 {
-                    SearchList.Items.Clear();
+                    _searchList.Items.Clear();
                     return;
                 }
-                if (SearchInput.Text != "Search")
+                if (_searchInput.Text != "Search")
                 {
-                    SearchList.Items.Clear();
-                    foreach (int card in Program.CardData.Keys)
+                    _searchList.Items.Clear();
+                    foreach (int card in Program.CardData.Keys.Where(card => Program.CardData[card].Id.ToString(CultureInfo.InvariantCulture).ToLower().StartsWith(_searchInput.Text.ToLower()) ||
+                                                                             Program.CardData[card].Name.ToLower().Contains(_searchInput.Text.ToLower())))
                     {
-                        if (Program.CardData[card].Id.ToString().ToLower().StartsWith(SearchInput.Text.ToLower()) ||
-                            Program.CardData[card].Name.ToLower().Contains(SearchInput.Text.ToLower()))
-                        {
-                            SearchList.Items.Add(Program.CardData[card].Id.ToString());
-                        }
+                        AddCardToList(Program.CardData[card].Id.ToString(CultureInfo.InvariantCulture));
                     }
-
                 }
-
             }
+        }
+
+        private void AddCardToList(string id)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<string>(AddCardToList), id);
+                return;
+            }
+
+            _searchList.Items.Add(id);
+
         }
 
         private void SearchList_DrawItem(object sender, DrawItemEventArgs e)
@@ -98,9 +102,9 @@ namespace DevPro_CardManager.Components
             bool selected = ((e.State & DrawItemState.Selected) == DrawItemState.Selected);
 
             int index = e.Index;
-            if (index >= 0 && index < SearchList.Items.Count)
+            if (index >= 0 && index < _searchList.Items.Count)
             {
-                string text = SearchList.Items[index].ToString();
+                string text = _searchList.Items[index].ToString();
                 Graphics g = e.Graphics;
 
                 CardInfos card = Program.CardData[Int32.Parse(text)];
@@ -108,15 +112,15 @@ namespace DevPro_CardManager.Components
                 g.FillRectangle((selected) ? new SolidBrush(Color.Blue) : new SolidBrush(Color.White), e.Bounds);
 
                 // Print text
-                g.DrawString((card.Name == "" ? card.Id.ToString() : card.Name), e.Font, (selected) ? Brushes.White : Brushes.Black,
-                    SearchList.GetItemRectangle(index).Location);
+                g.DrawString((card.Name == "" ? card.Id.ToString(CultureInfo.InvariantCulture) : card.Name), e.Font, (selected) ? Brushes.White : Brushes.Black,
+                    _searchList.GetItemRectangle(index).Location);
             }
 
             e.DrawFocusRectangle();
         }
         public ListBox List
         {
-            get { return SearchList; }
+            get { return _searchList; }
         }
     }
 }

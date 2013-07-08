@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
+using System.Globalization;
 using System.Windows.Forms;
-using DevPro.Data.Enums;
-using YGOPro_Launcher.CardDatabase;
+using DevPro_CardManager.Enums;
 using System.IO;
 using System.Reflection;
 using System.Data.SQLite;
@@ -14,15 +11,15 @@ using DevPro_CardManager.Properties;
 
 namespace DevPro_CardManager
 {
-    public partial class CDBEditor : Form
+    public sealed partial class CDBEditor : Form
     {
-        string cdbdir = @"cards.cdb";
-        string LoadedImage = "";
-        List<int> SetCodes;
-        List<int> Formats;
-        List<int> CardRaces;
-        List<int> CardAttributes;
-        int LoadedCard = 0;
+        private const string Cdbdir = @"cards.cdb";
+        string _loadedImage = "";
+        List<int> _setCodes;
+        List<int> _formats;
+        List<int> _cardRaces;
+        List<int> _cardAttributes;
+        int _loadedCard;
 
         public CDBEditor()
         {
@@ -30,9 +27,9 @@ namespace DevPro_CardManager
             TopLevel = false;
             Dock = DockStyle.Fill;
             Visible = true;
-            SearchBox.List.DoubleClick += new EventHandler(CardList_DoubleClick);
+            SearchBox.List.DoubleClick +=CardList_DoubleClick;
             SetDataTypes();
-            LoadData(cdbdir);
+            LoadData(Cdbdir);
         }
 
         private void SetDataTypes()
@@ -45,21 +42,23 @@ namespace DevPro_CardManager
                 Level.Items.Add("★" + i);
             }
             LoadSetCodesFromFile("Assets\\setname.txt");
+// ReSharper disable CoVariantArrayConversion
             CardTypeList.Items.AddRange(Enum.GetNames(typeof(CardType)));
+// ReSharper restore CoVariantArrayConversion
 
 
         }
 
         private void LoadSetCodesFromFile(string filedir)
         {
-            SetCodes = new List<int>();
+            _setCodes = new List<int>();
 
             if (!File.Exists(filedir))
             {
                 return;
             }
 
-            StreamReader reader = new StreamReader(File.OpenRead(filedir));
+            var reader = new StreamReader(File.OpenRead(filedir));
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
@@ -69,21 +68,21 @@ namespace DevPro_CardManager
                 string setname = line.Substring(parts[0].Length, line.Length - parts[0].Length).Trim();
                 SetCodeLst.Items.Add(setname);
                 OtherSetCodeLst.Items.Add(setname);
-                SetCodes.Add(Convert.ToInt32(parts[0], 16));
+                _setCodes.Add(Convert.ToInt32(parts[0], 16));
 
             }
         }
 
         private void LoadCardFormatsFromFile(string filedir)
         {
-            Formats = new List<int>();
+            _formats = new List<int>();
 
             if (!File.Exists(filedir))
             {
                 return;
             }
 
-            StreamReader reader = new StreamReader(File.OpenRead(filedir));
+            var reader = new StreamReader(File.OpenRead(filedir));
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
@@ -93,21 +92,21 @@ namespace DevPro_CardManager
                 string formatname = line.Substring(parts[0].Length, line.Length - parts[0].Length).Trim();
 
                 CardFormats.Items.Add(formatname);
-                Formats.Add(Convert.ToInt32(parts[0], 16));
+                _formats.Add(Convert.ToInt32(parts[0], 16));
 
             }
         }
 
         private void LoadCardRacesFromFile(string filedir)
         {
-            CardRaces = new List<int>();
+            _cardRaces = new List<int>();
 
             if (!File.Exists(filedir))
             {
                 return;
             }
 
-            StreamReader reader = new StreamReader(File.OpenRead(filedir));
+            var reader = new StreamReader(File.OpenRead(filedir));
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
@@ -117,21 +116,21 @@ namespace DevPro_CardManager
                 string racename = line.Substring(parts[0].Length, line.Length - parts[0].Length).Trim();
 
                 Race.Items.Add(racename);
-                CardRaces.Add(Convert.ToInt32(parts[0], 16));
+                _cardRaces.Add(Convert.ToInt32(parts[0], 16));
 
             }
         }
 
         private void LoadCardAttributesFromFile(string filedir)
         {
-            CardAttributes = new List<int>();
+            _cardAttributes = new List<int>();
 
             if (!File.Exists(filedir))
             {
                 return;
             }
 
-            StreamReader reader = new StreamReader(File.OpenRead(filedir));
+            var reader = new StreamReader(File.OpenRead(filedir));
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
@@ -141,7 +140,7 @@ namespace DevPro_CardManager
                 string attributename = line.Substring(parts[0].Length, line.Length - parts[0].Length).Trim();
 
                 CardAttribute.Items.Add(attributename);
-                CardAttributes.Add(Convert.ToInt32(parts[0], 16));
+                _cardAttributes.Add(Convert.ToInt32(parts[0], 16));
 
             }
         }
@@ -154,72 +153,70 @@ namespace DevPro_CardManager
             Clearbtn_Click(null, EventArgs.Empty);
             CardInfos info = Program.CardData[cardid];
 
-            CardID.Text = info.Id.ToString();
-            Alias.Text = info.AliasId.ToString();
-            for (int i = 0; i < Formats.Count; i++)
+            CardID.Text = info.Id.ToString(CultureInfo.InvariantCulture);
+            Alias.Text = info.AliasId.ToString(CultureInfo.InvariantCulture);
+            for (int i = 0; i < _formats.Count; i++)
             {
-                if (Formats[i] == info.Ot)
+                if (_formats[i] == info.Ot)
                 {
                     CardFormats.SelectedIndex = i;
                     break;
                 }
             }
             Level.SelectedIndex = info.Level - 1;
-            for (int i = 0; i < CardRaces.Count; i++)
+            for (int i = 0; i < _cardRaces.Count; i++)
             {
-                if (CardRaces[i] == info.Race)
+                if (_cardRaces[i] == info.Race)
                 {
                     Race.SelectedIndex = i;
                     break;
                 }
             }
-            for (int i = 0; i < CardAttributes.Count; i++)
+            for (int i = 0; i < _cardAttributes.Count; i++)
             {
-                if (CardAttributes[i] == info.Attribute)
+                if (_cardAttributes[i] == info.Attribute)
                 {
                     CardAttribute.SelectedIndex = i;
                     break;
                 }
             }
-            ATK.Text = info.Atk.ToString();
-            DEF.Text = info.Def.ToString();
+            ATK.Text = info.Atk.ToString(CultureInfo.InvariantCulture);
+            DEF.Text = info.Def.ToString(CultureInfo.InvariantCulture);
             CardName.Text = info.Name;
             CardDescription.Text = info.Description;
             foreach (string effect in info.EffectStrings)
                 EffectList.Items.Add(effect);
             SetCardTypes(info.GetCardTypes());
 
-            int index = this.SetCodes.IndexOf(info.SetCode & 0xffff);
-            this.SetCodeLst.SelectedIndex = index;
-            index = this.SetCodes.IndexOf(info.SetCode >> 0x10);
-            this.OtherSetCodeLst.SelectedIndex = index;
+            int index = _setCodes.IndexOf(info.SetCode & 0xffff);
+            SetCodeLst.SelectedIndex = index;
+            index = _setCodes.IndexOf(info.SetCode >> 0x10);
+            OtherSetCodeLst.SelectedIndex = index;
 
             SetCategoryCheckBoxs(info.Category);
 
-            LoadedCard = info.Id;
+            _loadedCard = info.Id;
 
             return true;
         }
 
         private void CardList_DoubleClick(object sender, EventArgs e)
         {
-            ListBox list = (ListBox)sender;
-            if (list.SelectedIndex >= 0)
+            var list = (ListBox)sender;
+            if (list.SelectedIndex < 0) return;
+            if (!LoadCard(Int32.Parse(list.SelectedItem.ToString())))
             {
-                if (!LoadCard(Int32.Parse(list.SelectedItem.ToString())))
-                {
-                    MessageBox.Show("Error Loading card", "Error", MessageBoxButtons.OK);
-                }
-                else
-                {
-                    LoadCardImage(Int32.Parse(list.SelectedItem.ToString()));
-                }
+                MessageBox.Show("Error Loading card", "Error", MessageBoxButtons.OK);
+            }
+            else
+            {
+                LoadCardImage(Int32.Parse(list.SelectedItem.ToString()));
             }
         }
 
-        private void SetCardTypes(CardType[] types)
+        private void SetCardTypes(IEnumerable<CardType> types)
         {
-            foreach (CardType cardtype in types)
+            foreach (var cardtype in types)
             {
                 switch (cardtype)
                 {
@@ -300,7 +297,7 @@ namespace DevPro_CardManager
             int num3 = 0;
             while (num3 < 0x20)
             {
-                if (this.CategoryList.GetItemCheckState(num3) == CheckState.Checked)
+                if (CategoryList.GetItemCheckState(num3) == CheckState.Checked)
                 {
                     selectedIndex |= num2;
                 }
@@ -314,17 +311,13 @@ namespace DevPro_CardManager
         private void SetCategoryCheckBoxs(int categorynumber)
         {
             int index = 0;
-            int num = 0;
+            int num;
             for (num = 1; index < 0x20; num = num << 1)
             {
-                if ((num & categorynumber) != 0L)
-                {
-                    this.CategoryList.SetItemCheckState(index, CheckState.Checked);
-                }
-                else
-                {
-                    this.CategoryList.SetItemCheckState(index, CheckState.Unchecked);
-                }
+                CategoryList.SetItemCheckState(index,
+                                                    (num & categorynumber) != 0L
+                                                        ? CheckState.Checked
+                                                        : CheckState.Unchecked);
                 index++;
             }
         }
@@ -343,11 +336,11 @@ namespace DevPro_CardManager
 
 
 
-            SQLiteConnection connection = new SQLiteConnection("Data Source=" + str2);
+            var connection = new SQLiteConnection("Data Source=" + str2);
             connection.Open();
 
-            SQLiteCommand datacommand = new SQLiteCommand("SELECT id, ot, alias, setcode, type, level, race, attribute, atk, def, category FROM datas", connection);
-            SQLiteCommand textcommand = new SQLiteCommand("SELECT id, name, desc, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, str14, str15, str16 FROM texts", connection);
+            var datacommand = new SQLiteCommand("SELECT id, ot, alias, setcode, type, level, race, attribute, atk, def, category FROM datas", connection);
+            var textcommand = new SQLiteCommand("SELECT id, name, desc, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, str14, str15, str16 FROM texts", connection);
             List<string[]> datas = DatabaseHelper.ExecuteStringCommand(datacommand, 11);
             List<string[]> texts = DatabaseHelper.ExecuteStringCommand(textcommand, 19);
 
@@ -368,7 +361,7 @@ namespace DevPro_CardManager
         {
             if (File.Exists("pics//" + id + ".jpg"))
             {
-                using (FileStream stream = new FileStream("pics//" + id + ".jpg", FileMode.Open, FileAccess.Read))
+                using (var stream = new FileStream("pics//" + id + ".jpg", FileMode.Open, FileAccess.Read))
                 {
                     CardImg.Image = Image.FromStream(stream);
                 }
@@ -404,9 +397,9 @@ namespace DevPro_CardManager
             {
                 CategoryList.SetItemCheckState(i, CheckState.Unchecked);
             }
-            LoadedCard = 0;
+            _loadedCard = 0;
             CardImg.Image = Resources.unknown;
-            LoadedImage = "";
+            _loadedImage = "";
         }
 
         private void DeleteEffectbtn_Click(object sender, EventArgs e)
@@ -469,15 +462,13 @@ namespace DevPro_CardManager
 
         private int GetCardFormat()
         {
-            return (CardFormats.SelectedItem == null ? 0 : Formats[CardFormats.SelectedIndex]);
+            return (CardFormats.SelectedItem == null ? 0 : _formats[CardFormats.SelectedIndex]);
         }
 
         private int GetSetCode()
         {
-            int code = 0;
-            code = (this.SetCodeLst.SelectedIndex > 0) ? this.SetCodes[this.SetCodeLst.SelectedIndex] : 0;
-            code += ((this.OtherSetCodeLst.SelectedIndex > 0) ? this.SetCodes[this.OtherSetCodeLst.SelectedIndex] : 0) << 0x10;
-
+            int code = (SetCodeLst.SelectedIndex > 0) ? _setCodes[SetCodeLst.SelectedIndex] : 0;
+            code += ((OtherSetCodeLst.SelectedIndex > 0) ? _setCodes[OtherSetCodeLst.SelectedIndex] : 0) << 0x10;
             return code;
         }
 
@@ -533,7 +524,7 @@ namespace DevPro_CardManager
 
         private void SaveCardbtn_Click(object sender, EventArgs e)
         {
-            SaveCardtoCDB(cdbdir);//english
+            SaveCardtoCDB(Cdbdir);//english
             //SaveCardtoCDB(@"Language\\French\\cards.cdb");//French
             //SaveCardtoCDB(@"Language\\German\\cards.cdb");//German
             SaveImage(CardID.Text);
@@ -541,12 +532,10 @@ namespace DevPro_CardManager
 
         private void SaveCardtoCDB(string cdbpath)
         {
-            int updatecard = 0;
-            int cardid = 0;
-            int ot = 0;
-            int cardalias = 0;
-            int atk = 0;
-            int def = 0;
+            int cardid;
+            int cardalias;
+            int atk;
+            int def;
             bool overwrite = false;
 
 
@@ -556,10 +545,7 @@ namespace DevPro_CardManager
                 return;
             }
 
-            if (LoadedCard == 0)
-                updatecard = cardid;
-            else
-                updatecard = LoadedCard;
+            int updatecard = _loadedCard == 0 ? cardid : _loadedCard;
 
             if (!Int32.TryParse(Alias.Text, out cardalias))
             {
@@ -581,16 +567,16 @@ namespace DevPro_CardManager
             {
                 SQLiteConnection.CreateFile(cdbpath);
             }
-            SQLiteConnection connection = new SQLiteConnection("Data Source=" + str2);
+            var connection = new SQLiteConnection("Data Source=" + str2);
             connection.Open();
 
             //check if card id exsists
 
-            SQLiteCommand Checkcommand = DatabaseHelper.CreateCommand("SELECT COUNT(*) FROM datas WHERE id= @id", connection);
-            Checkcommand.Parameters.Add(new SQLiteParameter("@id", updatecard));
-            if (DatabaseHelper.ExecuteIntCommand(Checkcommand) == 1)
+            SQLiteCommand checkcommand = DatabaseHelper.CreateCommand("SELECT COUNT(*) FROM datas WHERE id= @id", connection);
+            checkcommand.Parameters.Add(new SQLiteParameter("@id", updatecard));
+            if (DatabaseHelper.ExecuteIntCommand(checkcommand) == 1)
             {
-                if (MessageBox.Show("Overwrite current card?", "Found", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                if (MessageBox.Show("Overwrite current card?", "Found", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     overwrite = true;
                 }
@@ -601,7 +587,7 @@ namespace DevPro_CardManager
             }
 
 
-            SQLiteCommand command = null;
+            SQLiteCommand command;
             if (overwrite)
             {
                 command = DatabaseHelper.CreateCommand("UPDATE datas" +
@@ -614,15 +600,15 @@ namespace DevPro_CardManager
             }
             command.Parameters.Add(new SQLiteParameter("@loadedid", updatecard));
             command.Parameters.Add(new SQLiteParameter("@id", cardid));
-            command.Parameters.Add(new SQLiteParameter("@ot", (CardFormats.SelectedItem == null ? ot : GetCardFormat())));
+            command.Parameters.Add(new SQLiteParameter("@ot", (CardFormats.SelectedItem == null ? 0 : GetCardFormat())));
             command.Parameters.Add(new SQLiteParameter("@alias", cardalias));
             command.Parameters.Add(new SQLiteParameter("@setcode", GetSetCode()));
             command.Parameters.Add(new SQLiteParameter("@type", GetTypeCode()));
             command.Parameters.Add(new SQLiteParameter("@atk", atk));
             command.Parameters.Add(new SQLiteParameter("@def", def));
             command.Parameters.Add(new SQLiteParameter("@level", (Level.SelectedItem == null ? 0 : Int32.Parse(Level.SelectedItem.ToString().Substring(1)))));
-            command.Parameters.Add(new SQLiteParameter("@race", (Race.SelectedItem == null ? 0 : (Race.SelectedItem == null ? 0 : CardRaces[Race.SelectedIndex]))));
-            command.Parameters.Add(new SQLiteParameter("@attribute", (CardAttribute.SelectedItem == null ? 0 : (CardAttribute.SelectedItem == null ? 0 : CardAttributes[CardAttribute.SelectedIndex]))));
+            command.Parameters.Add(new SQLiteParameter("@race", (Race.SelectedItem == null ? 0 : (Race.SelectedItem == null ? 0 : _cardRaces[Race.SelectedIndex]))));
+            command.Parameters.Add(new SQLiteParameter("@attribute", (CardAttribute.SelectedItem == null ? 0 : (CardAttribute.SelectedItem == null ? 0 : _cardAttributes[CardAttribute.SelectedIndex]))));
             command.Parameters.Add(new SQLiteParameter("@category", GetCategoryNumber()));
             DatabaseHelper.ExecuteNonCommand(command);
             if (overwrite)
@@ -639,7 +625,7 @@ namespace DevPro_CardManager
             command.Parameters.Add(new SQLiteParameter("@id", cardid));
             command.Parameters.Add(new SQLiteParameter("@name", CardName.Text));
             command.Parameters.Add(new SQLiteParameter("@des", CardDescription.Text));
-            List<SQLiteParameter> parameters = new List<SQLiteParameter>();
+            var parameters = new List<SQLiteParameter>();
             for (int i = 0; i < 16; i++)
             {
                 parameters.Add(new SQLiteParameter("@str" + (i + 1), (i < EffectList.Items.Count ? EffectList.Items[i].ToString() : string.Empty)));
@@ -651,16 +637,13 @@ namespace DevPro_CardManager
 
             if (Program.CardData.ContainsKey(cardid))
             {
-                Program.CardData[cardid] = new CardInfos(new string[] { cardid.ToString(), (CardFormats.SelectedItem == null ? ot.ToString() : GetCardFormat().ToString()),cardalias.ToString(),GetSetCode().ToString(),GetTypeCode().ToString(),
-                    (Level.SelectedItem == null ? "0" : Level.SelectedItem.ToString().Substring(1)), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : CardRaces[Race.SelectedIndex].ToString())),
-                (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : CardAttributes[CardAttribute.SelectedIndex].ToString())),atk.ToString(),def.ToString(),GetCategoryNumber().ToString()});
+                Program.CardData[cardid] = new CardInfos(new [] { cardid.ToString(CultureInfo.InvariantCulture), (CardFormats.SelectedItem == null ? "0" : GetCardFormat().ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
+                    (Level.SelectedItem == null ? "0" : Level.SelectedItem.ToString().Substring(1)), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : _cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
+                (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : _cardAttributes[CardAttribute.SelectedIndex].ToString(CultureInfo.InvariantCulture))),atk.ToString(CultureInfo.InvariantCulture),def.ToString(CultureInfo.InvariantCulture),GetCategoryNumber().ToString(CultureInfo.InvariantCulture)});
 
-                List<string> cardtextarray = new List<string>();
-                cardtextarray.Add(cardid.ToString());
-                cardtextarray.Add(CardName.Text);
-                cardtextarray.Add(CardDescription.Text);
+                var cardtextarray = new List<string> {cardid.ToString(CultureInfo.InvariantCulture), CardName.Text, CardDescription.Text};
 
-                for (int i = 0; i < 17; i++)
+                for (var i = 0; i < 17; i++)
                 {
                     cardtextarray.Add((i < EffectList.Items.Count ? EffectList.Items[i].ToString() : string.Empty));
                 }
@@ -669,14 +652,11 @@ namespace DevPro_CardManager
             }
             else
             {
-                Program.CardData.Add(cardid, new CardInfos(new string[] { cardid.ToString(), (CardFormats.SelectedItem == null ? ot.ToString() : GetCardFormat().ToString()),cardalias.ToString(),GetSetCode().ToString(),GetTypeCode().ToString(),
-                    (Level.SelectedItem == null ? "0" : Level.SelectedItem.ToString().Substring(1)), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : CardRaces[Race.SelectedIndex].ToString())),
-                (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : CardAttributes[CardAttribute.SelectedIndex].ToString())),atk.ToString(),def.ToString(),GetCategoryNumber().ToString()}));
+                Program.CardData.Add(cardid, new CardInfos(new [] { cardid.ToString(CultureInfo.InvariantCulture), (CardFormats.SelectedItem == null ? "0" : GetCardFormat().ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
+                    (Level.SelectedItem == null ? "0" : Level.SelectedItem.ToString().Substring(1)), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : _cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
+                (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : _cardAttributes[CardAttribute.SelectedIndex].ToString(CultureInfo.InvariantCulture))),atk.ToString(CultureInfo.InvariantCulture),def.ToString(CultureInfo.InvariantCulture),GetCategoryNumber().ToString(CultureInfo.InvariantCulture)}));
 
-                List<string> cardtextarray = new List<string>();
-                cardtextarray.Add(cardid.ToString());
-                cardtextarray.Add(CardName.Text);
-                cardtextarray.Add(CardDescription.Text);
+                var cardtextarray = new List<string> {cardid.ToString(CultureInfo.InvariantCulture), CardName.Text, CardDescription.Text};
 
                 for (int i = 0; i < 17; i++)
                 {
@@ -688,7 +668,7 @@ namespace DevPro_CardManager
         }
         public void SaveImage(string cardid)
         {
-            if (LoadedImage != "")
+            if (_loadedImage != "")
             {
                 // Save card image
                 ImageResizer.SaveImage(CardImg.Image,
@@ -701,17 +681,17 @@ namespace DevPro_CardManager
 
         private void LoadImageBtn_Click(object sender, EventArgs e)
         {
-            LoadedImage = "";
+            _loadedImage = "";
             string imagepath = ImageResizer.OpenFileWindow("Set Image ", "", "Images|*.jpg;*.jpeg;*.png;");
             if (imagepath != null)
             {
                 if (File.Exists(imagepath))
                 {
-                    using (FileStream stream = new FileStream(imagepath, FileMode.Open, FileAccess.Read))
+                    using (var stream = new FileStream(imagepath, FileMode.Open, FileAccess.Read))
                     {
                         CardImg.Image = Image.FromStream(stream);
                     }
-                    LoadedImage = imagepath;
+                    _loadedImage = imagepath;
                 }
                 else
                 {
@@ -722,7 +702,7 @@ namespace DevPro_CardManager
 
         private void DeleteBtn_Click(object sender, EventArgs e)
         {
-            int cardid = 0;
+            int cardid;
             Int32.TryParse(CardID.Text, out cardid);
 
             if (cardid == 0)
@@ -738,19 +718,19 @@ namespace DevPro_CardManager
             }
 
             string str = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
-            string str2 = Path.Combine(str, cdbdir);
+            string str2 = Path.Combine(str, Cdbdir);
             if (!File.Exists(str2))
             {
-                SQLiteConnection.CreateFile(cdbdir);
+                SQLiteConnection.CreateFile(Cdbdir);
             }
-            SQLiteConnection connection = new SQLiteConnection("Data Source=" + str2);
+            var connection = new SQLiteConnection("Data Source=" + str2);
             connection.Open();
 
-            SQLiteCommand Checkcommand = DatabaseHelper.CreateCommand("SELECT COUNT(*) FROM datas WHERE id= @id", connection);
-            Checkcommand.Parameters.Add(new SQLiteParameter("@id", cardid));
-            if (DatabaseHelper.ExecuteIntCommand(Checkcommand) == 1)
+            SQLiteCommand checkcommand = DatabaseHelper.CreateCommand("SELECT COUNT(*) FROM datas WHERE id= @id", connection);
+            checkcommand.Parameters.Add(new SQLiteParameter("@id", cardid));
+            if (DatabaseHelper.ExecuteIntCommand(checkcommand) == 1)
             {
-                if (MessageBox.Show("Are you sure you want to delete " + Program.CardData[cardid].Name + "?", "Found", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                if (MessageBox.Show("Are you sure you want to delete " + Program.CardData[cardid].Name + "?", "Found", MessageBoxButtons.YesNo) == DialogResult.No)
                 {
                     return;
                 }

@@ -1,7 +1,5 @@
-﻿namespace DevPro.Data.Enums
+﻿namespace DevPro_CardManager.Enums
 {
-    using System;
-
     public enum CardType
     {
         Continuous = 0x20000,

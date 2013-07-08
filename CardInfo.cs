@@ -1,17 +1,14 @@
-﻿namespace YGOPro_Launcher.CardDatabase
-{
-    using System;
-    using System.IO;
-    using System.Runtime.CompilerServices;
-    using System.Text;
-    using System.Windows.Forms;
-    using System.Collections.Generic;
-    using DevPro.Data.Enums;
+﻿using System.Linq;
+using DevPro_CardManager.Enums;
+using System;
+using System.Collections.Generic;
 
+namespace DevPro_CardManager
+{
     public class CardInfos: ICloneable
     {
 
-        public CardInfos(string[] carddata)
+        public CardInfos(IList<string> carddata)
         {
             Id = Int32.Parse(carddata[0]);
             Ot = Int32.Parse(carddata[1]);
@@ -30,9 +27,9 @@
         {
             Name = cardtext[1];
             Description = cardtext[2];
-            List<string> effects = new List<string>();
+            var effects = new List<string>();
 
-            for (int i = 3; i < cardtext.Length; i++)
+            for (var i = 3; i < cardtext.Length; i++)
             {
                 if(cardtext[i] != "")
                     effects.Add(cardtext[i]);
@@ -43,44 +40,19 @@
 
         public CardType[] GetCardTypes()
         {
-            List<CardType> types = new List<CardType>();
             var typeArray = Enum.GetValues(typeof(CardType));
-            foreach (CardType type in typeArray)
-            {
-                if (((this.Type & (int)type) != 0))
-                {
-                    types.Add(type);
-                }
-            }
-            return types.ToArray();
+            return typeArray.Cast<CardType>().Where(type => ((Type & (int) type) != 0)).ToArray();
         }
 
-        public static CardType[] GetCardTypes(int Type)
-        {
-            List<CardType> types = new List<CardType>();
-            var typeArray = Enum.GetValues(typeof(CardType));
-            foreach (CardType type in typeArray)
-            {
-                if (((Type & (int)type) != 0))
-                {
-                    types.Add(type);
-                }
-            }
-            return types.ToArray();
-        }
         public int[] GetCardSets(List<int>setArray)
         {
-            List<int> sets = new List<int>();
-
-            sets.Add(setArray.IndexOf(SetCode & 0xffff));
-            sets.Add(setArray.IndexOf(SetCode >> 0x10));
-
+            var sets = new List<int> {setArray.IndexOf(SetCode & 0xffff), setArray.IndexOf(SetCode >> 0x10)};
             return sets.ToArray();
         }
 
         public object Clone()
         {
-            return  (CardInfos)this.MemberwiseClone();
+            return  MemberwiseClone();
         }
 
         public int AliasId { get; set; }
