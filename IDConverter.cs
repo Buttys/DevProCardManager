@@ -26,6 +26,17 @@ namespace DevPro_CardManager
             NewId.Leave += NewIDInput_Leave;
 
             UpdateCardsList.DrawItem += NewIDList_DrawItem;
+            UpdateCardsList.KeyDown += DeleteItem;
+        }
+
+        private void DeleteItem(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            {
+                var list = (ListBox)sender;
+                if (list.SelectedIndex != -1)
+                    list.Items.RemoveAt(list.SelectedIndex);
+            }
         }
 
         private void AddButton_Click(object sender, EventArgs e)
@@ -154,9 +165,10 @@ namespace DevPro_CardManager
                 }
 
                 Program.CardData.RenameKey(Convert.ToInt32(updateCard[0]), Convert.ToInt32(updateCard[1]));
-                UpdateCardsList.Items.Clear();
-                MessageBox.Show("Complete.");
-            }
+
+            }                
+            UpdateCardsList.Items.Clear();
+            MessageBox.Show("Complete.");
         }
 
         #region Form Desgin
