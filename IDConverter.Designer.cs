@@ -36,7 +36,7 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
-            this.scriptchk = new System.Windows.Forms.CheckBox();
+            this.patchchk = new System.Windows.Forms.CheckBox();
             this.imagechk = new System.Windows.Forms.CheckBox();
             this.cdbchk = new System.Windows.Forms.CheckBox();
             this.UpdateCardsList = new System.Windows.Forms.ListBox();
@@ -46,6 +46,7 @@
             this.SearchBox = new DevPro_CardManager.Components.SearchBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.ConvertButton = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel8.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -151,7 +152,8 @@
             this.tableLayoutPanel9.ColumnCount = 2;
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel9.Controls.Add(this.scriptchk, 0, 1);
+            this.tableLayoutPanel9.Controls.Add(this.checkBox1, 0, 1);
+            this.tableLayoutPanel9.Controls.Add(this.patchchk, 0, 1);
             this.tableLayoutPanel9.Controls.Add(this.imagechk, 0, 0);
             this.tableLayoutPanel9.Controls.Add(this.cdbchk, 1, 0);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -163,18 +165,18 @@
             this.tableLayoutPanel9.Size = new System.Drawing.Size(337, 46);
             this.tableLayoutPanel9.TabIndex = 0;
             // 
-            // scriptchk
+            // patchchk
             // 
-            this.scriptchk.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.scriptchk.AutoSize = true;
-            this.scriptchk.Checked = true;
-            this.scriptchk.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.scriptchk.Location = new System.Drawing.Point(55, 29);
-            this.scriptchk.Name = "scriptchk";
-            this.scriptchk.Size = new System.Drawing.Size(58, 17);
-            this.scriptchk.TabIndex = 1;
-            this.scriptchk.Text = "Scripts";
-            this.scriptchk.UseVisualStyleBackColor = true;
+            this.patchchk.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.patchchk.AutoSize = true;
+            this.patchchk.Checked = true;
+            this.patchchk.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.patchchk.Location = new System.Drawing.Point(208, 29);
+            this.patchchk.Name = "patchchk";
+            this.patchchk.Size = new System.Drawing.Size(88, 17);
+            this.patchchk.TabIndex = 1;
+            this.patchchk.Text = "Create Patch";
+            this.patchchk.UseVisualStyleBackColor = true;
             // 
             // imagechk
             // 
@@ -283,6 +285,19 @@
             this.ConvertButton.UseVisualStyleBackColor = true;
             this.ConvertButton.Click += new System.EventHandler(this.ConvertButton_Click);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(55, 29);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(58, 17);
+            this.checkBox1.TabIndex = 3;
+            this.checkBox1.Text = "Scripts";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // IDConverter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -320,7 +335,7 @@
         private System.Windows.Forms.ListBox UpdateCardsList;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
-        private System.Windows.Forms.CheckBox scriptchk;
+        private System.Windows.Forms.CheckBox patchchk;
         private System.Windows.Forms.CheckBox imagechk;
         private System.Windows.Forms.CheckBox cdbchk;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
@@ -328,5 +343,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Button AddButton;
         private Components.SearchBox SearchBox;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

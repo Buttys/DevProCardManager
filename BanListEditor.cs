@@ -43,11 +43,11 @@ namespace DevPro_CardManager
 
         }
 
-        Dictionary<string, List<BanListCard>> _banlists;
+        Dictionary<string, List<BanListCard>> m_banlists;
 
         private void LoadBanList()
         {
-            _banlists = new Dictionary<string, List<BanListCard>>();
+            m_banlists = new Dictionary<string, List<BanListCard>>();
             if (!File.Exists("lflist.conf"))
                 return;
 
@@ -71,17 +71,17 @@ namespace DevPro_CardManager
                         continue;
 
 
-                    if (!_banlists.ContainsKey(BanList.Items[BanList.Items.Count - 1].ToString()))
+                    if (!m_banlists.ContainsKey(BanList.Items[BanList.Items.Count - 1].ToString()))
                     {
                         
-                        _banlists.Add(BanList.Items[BanList.Items.Count - 1].ToString(), new List<BanListCard>());
-                        _banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(
+                        m_banlists.Add(BanList.Items[BanList.Items.Count - 1].ToString(), new List<BanListCard>());
+                        m_banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(
                             new BanListCard { ID = Int32.Parse(parts[0]), Banvalue = Int32.Parse(parts[1]), Name = Program.CardData[Int32.Parse(parts[0])].Name });
                     }
                     else
                     {
-                        if (!_banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Exists(banListCard => banListCard.ID == Int32.Parse(parts[0])))
-                            _banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(
+                        if (!m_banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Exists(banListCard => banListCard.ID == Int32.Parse(parts[0])))
+                            m_banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(
                                 new BanListCard { ID = Int32.Parse(parts[0]), Banvalue = Int32.Parse(parts[1]), Name = Program.CardData[Int32.Parse(parts[0])].Name });
                     }
                 }
@@ -99,9 +99,9 @@ namespace DevPro_CardManager
                     writer.WriteLine("!{0}", t);
                     try
                     {
-                        var forbidden = _banlists[t.ToString()].FindAll(x => x.Banvalue == 0);
-                        var limited = _banlists[t.ToString()].FindAll(x => x.Banvalue == 1);
-                        var semiLimited = _banlists[t.ToString()].FindAll(x => x.Banvalue == 2);
+                        var forbidden = m_banlists[t.ToString()].FindAll(x => x.Banvalue == 0);
+                        var limited = m_banlists[t.ToString()].FindAll(x => x.Banvalue == 1);
+                        var semiLimited = m_banlists[t.ToString()].FindAll(x => x.Banvalue == 2);
 
                         writer.WriteLine("#forbidden");
                         foreach (var banListCard in forbidden)
@@ -178,9 +178,9 @@ namespace DevPro_CardManager
             BannedList.Items.Clear();
             LimitedList.Items.Clear();
             SemiLimitedList.Items.Clear();
-            if (_banlists.ContainsKey(BanList.SelectedItem.ToString()))
+            if (m_banlists.ContainsKey(BanList.SelectedItem.ToString()))
             {
-                foreach (BanListCard card in _banlists[BanList.SelectedItem.ToString()])
+                foreach (BanListCard card in m_banlists[BanList.SelectedItem.ToString()])
                 {
                     if (card.Banvalue == 0)
                         BannedList.Items.Add(card.ID);
@@ -204,14 +204,19 @@ namespace DevPro_CardManager
             {
                 string text = list.Items[index].ToString();
                 Graphics g = e.Graphics;
+                if (!Program.CardData.ContainsKey(Int32.Parse(text)))
+                    list.Items.Remove(text);
+                else
+                {
+                    CardInfos card = Program.CardData[Int32.Parse(text)];
 
-                CardInfos card = Program.CardData[Int32.Parse(text)];
+                    g.FillRectangle((selected) ? new SolidBrush(Color.Blue) : new SolidBrush(Color.White), e.Bounds);
 
-                g.FillRectangle((selected) ? new SolidBrush(Color.Blue) : new SolidBrush(Color.White), e.Bounds);
-
-                // Print text
-                g.DrawString((card.Name == "" ? card.Id.ToString(CultureInfo.InvariantCulture) : card.Name), e.Font, (selected) ? Brushes.White : Brushes.Black,
-                    list.GetItemRectangle(index).Location);
+                    // Print text
+                    g.DrawString((card.Name == "" ? card.Id.ToString(CultureInfo.InvariantCulture) : card.Name), e.Font,
+                                 (selected) ? Brushes.White : Brushes.Black,
+                                 list.GetItemRectangle(index).Location);
+                }
             }
 
             e.DrawFocusRectangle();
@@ -225,7 +230,7 @@ namespace DevPro_CardManager
                     if (!BannedList.Items.Contains(id))
                     {
                         BannedList.Items.Add(id);
-                        _banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(
+                        m_banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(
                             new BanListCard { ID = id, Banvalue = 0, Name = Program.CardData[id].Name });
                     }
             }
@@ -241,7 +246,7 @@ namespace DevPro_CardManager
             BannedList.Items.Clear();
             LimitedList.Items.Clear();
             SemiLimitedList.Items.Clear();
-            _banlists[BanList.SelectedItem.ToString()].Clear();
+            m_banlists[BanList.SelectedItem.ToString()].Clear();
         }
         private void BanListInput_Enter(object sender, EventArgs e)
         {
@@ -267,13 +272,13 @@ namespace DevPro_CardManager
                 if (string.IsNullOrEmpty(BanListInput.Text))
                     return;
 
-                if (_banlists.ContainsKey(BanListInput.Text))
+                if (m_banlists.ContainsKey(BanListInput.Text))
                 {
                     BanList.SelectedItem = BanListInput.Text;
                     return;
                 }
 
-                _banlists.Add(BanListInput.Text,new List<BanListCard>());
+                m_banlists.Add(BanListInput.Text,new List<BanListCard>());
                 BanList.Items.Add(BanListInput.Text);
                 BanList.SelectedItem = BanListInput.Text;
                 BanListInput.Clear();

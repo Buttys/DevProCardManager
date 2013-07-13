@@ -68,9 +68,21 @@ namespace DevPro_CardManager
         private void ConvertButton_Click(object sender, EventArgs e)
         {
             bool updateCdb = cdbchk.Checked;
-            bool updateScript = scriptchk.Checked;
+            bool updateScript = patchchk.Checked;
             bool updateImage = imagechk.Checked;
             List<string[]> updateCards = UpdateCardsList.Items.OfType<string[]>().ToList();
+
+            if (patchchk.Checked)
+            {
+                if (!Directory.Exists("DevPatch"))
+                    Directory.CreateDirectory("DevPatch");
+                if (!Directory.Exists("DevPatch\\script"))
+                    Directory.CreateDirectory("DevPatch\\script");
+                if (!Directory.Exists("DevPatch\\pics"))
+                    Directory.CreateDirectory("DevPatch\\pics");
+                if (!Directory.Exists("DevPatch\\pics\\thumbnail"))
+                    Directory.CreateDirectory("DevPatch\\pics\\thumbnail");
+            }
 
             foreach (var updateCard in updateCards)
             {
@@ -90,19 +102,34 @@ namespace DevPro_CardManager
                     SQLiteCommands.UpdateCardId(updateCard[0], updateCard[1], connection);
 
                     connection.Close();
+
+                    if(patchchk.Checked)
+                        File.Copy(str2, "DevPatch\\cards.cdb",true);
+
                 }
 
                 if (updateImage)
                 {
                     string mainDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
                     const string picFolderName = "pics";
+                    const string tumbnailFolderName = "pics\\thumbnail";
                     string picName = updateCard[0] + ".jpg";
                     string newPicName = updateCard[1] + ".jpg";
 
                     string imagePath = Path.Combine(mainDir, picFolderName, picName);
                     string newImagePath = Path.Combine(mainDir, picFolderName, newPicName);
+                    string thumbnailImagePath = Path.Combine(mainDir, tumbnailFolderName, picName);
+                    string newthumbnailImagePath = Path.Combine(mainDir, tumbnailFolderName, newPicName);
 
-                    File.Move(imagePath, newImagePath);
+                    if (File.Exists(imagePath) && !File.Exists(newImagePath))
+                        File.Move(imagePath, newImagePath);
+                    if (File.Exists(thumbnailImagePath) && !File.Exists(newthumbnailImagePath))
+                        File.Move(thumbnailImagePath, newthumbnailImagePath);
+                    if (patchchk.Checked)
+                    {
+                        File.Copy(newImagePath, Path.Combine("DevPatch\\pics", newPicName), true);
+                        File.Copy(newthumbnailImagePath, Path.Combine("DevPatch\\pics\\thumbnail", newPicName), true);
+                    }
                 }
 
                 if (updateScript)
@@ -121,6 +148,9 @@ namespace DevPro_CardManager
                     string scriptFile = File.ReadAllText(newScriptPath);
                     scriptFile = scriptFile.Replace(updateCard[0], updateCard[1]);
                     File.WriteAllText(newScriptPath, scriptFile);
+
+                    if(patchchk.Checked)
+                        File.Copy(newScriptPath, Path.Combine("DevPatch\\script", newScriptName), true);
                 }
 
                 Program.CardData.RenameKey(Convert.ToInt32(updateCard[0]), Convert.ToInt32(updateCard[1]));
