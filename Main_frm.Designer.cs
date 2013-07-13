@@ -31,18 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fromsqlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cdbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sqlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cdbToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TabControl = new System.Windows.Forms.TabControl();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.loadToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,65 +51,10 @@
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadToolStripMenuItem1,
-            this.toolStripSeparator2,
-            this.importToolStripMenuItem,
-            this.exportToolStripMenuItem,
-            this.toolStripSeparator1,
             this.closeToolStripMenuItem});
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             this.loadToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.loadToolStripMenuItem.Text = "File";
-            // 
-            // importToolStripMenuItem
-            // 
-            this.importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fromsqlToolStripMenuItem,
-            this.cdbToolStripMenuItem});
-            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.importToolStripMenuItem.Text = "Import";
-            // 
-            // fromsqlToolStripMenuItem
-            // 
-            this.fromsqlToolStripMenuItem.Name = "fromsqlToolStripMenuItem";
-            this.fromsqlToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
-            this.fromsqlToolStripMenuItem.Text = ".sql";
-            this.fromsqlToolStripMenuItem.Click += new System.EventHandler(this.ImportSQL_Click);
-            // 
-            // cdbToolStripMenuItem
-            // 
-            this.cdbToolStripMenuItem.Name = "cdbToolStripMenuItem";
-            this.cdbToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
-            this.cdbToolStripMenuItem.Text = "cdb";
-            this.cdbToolStripMenuItem.Click += new System.EventHandler(this.ImportCBD_Click);
-            // 
-            // exportToolStripMenuItem
-            // 
-            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sqlToolStripMenuItem,
-            this.cdbToolStripMenuItem1});
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exportToolStripMenuItem.Text = "Export";
-            // 
-            // sqlToolStripMenuItem
-            // 
-            this.sqlToolStripMenuItem.Name = "sqlToolStripMenuItem";
-            this.sqlToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
-            this.sqlToolStripMenuItem.Text = ".sql";
-            this.sqlToolStripMenuItem.Click += new System.EventHandler(this.ExportToSql_Click);
-            // 
-            // cdbToolStripMenuItem1
-            // 
-            this.cdbToolStripMenuItem1.Name = "cdbToolStripMenuItem1";
-            this.cdbToolStripMenuItem1.Size = new System.Drawing.Size(94, 22);
-            this.cdbToolStripMenuItem1.Text = "cdb";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // closeToolStripMenuItem
             // 
@@ -143,18 +79,7 @@
             this.TabControl.Size = new System.Drawing.Size(794, 586);
             this.TabControl.TabIndex = 1;
             // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
-            // 
-            // loadToolStripMenuItem1
-            // 
-            this.loadToolStripMenuItem1.Name = "loadToolStripMenuItem1";
-            this.loadToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.loadToolStripMenuItem1.Text = "Load";
-            // 
-            // Main_frm
+            // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -166,7 +91,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainFrm";
-            this.Text = "DevPro CardManager";
+            this.Text = "YGOPro CardManager v1.1";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -181,15 +106,6 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.TabControl TabControl;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fromsqlToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cdbToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sqlToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cdbToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 
     }
 }

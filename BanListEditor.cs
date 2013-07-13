@@ -41,6 +41,11 @@ namespace DevPro_CardManager
             BanListInput.Leave += BanListInput_Leave;
             BanListInput.KeyDown += BanListInput_KeyDown;
 
+            LimitedList.KeyDown += DeleteItem;
+            SemiLimitedList.KeyDown += DeleteItem;
+            BannedList.KeyDown += DeleteItem;
+            BanList.KeyDown += DeleteBanList;
+
         }
 
         Dictionary<string, List<BanListCard>> m_banlists;
@@ -282,6 +287,30 @@ namespace DevPro_CardManager
                 BanList.Items.Add(BanListInput.Text);
                 BanList.SelectedItem = BanListInput.Text;
                 BanListInput.Clear();
+            }
+        }
+
+        private void DeleteItem(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            {
+                var list = (ListBox) sender;
+                if(list.SelectedIndex != -1)
+                    list.Items.RemoveAt(list.SelectedIndex);
+            }
+        }
+
+        private void DeleteBanList(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            {
+                var list = (ListBox)sender;
+                if (list.SelectedIndex != -1)
+                {
+                    Clearbtn_Click(null,null);
+                    m_banlists.Remove(list.SelectedItem.ToString());
+                    list.Items.RemoveAt(list.SelectedIndex);
+                }
             }
         }
     }
