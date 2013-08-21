@@ -245,12 +245,14 @@ namespace DevPro_CardManager
             foreach (int id in Program.CardData.Keys)
             {
                 if (Program.CardData[id].Ot == 4)
-                    if (!BannedList.Items.Contains(id))
+                {
+                    if (GetBanListCard(id) == null)
                     {
                         BanListCard card = new BanListCard {ID = id, Banvalue = 0, Name = Program.CardData[id].Name};
                         BannedList.Items.Add(card);
-                        m_banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(card);
+                        m_banlists[BanList.SelectedItem.ToString()].Add(card);
                     }
+                }
             }
         }
 
