@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Globalization;
 using System.Windows.Forms;
 using System.IO;
+using Enumerable = System.Linq.Enumerable;
 
 namespace DevPro_CardManager
 {
@@ -75,19 +75,17 @@ namespace DevPro_CardManager
                     if (Program.CardData[Int32.Parse(parts[0])].Name == "")
                         continue;
 
-
+                    BanListCard card = new BanListCard { ID = Int32.Parse(parts[0]), Banvalue = Int32.Parse(parts[1]), Name = Program.CardData[Int32.Parse(parts[0])].Name };
                     if (!m_banlists.ContainsKey(BanList.Items[BanList.Items.Count - 1].ToString()))
                     {
                         
                         m_banlists.Add(BanList.Items[BanList.Items.Count - 1].ToString(), new List<BanListCard>());
-                        m_banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(
-                            new BanListCard { ID = Int32.Parse(parts[0]), Banvalue = Int32.Parse(parts[1]), Name = Program.CardData[Int32.Parse(parts[0])].Name });
+                        m_banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(card);
                     }
                     else
                     {
                         if (!m_banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Exists(banListCard => banListCard.ID == Int32.Parse(parts[0])))
-                            m_banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(
-                                new BanListCard { ID = Int32.Parse(parts[0]), Banvalue = Int32.Parse(parts[1]), Name = Program.CardData[Int32.Parse(parts[0])].Name });
+                            m_banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(card);
                     }
                 }
             }
@@ -156,26 +154,43 @@ namespace DevPro_CardManager
             int indexOfItemUnderMouseToDrop = list.IndexFromPoint(list.PointToClient(new Point(e.X, e.Y)));
             if (e.Data.GetDataPresent(DataFormats.StringFormat))
             {
-                if (!BannedList.Items.Contains(e.Data.GetData(DataFormats.Text)) && !LimitedList.Items.Contains(e.Data.GetData(DataFormats.Text))
-                        && !SemiLimitedList.Items.Contains(e.Data.GetData(DataFormats.Text)))
+                int id = Int32.Parse(e.Data.GetData(DataFormats.Text).ToString());
+                CardInfos cardinfo = Program.CardData[id];
+                BanListCard bancard = new BanListCard() { ID = id, Name = cardinfo.Name, Banvalue = (list == BannedList ? 0:list == LimitedList ? 1:2)};
+
+
+                if (GetBanListCard(id) == null)
                 {
                     if (indexOfItemUnderMouseToDrop >= 0 && indexOfItemUnderMouseToDrop < list.Items.Count)
-                        list.Items.Insert(indexOfItemUnderMouseToDrop, e.Data.GetData(DataFormats.Text));
+                        list.Items.Insert(indexOfItemUnderMouseToDrop, bancard);
                     else
-                        list.Items.Add(e.Data.GetData(DataFormats.Text));
+                        list.Items.Add(bancard);
+
+                    m_banlists[BanList.SelectedItem.ToString()].Add(bancard);
                 }
                 else
                 {
-                    int cardid = Int32.Parse((string)e.Data.GetData(DataFormats.Text));
-                    if (BannedList.Items.Contains(e.Data.GetData(DataFormats.Text)))
-                        MessageBox.Show(Program.CardData[cardid].Name + " is already contained in the Banned list.");
-                    else if (LimitedList.Items.Contains(e.Data.GetData(DataFormats.Text)))
-                        MessageBox.Show(Program.CardData[cardid].Name + " is already contained in the Limited list.");
-                    else if (SemiLimitedList.Items.Contains(e.Data.GetData(DataFormats.Text)))
-                        MessageBox.Show(Program.CardData[cardid].Name + " is already contained in the SemiLimited list.");
+                    BanListCard foundcard = GetBanListCard(id);
+
+                    if (foundcard.Banvalue == 0)
+                        MessageBox.Show(foundcard.Name + " is already contained in the Banned list.");
+                    else if (foundcard.Banvalue == 1)
+                        MessageBox.Show(foundcard.Name + " is already contained in the Limited list.");
+                    else if (foundcard.Banvalue == 2)
+                        MessageBox.Show(foundcard.Name + " is already contained in the SemiLimited list.");
                 }
             }
-        } 
+        }
+ 
+        private BanListCard GetBanListCard(int id)
+        {
+            foreach (BanListCard card in m_banlists[BanList.SelectedItem.ToString()])
+            {
+                if (card.ID == id)
+                    return card;
+            }
+            return null;
+        }
 
         private void BanList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -188,11 +203,11 @@ namespace DevPro_CardManager
                 foreach (BanListCard card in m_banlists[BanList.SelectedItem.ToString()])
                 {
                     if (card.Banvalue == 0)
-                        BannedList.Items.Add(card.ID);
+                        BannedList.Items.Add(card);
                     else if (card.Banvalue == 1)
-                        LimitedList.Items.Add(card.ID);
+                        LimitedList.Items.Add(card);
                     else if (card.Banvalue == 2)
-                        SemiLimitedList.Items.Add(card.ID);
+                        SemiLimitedList.Items.Add(card);
                 }
             }
         }
@@ -207,18 +222,16 @@ namespace DevPro_CardManager
             int index = e.Index;
             if (index >= 0 && index < list.Items.Count)
             {
-                string text = list.Items[index].ToString();
+                BanListCard card = (BanListCard)list.Items[index];
                 Graphics g = e.Graphics;
-                if (!Program.CardData.ContainsKey(Int32.Parse(text)))
-                    list.Items.Remove(text);
+                if (!Program.CardData.ContainsKey(card.ID))
+                    list.Items.Remove(card);
                 else
                 {
-                    CardInfos card = Program.CardData[Int32.Parse(text)];
-
                     g.FillRectangle((selected) ? new SolidBrush(Color.Blue) : new SolidBrush(Color.White), e.Bounds);
 
                     // Print text
-                    g.DrawString((card.Name == "" ? card.Id.ToString(CultureInfo.InvariantCulture) : card.Name), e.Font,
+                    g.DrawString((card.Name == "" ? card.ID.ToString() : card.Name), e.Font,
                                  (selected) ? Brushes.White : Brushes.Black,
                                  list.GetItemRectangle(index).Location);
                 }
@@ -234,9 +247,9 @@ namespace DevPro_CardManager
                 if (Program.CardData[id].Ot == 4)
                     if (!BannedList.Items.Contains(id))
                     {
-                        BannedList.Items.Add(id);
-                        m_banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(
-                            new BanListCard { ID = id, Banvalue = 0, Name = Program.CardData[id].Name });
+                        BanListCard card = new BanListCard {ID = id, Banvalue = 0, Name = Program.CardData[id].Name};
+                        BannedList.Items.Add(card);
+                        m_banlists[BanList.Items[BanList.Items.Count - 1].ToString()].Add(card);
                     }
             }
         }
@@ -295,8 +308,13 @@ namespace DevPro_CardManager
             if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
                 var list = (ListBox) sender;
-                if(list.SelectedIndex != -1)
-                    list.Items.RemoveAt(list.SelectedIndex);
+                if (list.SelectedIndex != -1)
+                {
+                    BanListCard card = (BanListCard)list.SelectedItem;
+                    m_banlists[BanList.SelectedItem.ToString()].Remove(card);
+                    list.Items.Remove(card);
+                    
+                }
             }
         }
 
