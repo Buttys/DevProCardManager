@@ -296,7 +296,7 @@ namespace DevPro_CardManager
             int selectedIndex = 0;
             int num2 = 1;
             int num3 = 0;
-            while (num3 < 0x20)
+            while (num3 < CategoryList.Items.Count)
             {
                 if (CategoryList.GetItemCheckState(num3) == CheckState.Checked)
                 {
@@ -313,7 +313,7 @@ namespace DevPro_CardManager
         {
             int index = 0;
             int num;
-            for (num = 1; index < 0x20; num = num << 1)
+            for (num = 1; index < CategoryList.Items.Count; num = num << 1)
             {
                 CategoryList.SetItemCheckState(index,
                                                     (num & categorynumber) != 0L
