@@ -16,7 +16,7 @@ namespace DevPro_CardManager
     {
         private const string Cdbdir = @"cards.cdb";
         string m_loadedImage = "";
-        List<int> m_setCodes;
+        Dictionary<int,string> m_setCodes;
         List<int> m_formats;
         List<int> m_cardRaces;
         List<int> m_cardAttributes;
@@ -43,16 +43,13 @@ namespace DevPro_CardManager
                 Level.Items.Add("★" + i);
             }
             LoadSetCodesFromFile("Assets\\setname.txt");
-// ReSharper disable CoVariantArrayConversion
             CardTypeList.Items.AddRange(Enum.GetNames(typeof(CardType)));
-// ReSharper restore CoVariantArrayConversion
-
-
         }
 
         private void LoadSetCodesFromFile(string filedir)
         {
-            m_setCodes = new List<int>();
+            m_setCodes = new Dictionary<int,string>();
+            List<string> setnames = new List<string>();
 
             if (!File.Exists(filedir))
             {
@@ -67,11 +64,17 @@ namespace DevPro_CardManager
                 string[] parts = line.Split(' ');
                 if (parts.Length == 1) continue;
                 string setname = line.Substring(parts[0].Length, line.Length - parts[0].Length).Trim();
-                SetCodeLst.Items.Add(setname);
-                OtherSetCodeLst.Items.Add(setname);
-                m_setCodes.Add(Convert.ToInt32(parts[0], 16));
+                int setcode = Convert.ToInt32(parts[0], 16);
 
+                if (!m_setCodes.ContainsKey(setcode))
+                {
+                    setnames.Add(setname);
+                    m_setCodes.Add(setcode, setname);
+                }
             }
+            setnames.Sort();
+            SetCodeLst.Items.AddRange(setnames.ToArray());
+            OtherSetCodeLst.Items.AddRange(setnames.ToArray());
         }
 
         private void LoadCardFormatsFromFile(string filedir)
@@ -189,10 +192,12 @@ namespace DevPro_CardManager
                 EffectList.Items.Add(effect);
             SetCardTypes(info.GetCardTypes());
 
-            int index = m_setCodes.IndexOf(info.SetCode & 0xffff);
-            SetCodeLst.SelectedIndex = index;
-            index = m_setCodes.IndexOf(info.SetCode >> 0x10);
-            OtherSetCodeLst.SelectedIndex = index;
+            int setcode = info.SetCode & 0xffff;
+            if (m_setCodes.ContainsKey(setcode))
+                SetCodeLst.SelectedItem = m_setCodes[setcode];
+            setcode = info.SetCode >> 16;
+            if (m_setCodes.ContainsKey(setcode))
+                OtherSetCodeLst.SelectedItem = m_setCodes[setcode];
 
             SetCategoryCheckBoxs(info.Category);
 
@@ -468,9 +473,17 @@ namespace DevPro_CardManager
 
         private int GetSetCode()
         {
-            int code = (SetCodeLst.SelectedIndex > 0) ? m_setCodes[SetCodeLst.SelectedIndex] : 0;
-            code += ((OtherSetCodeLst.SelectedIndex > 0) ? m_setCodes[OtherSetCodeLst.SelectedIndex] : 0) << 0x10;
+            int code = (SetCodeLst.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeLst.SelectedItem.ToString()) : 0;
+            code += ((OtherSetCodeLst.SelectedIndex > 0) ? GetSetCodeFromString(OtherSetCodeLst.SelectedItem.ToString()) : 0) << 0x10;
             return code;
+        }
+
+        private int GetSetCodeFromString(string name)
+        {
+            foreach(var item in m_setCodes)
+                if(item.Value == name)
+                    return item.Key;
+            return 0;
         }
 
         private int GetTypeCode()
