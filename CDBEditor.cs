@@ -452,7 +452,7 @@ namespace DevPro_CardManager
 
         private void AddEffectbtn_Click(object sender, EventArgs e)
         {
-            if (EffectInput.Text == "")
+            if (string.IsNullOrEmpty(EffectInput.Text))
                 return;
             if (EffectList.Items.Count == 16)
             {
