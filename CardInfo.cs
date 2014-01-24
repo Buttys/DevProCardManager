@@ -13,7 +13,7 @@ namespace DevPro_CardManager
             Id = Int32.Parse(carddata[0]);
             Ot = Int32.Parse(carddata[1]);
             AliasId = Int32.Parse(carddata[2]);
-            SetCode = Int32.Parse(carddata[3]);
+            SetCode = Int64.Parse(carddata[3]);
             Type = Int32.Parse(carddata[4]);
             Level = Int32.Parse(carddata[5]);
             Race = Int32.Parse(carddata[6]);
@@ -44,11 +44,11 @@ namespace DevPro_CardManager
             return typeArray.Cast<CardType>().Where(type => ((Type & (int) type) != 0)).ToArray();
         }
 
-        public int[] GetCardSets(List<int>setArray)
-        {
-            var sets = new List<int> {setArray.IndexOf(SetCode & 0xffff), setArray.IndexOf(SetCode >> 0x10)};
-            return sets.ToArray();
-        }
+        //public int[] GetCardSets(List<int>setArray)
+        //{
+        //    var sets = new List<int> {setArray.IndexOf(SetCode & 0xffff), setArray.IndexOf(SetCode >> 0x10)};
+        //    return sets.ToArray();
+        //}
 
         public object Clone()
         {
@@ -81,7 +81,7 @@ namespace DevPro_CardManager
 
         public string[] EffectStrings { get; set; }
 
-        public int SetCode { get; set; }
+        public Int64 SetCode { get; set; }
 
     }
 }

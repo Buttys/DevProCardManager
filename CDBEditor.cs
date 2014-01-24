@@ -75,6 +75,7 @@ namespace DevPro_CardManager
             setnames.Sort();
             SetCodeLst.Items.AddRange(setnames.ToArray());
             OtherSetCodeLst.Items.AddRange(setnames.ToArray());
+            OtherSetCodeTwolst.Items.AddRange(setnames.ToArray());
         }
 
         private void LoadCardFormatsFromFile(string filedir)
@@ -192,12 +193,16 @@ namespace DevPro_CardManager
                 EffectList.Items.Add(effect);
             SetCardTypes(info.GetCardTypes());
 
-            int setcode = info.SetCode & 0xffff;
+            int setcode = (int)(info.SetCode & 0xffff);
             if (m_setCodes.ContainsKey(setcode))
                 SetCodeLst.SelectedItem = m_setCodes[setcode];
-            setcode = info.SetCode >> 16;
+            setcode = (int)(info.SetCode >> 16);
             if (m_setCodes.ContainsKey(setcode))
                 OtherSetCodeLst.SelectedItem = m_setCodes[setcode];
+            setcode = (int)(info.SetCode >> 32);
+            if (m_setCodes.ContainsKey(setcode))
+                OtherSetCodeTwolst.SelectedItem = m_setCodes[setcode];
+
 
             SetCategoryCheckBoxs(info.Category);
 
@@ -471,10 +476,13 @@ namespace DevPro_CardManager
             return (CardFormats.SelectedItem == null ? 0 : m_formats[CardFormats.SelectedIndex]);
         }
 
-        private int GetSetCode()
+        private long GetSetCode()
         {
-            int code = (SetCodeLst.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeLst.SelectedItem.ToString()) : 0;
-            code += ((OtherSetCodeLst.SelectedIndex > 0) ? GetSetCodeFromString(OtherSetCodeLst.SelectedItem.ToString()) : 0) << 0x10;
+            long code = 0;
+            code += (SetCodeLst.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeLst.SelectedItem.ToString()) : 0;
+            code += ((OtherSetCodeLst.SelectedIndex > 0) ? GetSetCodeFromString(OtherSetCodeLst.SelectedItem.ToString()) : 0) << 48;
+            code += ((OtherSetCodeTwolst.SelectedIndex > 0) ? GetSetCodeFromString(OtherSetCodeTwolst.SelectedItem.ToString()) : 0) << 32;
+            //code += 0 << 16;
             return code;
         }
 
