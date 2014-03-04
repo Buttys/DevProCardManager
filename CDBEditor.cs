@@ -42,7 +42,7 @@ namespace DevPro_CardManager
             {
                 Level.Items.Add("★" + i);
             }
-            LoadSetCodesFromFile("Assets\\setname.txt");
+            LoadSetCodesFromFile("strings.conf");
             CardTypeList.Items.AddRange(Enum.GetNames(typeof(CardType)));
         }
 
@@ -59,12 +59,14 @@ namespace DevPro_CardManager
             var reader = new StreamReader(File.OpenRead(filedir));
             while (!reader.EndOfStream)
             {
+                //!setcode 0x8d Ghostrick
                 string line = reader.ReadLine();
-                if (line == null) continue;
+                if (line == null || !line.StartsWith("!setcode")) continue;
                 string[] parts = line.Split(' ');
                 if (parts.Length == 1) continue;
-                string setname = line.Substring(parts[0].Length, line.Length - parts[0].Length).Trim();
-                int setcode = Convert.ToInt32(parts[0], 16);
+                
+                int setcode = Convert.ToInt32(parts[1], 16);
+                string setname = line.Split(new string[] { parts[1] }, StringSplitOptions.RemoveEmptyEntries)[1];
 
                 if (!m_setCodes.ContainsKey(setcode))
                 {
@@ -73,9 +75,10 @@ namespace DevPro_CardManager
                 }
             }
             setnames.Sort();
-            SetCodeLst.Items.AddRange(setnames.ToArray());
-            OtherSetCodeLst.Items.AddRange(setnames.ToArray());
-            OtherSetCodeTwolst.Items.AddRange(setnames.ToArray());
+            SetCodeOne.Items.AddRange(setnames.ToArray());
+            SetCodeTwo.Items.AddRange(setnames.ToArray());
+            SetCodeThree.Items.AddRange(setnames.ToArray());
+            SetCodeFour.Items.AddRange(setnames.ToArray());
         }
 
         private void LoadCardFormatsFromFile(string filedir)
@@ -193,17 +196,18 @@ namespace DevPro_CardManager
                 EffectList.Items.Add(effect);
             SetCardTypes(info.GetCardTypes());
 
-            int setcode = (int)(info.SetCode & 0xffff);
-            if (m_setCodes.ContainsKey(setcode))
-                SetCodeLst.SelectedItem = m_setCodes[setcode];
-            setcode = (int)(info.SetCode >> 16);
-            if (m_setCodes.ContainsKey(setcode))
-                OtherSetCodeLst.SelectedItem = m_setCodes[setcode];
-            setcode = (int)(info.SetCode >> 32);
-            if (m_setCodes.ContainsKey(setcode))
-                OtherSetCodeTwolst.SelectedItem = m_setCodes[setcode];
-
-
+            long setcode = info.SetCode & 0xffff;
+            if (m_setCodes.ContainsKey((int)setcode))
+                SetCodeOne.SelectedItem = m_setCodes[(int)setcode];
+            setcode = info.SetCode >> 16 & 0xffff;
+            if (m_setCodes.ContainsKey((int)setcode))
+                SetCodeTwo.SelectedItem = m_setCodes[(int)setcode];
+            setcode = info.SetCode >> 32 & 0xffff;
+            if (m_setCodes.ContainsKey((int)setcode))
+                SetCodeThree.SelectedItem = m_setCodes[(int)setcode];
+            setcode = info.SetCode >> 48 & 0xffff;
+            if (m_setCodes.ContainsKey((int)setcode))
+                SetCodeFour.SelectedItem = m_setCodes[(int)setcode];
             SetCategoryCheckBoxs(info.Category);
 
             m_loadedCard = info.Id;
@@ -389,8 +393,8 @@ namespace DevPro_CardManager
             CardID.Clear();
             Alias.Text = "0";
             CardFormats.SelectedIndex = -1;
-            SetCodeLst.SelectedIndex = -1;
-            OtherSetCodeLst.SelectedIndex = -1;
+            SetCodeOne.SelectedIndex = -1;
+            SetCodeTwo.SelectedIndex = -1;
             Level.SelectedIndex = -1;
             Race.SelectedIndex = -1;
             CardAttribute.SelectedIndex = -1;
@@ -478,12 +482,13 @@ namespace DevPro_CardManager
 
         private long GetSetCode()
         {
-            long code = 0;
-            code += (SetCodeLst.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeLst.SelectedItem.ToString()) : 0;
-            code += ((OtherSetCodeLst.SelectedIndex > 0) ? GetSetCodeFromString(OtherSetCodeLst.SelectedItem.ToString()) : 0) << 48;
-            code += ((OtherSetCodeTwolst.SelectedIndex > 0) ? GetSetCodeFromString(OtherSetCodeTwolst.SelectedItem.ToString()) : 0) << 32;
-            //code += 0 << 16;
-            return code;
+            MemoryStream m_stream = new MemoryStream();
+            BinaryWriter m_writer = new BinaryWriter(m_stream);
+            m_writer.Write((short)((SetCodeOne.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeOne.SelectedItem.ToString()) : 0));
+            m_writer.Write((short)((SetCodeTwo.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeTwo.SelectedItem.ToString()) : 0));
+            m_writer.Write((short)((SetCodeThree.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeThree.SelectedItem.ToString()) : 0));
+            m_writer.Write((short)((SetCodeFour.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeFour.SelectedItem.ToString()) : 0));
+            return BitConverter.ToInt64(m_stream.ToArray(),0);
         }
 
         private int GetSetCodeFromString(string name)

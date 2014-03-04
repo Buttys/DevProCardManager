@@ -138,8 +138,10 @@ namespace DevPro_CardManager
                         File.Move(thumbnailImagePath, newthumbnailImagePath);
                     if (patchchk.Checked)
                     {
-                        File.Copy(newImagePath, Path.Combine("DevPatch\\pics", newPicName), true);
-                        File.Copy(newthumbnailImagePath, Path.Combine("DevPatch\\pics\\thumbnail", newPicName), true);
+                        if(File.Exists(newImagePath))
+                            File.Copy(newImagePath, Path.Combine("DevPatch\\pics", newPicName), true);
+                        if (File.Exists(newthumbnailImagePath))
+                            File.Copy(newthumbnailImagePath, Path.Combine("DevPatch\\pics\\thumbnail", newPicName), true);
                     }
                 }
 
@@ -153,15 +155,19 @@ namespace DevPro_CardManager
                     string scriptPath = Path.Combine(mainDir, scriptFolderName, scriptName);
                     string newScriptPath = Path.Combine(mainDir, scriptFolderName, newScriptName);
 
-                    File.Move(scriptPath, newScriptPath);
+                    if (File.Exists(scriptPath))
+                    {
+                        File.Move(scriptPath, newScriptPath);
 
-                    //needs testing id replacing
-                    string scriptFile = File.ReadAllText(newScriptPath);
-                    scriptFile = scriptFile.Replace(updateCard[0], updateCard[1]);
-                    File.WriteAllText(newScriptPath, scriptFile);
+                        //needs testing id replacing
+                        string scriptFile = File.ReadAllText(newScriptPath);
+                        scriptFile = scriptFile.Replace(updateCard[0], updateCard[1]);
+                        File.WriteAllText(newScriptPath, scriptFile);
 
-                    if(patchchk.Checked)
-                        File.Copy(newScriptPath, Path.Combine("DevPatch\\script", newScriptName), true);
+                        if (patchchk.Checked)
+                            if(File.Exists(newScriptPath))
+                                File.Copy(newScriptPath, Path.Combine("DevPatch\\script", newScriptName), true);
+                    }
                 }
 
                 Program.CardData.RenameKey(Convert.ToInt32(updateCard[0]), Convert.ToInt32(updateCard[1]));
