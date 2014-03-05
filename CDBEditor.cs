@@ -56,6 +56,8 @@ namespace DevPro_CardManager
                 return;
             }
 
+            m_setCodes.Add(0, "None");
+
             var reader = new StreamReader(File.OpenRead(filedir));
             while (!reader.EndOfStream)
             {
@@ -75,6 +77,7 @@ namespace DevPro_CardManager
                 }
             }
             setnames.Sort();
+            setnames.Insert(0, "None");
             SetCodeOne.Items.AddRange(setnames.ToArray());
             SetCodeTwo.Items.AddRange(setnames.ToArray());
             SetCodeThree.Items.AddRange(setnames.ToArray());
@@ -199,15 +202,23 @@ namespace DevPro_CardManager
             long setcode = info.SetCode & 0xffff;
             if (m_setCodes.ContainsKey((int)setcode))
                 SetCodeOne.SelectedItem = m_setCodes[(int)setcode];
+            else
+                SetCodeOne.SelectedItem = m_setCodes[0];
             setcode = info.SetCode >> 16 & 0xffff;
             if (m_setCodes.ContainsKey((int)setcode))
                 SetCodeTwo.SelectedItem = m_setCodes[(int)setcode];
+            else
+                SetCodeTwo.SelectedItem = m_setCodes[0];
             setcode = info.SetCode >> 32 & 0xffff;
             if (m_setCodes.ContainsKey((int)setcode))
                 SetCodeThree.SelectedItem = m_setCodes[(int)setcode];
+            else
+                SetCodeThree.SelectedItem = m_setCodes[0];
             setcode = info.SetCode >> 48 & 0xffff;
             if (m_setCodes.ContainsKey((int)setcode))
                 SetCodeFour.SelectedItem = m_setCodes[(int)setcode];
+            else
+                SetCodeFour.SelectedItem = m_setCodes[0];
             SetCategoryCheckBoxs(info.Category);
 
             m_loadedCard = info.Id;
