@@ -552,10 +552,10 @@
             // 
             // EffectInput
             // 
-            this.EffectInput.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.EffectInput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EffectInput.Location = new System.Drawing.Point(137, 99);
             this.EffectInput.Name = "EffectInput";
-            this.EffectInput.Size = new System.Drawing.Size(172, 20);
+            this.EffectInput.Size = new System.Drawing.Size(268, 20);
             this.EffectInput.TabIndex = 2;
             // 
             // flowLayoutPanel1
