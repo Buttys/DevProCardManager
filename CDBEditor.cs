@@ -39,9 +39,11 @@ namespace DevPro_CardManager
             LoadCardRacesFromFile("Assets\\cardraces.txt");
             LoadCardAttributesFromFile("assets\\cardattributes.txt");
             for (int i = 1; i < 13; i++)
-            {
                 Level.Items.Add("★" + i);
-            }
+            for (int i = 0; i < 14; i++)
+                LScale.Items.Add(i);
+            for (int i = 0; i < 14; i++)
+                RScale.Items.Add(i);
             LoadSetCodesFromFile("strings.conf");
             CardTypeList.Items.AddRange(Enum.GetNames(typeof(CardType)));
         }
@@ -174,7 +176,9 @@ namespace DevPro_CardManager
                     break;
                 }
             }
-            Level.SelectedIndex = info.Level - 1;
+            Level.SelectedIndex = (int)info.Level - 1;
+            RScale.SelectedIndex = (int)info.RScale;
+            LScale.SelectedIndex = (int)info.LScale;
             for (int i = 0; i < m_cardRaces.Count; i++)
             {
                 if (m_cardRaces[i] == info.Race)
@@ -311,6 +315,9 @@ namespace DevPro_CardManager
                         break;
                     case CardType.Xyz:
                         CardTypeList.SetItemCheckState(21, CheckState.Checked);
+                        break;
+                    case CardType.Pendulum:
+                        CardTypeList.SetItemCheckState(22, CheckState.Checked);
                         break;
                 }
             }
@@ -510,6 +517,17 @@ namespace DevPro_CardManager
             return 0;
         }
 
+        private int GetLevelCode()
+        {
+            MemoryStream m_stream = new MemoryStream();
+            BinaryWriter m_writer = new BinaryWriter(m_stream);
+            m_writer.Write((byte)(Level.SelectedItem == null ? 0 : Int32.Parse(Level.SelectedItem.ToString().Substring(1))));
+            m_writer.Write((byte)0);
+            m_writer.Write((byte)Int32.Parse(RScale.SelectedItem.ToString()));
+            m_writer.Write((byte)Int32.Parse(LScale.SelectedItem.ToString()));
+            return BitConverter.ToInt32(m_stream.ToArray(), 0);
+        }
+
         private int GetTypeCode()
         {
             int code = 0;
@@ -557,6 +575,8 @@ namespace DevPro_CardManager
                 code += (int)CardType.Toon;
             if (CardTypeList.GetItemCheckState(21) == CheckState.Checked)
                 code += (int)CardType.Xyz;
+            if (CardTypeList.GetItemCheckState(22) == CheckState.Checked)
+                code += (int)CardType.Pendulum;
             return code;
         }
 
@@ -646,7 +666,7 @@ namespace DevPro_CardManager
             command.Parameters.Add(new SQLiteParameter("@type", GetTypeCode()));
             command.Parameters.Add(new SQLiteParameter("@atk", atk));
             command.Parameters.Add(new SQLiteParameter("@def", def));
-            command.Parameters.Add(new SQLiteParameter("@level", (Level.SelectedItem == null ? 0 : Int32.Parse(Level.SelectedItem.ToString().Substring(1)))));
+            command.Parameters.Add(new SQLiteParameter("@level", GetLevelCode()));
             command.Parameters.Add(new SQLiteParameter("@race", (Race.SelectedItem == null ? 0 : (Race.SelectedItem == null ? 0 : m_cardRaces[Race.SelectedIndex]))));
             command.Parameters.Add(new SQLiteParameter("@attribute", (CardAttribute.SelectedItem == null ? 0 : (CardAttribute.SelectedItem == null ? 0 : m_cardAttributes[CardAttribute.SelectedIndex]))));
             command.Parameters.Add(new SQLiteParameter("@category", GetCategoryNumber()));
@@ -678,7 +698,7 @@ namespace DevPro_CardManager
             if (Program.CardData.ContainsKey(cardid))
             {
                 Program.CardData[cardid] = new CardInfos(new [] { cardid.ToString(CultureInfo.InvariantCulture), (CardFormats.SelectedItem == null ? "0" : GetCardFormat().ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
-                    (Level.SelectedItem == null ? "0" : Level.SelectedItem.ToString().Substring(1)), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
+                    GetLevelCode().ToString(), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
                 (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : m_cardAttributes[CardAttribute.SelectedIndex].ToString(CultureInfo.InvariantCulture))),atk.ToString(CultureInfo.InvariantCulture),def.ToString(CultureInfo.InvariantCulture),GetCategoryNumber().ToString(CultureInfo.InvariantCulture)});
 
                 var cardtextarray = new List<string> {cardid.ToString(CultureInfo.InvariantCulture), CardName.Text, CardDescription.Text};
@@ -693,7 +713,7 @@ namespace DevPro_CardManager
             else
             {
                 Program.CardData.Add(cardid, new CardInfos(new [] { cardid.ToString(CultureInfo.InvariantCulture), (CardFormats.SelectedItem == null ? "0" : GetCardFormat().ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
-                    (Level.SelectedItem == null ? "0" : Level.SelectedItem.ToString().Substring(1)), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
+                    GetLevelCode().ToString(), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
                 (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : m_cardAttributes[CardAttribute.SelectedIndex].ToString(CultureInfo.InvariantCulture))),atk.ToString(CultureInfo.InvariantCulture),def.ToString(CultureInfo.InvariantCulture),GetCategoryNumber().ToString(CultureInfo.InvariantCulture)}));
 
                 var cardtextarray = new List<string> {cardid.ToString(CultureInfo.InvariantCulture), CardName.Text, CardDescription.Text};
