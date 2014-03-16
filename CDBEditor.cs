@@ -44,19 +44,18 @@ namespace DevPro_CardManager
                 LScale.Items.Add(i);
             for (int i = 0; i < 14; i++)
                 RScale.Items.Add(i);
-            LoadSetCodesFromFile("strings.conf");
+            if (!LoadSetCodesFromFile("strings.conf"))
+                LoadSetCodesFromOldFile("Assets\\setname.txt");
             CardTypeList.Items.AddRange(Enum.GetNames(typeof(CardType)));
         }
 
-        private void LoadSetCodesFromFile(string filedir)
+        private bool LoadSetCodesFromFile(string filedir)
         {
             m_setCodes = new Dictionary<int,string>();
             List<string> setnames = new List<string>();
 
             if (!File.Exists(filedir))
-            {
-                return;
-            }
+                return false;
 
             m_setCodes.Add(0, "None");
 
@@ -78,8 +77,44 @@ namespace DevPro_CardManager
                     m_setCodes.Add(setcode, setname);
                 }
             }
+            if (setnames.Count == 0)
+                return false;
+
             setnames.Sort();
             setnames.Insert(0, "None");
+            SetCodeOne.Items.AddRange(setnames.ToArray());
+            SetCodeTwo.Items.AddRange(setnames.ToArray());
+            SetCodeThree.Items.AddRange(setnames.ToArray());
+            SetCodeFour.Items.AddRange(setnames.ToArray());
+
+            return true;
+        }
+
+        private void LoadSetCodesFromOldFile(string filedir)
+        {
+            m_setCodes = new Dictionary<int, string>();
+            List<string> setnames = new List<string>();
+
+            if (!File.Exists(filedir))
+                return;
+
+            var reader = new StreamReader(File.OpenRead(filedir));
+            while (!reader.EndOfStream)
+            {
+ 	            string line = reader.ReadLine();
+	            if (line == null) continue;
+ 	            string[] parts = line.Split(' ');
+ 	            if (parts.Length == 1) continue;
+	            string setname = line.Substring(parts[0].Length, line.Length - parts[0].Length).Trim();
+                int setcode = Convert.ToInt32(parts[0], 16);
+
+                if (!m_setCodes.ContainsKey(setcode))
+                {
+                    setnames.Add(setname);
+                    m_setCodes.Add(setcode, setname);
+                }
+            }
+            setnames.Sort();
             SetCodeOne.Items.AddRange(setnames.ToArray());
             SetCodeTwo.Items.AddRange(setnames.ToArray());
             SetCodeThree.Items.AddRange(setnames.ToArray());
