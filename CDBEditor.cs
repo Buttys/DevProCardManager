@@ -449,6 +449,8 @@ namespace DevPro_CardManager
             SetCodeOne.SelectedIndex = -1;
             SetCodeTwo.SelectedIndex = -1;
             Level.SelectedIndex = -1;
+            RScale.SelectedIndex = 0;
+            LScale.SelectedIndex = 0;
             Race.SelectedIndex = -1;
             CardAttribute.SelectedIndex = -1;
             ATK.Text = "0";
