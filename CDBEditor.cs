@@ -376,7 +376,7 @@ namespace DevPro_CardManager
             return selectedIndex;
         }
 
-        private void SetCategoryCheckBoxs(int categorynumber)
+        private void SetCategoryCheckBoxs(long categorynumber)
         {
             int index = 0;
             int num;
