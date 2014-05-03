@@ -42,17 +42,21 @@
             this.SetCodeOne = new System.Windows.Forms.ComboBox();
             this.SetCodeTwo = new System.Windows.Forms.ComboBox();
             this.SetCodeThree = new System.Windows.Forms.ComboBox();
+            this.Level = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.SetCodeFour = new System.Windows.Forms.ComboBox();
             this.DEF = new System.Windows.Forms.MaskedTextBox();
             this.ATK = new System.Windows.Forms.TextBox();
             this.CardAttribute = new System.Windows.Forms.ComboBox();
             this.Race = new System.Windows.Forms.ComboBox();
-            this.Level = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.SetCodeFour = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.LScale = new System.Windows.Forms.ComboBox();
+            this.RScale = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label10 = new System.Windows.Forms.Label();
@@ -83,10 +87,6 @@
             this.CardImg = new System.Windows.Forms.PictureBox();
             this.LoadImageBtn = new System.Windows.Forms.Button();
             this.SearchBox = new DevPro_CardManager.Components.SearchBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.LScale = new System.Windows.Forms.ComboBox();
-            this.RScale = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -301,6 +301,35 @@
             this.SetCodeThree.Size = new System.Drawing.Size(176, 21);
             this.SetCodeThree.TabIndex = 31;
             // 
+            // Level
+            // 
+            this.Level.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Level.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Level.FormattingEnabled = true;
+            this.Level.Location = new System.Drawing.Point(109, 178);
+            this.Level.Name = "Level";
+            this.Level.Size = new System.Drawing.Size(176, 21);
+            this.Level.TabIndex = 26;
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(3, 175);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(100, 25);
+            this.label5.TabIndex = 21;
+            this.label5.Text = "Level";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // SetCodeFour
+            // 
+            this.SetCodeFour.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SetCodeFour.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SetCodeFour.FormattingEnabled = true;
+            this.SetCodeFour.Location = new System.Drawing.Point(109, 153);
+            this.SetCodeFour.Name = "SetCodeFour";
+            this.SetCodeFour.Size = new System.Drawing.Size(176, 21);
+            this.SetCodeFour.TabIndex = 32;
+            // 
             // DEF
             // 
             this.DEF.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -339,16 +368,6 @@
             this.Race.Size = new System.Drawing.Size(176, 21);
             this.Race.TabIndex = 27;
             // 
-            // Level
-            // 
-            this.Level.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Level.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Level.FormattingEnabled = true;
-            this.Level.Location = new System.Drawing.Point(109, 178);
-            this.Level.Name = "Level";
-            this.Level.Size = new System.Drawing.Size(176, 21);
-            this.Level.TabIndex = 26;
-            // 
             // label9
             // 
             this.label9.Location = new System.Drawing.Point(3, 325);
@@ -385,24 +404,45 @@
             this.label6.Text = "Race";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label5
+            // label12
             // 
-            this.label5.Location = new System.Drawing.Point(3, 175);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(100, 25);
-            this.label5.TabIndex = 21;
-            this.label5.Text = "Level";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label12.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(63, 206);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(40, 13);
+            this.label12.TabIndex = 33;
+            this.label12.Text = "LScale";
             // 
-            // SetCodeFour
+            // label13
             // 
-            this.SetCodeFour.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SetCodeFour.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SetCodeFour.FormattingEnabled = true;
-            this.SetCodeFour.Location = new System.Drawing.Point(109, 153);
-            this.SetCodeFour.Name = "SetCodeFour";
-            this.SetCodeFour.Size = new System.Drawing.Size(176, 21);
-            this.SetCodeFour.TabIndex = 32;
+            this.label13.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(61, 231);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(42, 13);
+            this.label13.TabIndex = 34;
+            this.label13.Text = "RScale";
+            // 
+            // LScale
+            // 
+            this.LScale.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.LScale.FormattingEnabled = true;
+            this.LScale.Location = new System.Drawing.Point(109, 203);
+            this.LScale.Name = "LScale";
+            this.LScale.Size = new System.Drawing.Size(176, 21);
+            this.LScale.TabIndex = 35;
+            // 
+            // RScale
+            // 
+            this.RScale.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.RScale.FormattingEnabled = true;
+            this.RScale.Location = new System.Drawing.Point(109, 228);
+            this.RScale.Name = "RScale";
+            this.RScale.Size = new System.Drawing.Size(176, 21);
+            this.RScale.TabIndex = 36;
             // 
             // groupBox4
             // 
@@ -769,46 +809,6 @@
             this.SearchBox.TabIndex = 2;
             this.SearchBox.TabStop = false;
             this.SearchBox.Text = "Search";
-            // 
-            // label12
-            // 
-            this.label12.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(63, 206);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(40, 13);
-            this.label12.TabIndex = 33;
-            this.label12.Text = "LScale";
-            // 
-            // label13
-            // 
-            this.label13.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(61, 231);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(42, 13);
-            this.label13.TabIndex = 34;
-            this.label13.Text = "RScale";
-            // 
-            // LScale
-            // 
-            this.LScale.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.LScale.FormattingEnabled = true;
-            this.LScale.Location = new System.Drawing.Point(109, 203);
-            this.LScale.Name = "LScale";
-            this.LScale.Size = new System.Drawing.Size(176, 21);
-            this.LScale.TabIndex = 35;
-            // 
-            // RScale
-            // 
-            this.RScale.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.RScale.FormattingEnabled = true;
-            this.RScale.Location = new System.Drawing.Point(109, 228);
-            this.RScale.Name = "RScale";
-            this.RScale.Size = new System.Drawing.Size(176, 21);
-            this.RScale.TabIndex = 36;
             // 
             // CDBEditor
             // 

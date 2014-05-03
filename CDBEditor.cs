@@ -14,7 +14,7 @@ namespace DevPro_CardManager
 {
     public sealed partial class CDBEditor : Form
     {
-        private const string Cdbdir = @"cards.cdb";
+        private const string Cdbdir = "cards.cdb";
         string m_loadedImage = "";
         Dictionary<int,string> m_setCodes;
         List<int> m_formats;
@@ -31,6 +31,8 @@ namespace DevPro_CardManager
             SearchBox.List.DoubleClick +=CardList_DoubleClick;
             SetDataTypes();
             LoadData(Cdbdir);
+            LScale.SelectedIndex = 0;
+            RScale.SelectedIndex = 0;
         }
 
         private void SetDataTypes()
@@ -448,6 +450,8 @@ namespace DevPro_CardManager
             CardFormats.SelectedIndex = -1;
             SetCodeOne.SelectedIndex = -1;
             SetCodeTwo.SelectedIndex = -1;
+            SetCodeThree.SelectedIndex = -1;
+            SetCodeFour.SelectedIndex = -1;
             Level.SelectedIndex = -1;
             RScale.SelectedIndex = 0;
             LScale.SelectedIndex = 0;
