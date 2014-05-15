@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
@@ -131,6 +131,8 @@ namespace DevPro_CardManager
             {
                 FileInfo[] unusedPics = GetUnusedFiles("pics", "*.jpg", new string[0]);
                 FileInfo[] unusedThumbs = GetUnusedFiles("pics\\thumbnail", "*.jpg", new string[0]);
+                FileInfo[] unusedField = GetUnusedFiles("pics\\field", "*.png", new string[0]);
+                FileInfo[] unusedField2 = GetUnusedFiles ("pics\\field", "*.jpg", new string[0]);
                 FileInfo[] unusedScripts = GetUnusedFiles("script", "*.lua", new string[] { "constant.lua", "utility.lua" }, true);
 
                 try
@@ -139,6 +141,10 @@ namespace DevPro_CardManager
                         file.Delete();
                     foreach (FileInfo file in unusedThumbs)
                         file.Delete();
+                    foreach (FileInfo File in unusedField)
+                        File.Delete();
+                    foreach (FileInfo File in unusedField2)
+                        File.Delete();
                     foreach (FileInfo file in unusedScripts)
                         file.Delete();
                 }
@@ -153,7 +159,7 @@ namespace DevPro_CardManager
                     return;
                 }
 
-                MessageBox.Show((unusedPics.Length + unusedThumbs.Length + unusedScripts.Length) + " files were removed!");
+                MessageBox.Show((unusedPics.Length + unusedThumbs.Length + unusedField2.Length + unusedField.Length + unusedScripts.Length) + " files were removed!");
             }
         }
 
