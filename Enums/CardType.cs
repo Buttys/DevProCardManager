@@ -23,7 +23,8 @@
         Tuner = 0x1000,
         Union = 0x400,
         Xyz = 0x800000,
-        Gemini = 0x800
+        Gemini = 0x800,
+        Pendulum = 0x1000000
     }
 }
 

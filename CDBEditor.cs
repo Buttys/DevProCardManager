@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -14,9 +14,9 @@ namespace DevPro_CardManager
 {
     public sealed partial class CDBEditor : Form
     {
-        private const string Cdbdir = @"cards.cdb";
+        private const string Cdbdir = "cards.cdb";
         string m_loadedImage = "";
-        List<long> m_setCodes;
+        Dictionary<int,string> m_setCodes;
         List<int> m_formats;
         List<int> m_cardRaces;
         List<int> m_cardAttributes;
@@ -31,6 +31,8 @@ namespace DevPro_CardManager
             SearchBox.List.DoubleClick +=CardList_DoubleClick;
             SetDataTypes();
             LoadData(Cdbdir);
+            LScale.SelectedIndex = 0;
+            RScale.SelectedIndex = 0;
         }
 
         private void SetDataTypes()
@@ -39,39 +41,86 @@ namespace DevPro_CardManager
             LoadCardRacesFromFile("Assets\\cardraces.txt");
             LoadCardAttributesFromFile("assets\\cardattributes.txt");
             for (int i = 1; i < 13; i++)
-            {
                 Level.Items.Add("★" + i);
-            }
-            LoadSetCodesFromFile("Assets\\setname.txt");
-// ReSharper disable CoVariantArrayConversion
+            for (int i = 0; i < 14; i++)
+                LScale.Items.Add(i);
+            for (int i = 0; i < 14; i++)
+                RScale.Items.Add(i);
+            if (!LoadSetCodesFromFile("strings.conf"))
+                LoadSetCodesFromOldFile("Assets\\setname.txt");
             CardTypeList.Items.AddRange(Enum.GetNames(typeof(CardType)));
-// ReSharper restore CoVariantArrayConversion
-
-
         }
 
-        private void LoadSetCodesFromFile(string filedir)
+        private bool LoadSetCodesFromFile(string filedir)
         {
-            m_setCodes = new List<long>();
+            m_setCodes = new Dictionary<int,string>();
+            List<string> setnames = new List<string>();
 
             if (!File.Exists(filedir))
-            {
-                return;
-            }
+                return false;
+
+            m_setCodes.Add(0, "None");
 
             var reader = new StreamReader(File.OpenRead(filedir));
             while (!reader.EndOfStream)
             {
+                //!setcode 0x8d Ghostrick
                 string line = reader.ReadLine();
-                if (line == null) continue;
+                if (line == null || !line.StartsWith("!setcode")) continue;
                 string[] parts = line.Split(' ');
                 if (parts.Length == 1) continue;
-                string setname = line.Substring(parts[0].Length, line.Length - parts[0].Length).Trim();
-                SetCodeLst.Items.Add(setname);
-                OtherSetCodeLst.Items.Add(setname);
-                m_setCodes.Add(Convert.ToInt32(parts[0], 16));
+                
+                int setcode = Convert.ToInt32(parts[1], 16);
+                string setname = line.Split(new string[] { parts[1] }, StringSplitOptions.RemoveEmptyEntries)[1];
 
+                if (!m_setCodes.ContainsKey(setcode))
+                {
+                    setnames.Add(setname);
+                    m_setCodes.Add(setcode, setname);
+                }
             }
+            if (setnames.Count == 0)
+                return false;
+
+            setnames.Sort();
+            setnames.Insert(0, "None");
+            SetCodeOne.Items.AddRange(setnames.ToArray());
+            SetCodeTwo.Items.AddRange(setnames.ToArray());
+            SetCodeThree.Items.AddRange(setnames.ToArray());
+            SetCodeFour.Items.AddRange(setnames.ToArray());
+
+            return true;
+        }
+
+        private void LoadSetCodesFromOldFile(string filedir)
+        {
+            m_setCodes = new Dictionary<int, string>();
+            List<string> setnames = new List<string>();
+
+            if (!File.Exists(filedir))
+                return;
+
+            var reader = new StreamReader(File.OpenRead(filedir));
+            while (!reader.EndOfStream)
+            {
+ 	            string line = reader.ReadLine();
+	            if (line == null) continue;
+ 	            string[] parts = line.Split(' ');
+ 	            if (parts.Length == 1) continue;
+	            string setname = line.Substring(parts[0].Length, line.Length - parts[0].Length).Trim();
+                int setcode = Convert.ToInt32(parts[0], 16);
+
+                if (!m_setCodes.ContainsKey(setcode))
+                {
+                    setnames.Add(setname);
+                    m_setCodes.Add(setcode, setname);
+                }
+            }
+            setnames.Sort();
+            SetCodeOne.Items.AddRange(setnames.ToArray());
+            SetCodeTwo.Items.AddRange(setnames.ToArray());
+            SetCodeThree.Items.AddRange(setnames.ToArray());
+            SetCodeFour.Items.AddRange(setnames.ToArray());
         }
 
         private void LoadCardFormatsFromFile(string filedir)
@@ -164,7 +213,9 @@ namespace DevPro_CardManager
                     break;
                 }
             }
-            Level.SelectedIndex = info.Level - 1;
+            Level.SelectedIndex = (int)info.Level - 1;
+            RScale.SelectedIndex = (int)info.RScale;
+            LScale.SelectedIndex = (int)info.LScale;
             for (int i = 0; i < m_cardRaces.Count; i++)
             {
                 if (m_cardRaces[i] == info.Race)
@@ -189,11 +240,26 @@ namespace DevPro_CardManager
                 EffectList.Items.Add(effect);
             SetCardTypes(info.GetCardTypes());
 
-            int index = m_setCodes.IndexOf(info.SetCode & 0xffff);
-            SetCodeLst.SelectedIndex = index;
-            index = m_setCodes.IndexOf(info.SetCode >> 0x10);
-            OtherSetCodeLst.SelectedIndex = index;
-
+            long setcode = info.SetCode & 0xffff;
+            if (m_setCodes.ContainsKey((int)setcode))
+                SetCodeOne.SelectedItem = m_setCodes[(int)setcode];
+            else
+                SetCodeOne.SelectedItem = m_setCodes[0];
+            setcode = info.SetCode >> 16 & 0xffff;
+            if (m_setCodes.ContainsKey((int)setcode))
+                SetCodeTwo.SelectedItem = m_setCodes[(int)setcode];
+            else
+                SetCodeTwo.SelectedItem = m_setCodes[0];
+            setcode = info.SetCode >> 32 & 0xffff;
+            if (m_setCodes.ContainsKey((int)setcode))
+                SetCodeThree.SelectedItem = m_setCodes[(int)setcode];
+            else
+                SetCodeThree.SelectedItem = m_setCodes[0];
+            setcode = info.SetCode >> 48 & 0xffff;
+            if (m_setCodes.ContainsKey((int)setcode))
+                SetCodeFour.SelectedItem = m_setCodes[(int)setcode];
+            else
+                SetCodeFour.SelectedItem = m_setCodes[0];
             SetCategoryCheckBoxs(info.Category);
 
             m_loadedCard = info.Id;
@@ -287,6 +353,9 @@ namespace DevPro_CardManager
                     case CardType.Xyz:
                         CardTypeList.SetItemCheckState(21, CheckState.Checked);
                         break;
+                    case CardType.Pendulum:
+                        CardTypeList.SetItemCheckState(22, CheckState.Checked);
+                        break;
                 }
             }
         }
@@ -296,7 +365,7 @@ namespace DevPro_CardManager
             int selectedIndex = 0;
             int num2 = 1;
             int num3 = 0;
-            while (num3 < 0x20)
+            while (num3 < CategoryList.Items.Count)
             {
                 if (CategoryList.GetItemCheckState(num3) == CheckState.Checked)
                 {
@@ -309,11 +378,11 @@ namespace DevPro_CardManager
             return selectedIndex;
         }
 
-        private void SetCategoryCheckBoxs(int categorynumber)
+        private void SetCategoryCheckBoxs(long categorynumber)
         {
             int index = 0;
             int num;
-            for (num = 1; index < 0x20; num = num << 1)
+            for (num = 1; index < CategoryList.Items.Count; num = num << 1)
             {
                 CategoryList.SetItemCheckState(index,
                                                     (num & categorynumber) != 0L
@@ -379,9 +448,13 @@ namespace DevPro_CardManager
             CardID.Clear();
             Alias.Text = "0";
             CardFormats.SelectedIndex = -1;
-            SetCodeLst.SelectedIndex = -1;
-            OtherSetCodeLst.SelectedIndex = -1;
+            SetCodeOne.SelectedIndex = -1;
+            SetCodeTwo.SelectedIndex = -1;
+            SetCodeThree.SelectedIndex = -1;
+            SetCodeFour.SelectedIndex = -1;
             Level.SelectedIndex = -1;
+            RScale.SelectedIndex = 0;
+            LScale.SelectedIndex = 0;
             Race.SelectedIndex = -1;
             CardAttribute.SelectedIndex = -1;
             ATK.Text = "0";
@@ -447,7 +520,7 @@ namespace DevPro_CardManager
 
         private void AddEffectbtn_Click(object sender, EventArgs e)
         {
-            if (EffectInput.Text == "")
+            if (string.IsNullOrEmpty(EffectInput.Text))
                 return;
             if (EffectList.Items.Count == 16)
             {
@@ -468,9 +541,32 @@ namespace DevPro_CardManager
 
         private long GetSetCode()
         {
-            long code = (SetCodeLst.SelectedIndex > 0) ? m_setCodes[SetCodeLst.SelectedIndex] : 0;
-            code += ((OtherSetCodeLst.SelectedIndex > 0) ? m_setCodes[OtherSetCodeLst.SelectedIndex] : 0) << 0x10;
-            return code;
+            MemoryStream m_stream = new MemoryStream();
+            BinaryWriter m_writer = new BinaryWriter(m_stream);
+            m_writer.Write((short)((SetCodeOne.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeOne.SelectedItem.ToString()) : 0));
+            m_writer.Write((short)((SetCodeTwo.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeTwo.SelectedItem.ToString()) : 0));
+            m_writer.Write((short)((SetCodeThree.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeThree.SelectedItem.ToString()) : 0));
+            m_writer.Write((short)((SetCodeFour.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeFour.SelectedItem.ToString()) : 0));
+            return BitConverter.ToInt64(m_stream.ToArray(),0);
+        }
+
+        private int GetSetCodeFromString(string name)
+        {
+            foreach(var item in m_setCodes)
+                if(item.Value == name)
+                    return item.Key;
+            return 0;
+        }
+
+        private int GetLevelCode()
+        {
+            MemoryStream m_stream = new MemoryStream();
+            BinaryWriter m_writer = new BinaryWriter(m_stream);
+            m_writer.Write((byte)(Level.SelectedItem == null ? 0 : Int32.Parse(Level.SelectedItem.ToString().Substring(1))));
+            m_writer.Write((byte)0);
+            m_writer.Write((byte)Int32.Parse(RScale.SelectedItem.ToString()));
+            m_writer.Write((byte)Int32.Parse(LScale.SelectedItem.ToString()));
+            return BitConverter.ToInt32(m_stream.ToArray(), 0);
         }
 
         private int GetTypeCode()
@@ -520,6 +616,8 @@ namespace DevPro_CardManager
                 code += (int)CardType.Toon;
             if (CardTypeList.GetItemCheckState(21) == CheckState.Checked)
                 code += (int)CardType.Xyz;
+            if (CardTypeList.GetItemCheckState(22) == CheckState.Checked)
+                code += (int)CardType.Pendulum;
             return code;
         }
 
@@ -609,7 +707,7 @@ namespace DevPro_CardManager
             command.Parameters.Add(new SQLiteParameter("@type", GetTypeCode()));
             command.Parameters.Add(new SQLiteParameter("@atk", atk));
             command.Parameters.Add(new SQLiteParameter("@def", def));
-            command.Parameters.Add(new SQLiteParameter("@level", (Level.SelectedItem == null ? 0 : Int32.Parse(Level.SelectedItem.ToString().Substring(1)))));
+            command.Parameters.Add(new SQLiteParameter("@level", GetLevelCode()));
             command.Parameters.Add(new SQLiteParameter("@race", (Race.SelectedItem == null ? 0 : (Race.SelectedItem == null ? 0 : m_cardRaces[Race.SelectedIndex]))));
             command.Parameters.Add(new SQLiteParameter("@attribute", (CardAttribute.SelectedItem == null ? 0 : (CardAttribute.SelectedItem == null ? 0 : m_cardAttributes[CardAttribute.SelectedIndex]))));
             command.Parameters.Add(new SQLiteParameter("@category", GetCategoryNumber()));
@@ -641,7 +739,7 @@ namespace DevPro_CardManager
             if (Program.CardData.ContainsKey(cardid))
             {
                 Program.CardData[cardid] = new CardInfos(new [] { cardid.ToString(CultureInfo.InvariantCulture), (CardFormats.SelectedItem == null ? "0" : GetCardFormat().ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
-                    (Level.SelectedItem == null ? "0" : Level.SelectedItem.ToString().Substring(1)), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
+                    GetLevelCode().ToString(), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
                 (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : m_cardAttributes[CardAttribute.SelectedIndex].ToString(CultureInfo.InvariantCulture))),atk.ToString(CultureInfo.InvariantCulture),def.ToString(CultureInfo.InvariantCulture),GetCategoryNumber().ToString(CultureInfo.InvariantCulture)});
 
                 var cardtextarray = new List<string> {cardid.ToString(CultureInfo.InvariantCulture), CardName.Text, CardDescription.Text};
@@ -656,7 +754,7 @@ namespace DevPro_CardManager
             else
             {
                 Program.CardData.Add(cardid, new CardInfos(new [] { cardid.ToString(CultureInfo.InvariantCulture), (CardFormats.SelectedItem == null ? "0" : GetCardFormat().ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
-                    (Level.SelectedItem == null ? "0" : Level.SelectedItem.ToString().Substring(1)), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
+                    GetLevelCode().ToString(), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
                 (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : m_cardAttributes[CardAttribute.SelectedIndex].ToString(CultureInfo.InvariantCulture))),atk.ToString(CultureInfo.InvariantCulture),def.ToString(CultureInfo.InvariantCulture),GetCategoryNumber().ToString(CultureInfo.InvariantCulture)}));
 
                 var cardtextarray = new List<string> {cardid.ToString(CultureInfo.InvariantCulture), CardName.Text, CardDescription.Text};
