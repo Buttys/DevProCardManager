@@ -15,12 +15,15 @@ namespace DevPro_CardManager
             AliasId = Int32.Parse(carddata[2]);
             SetCode = Int64.Parse(carddata[3]);
             Type = Int32.Parse(carddata[4]);
-            Level = Int32.Parse(carddata[5]);
+            uint level = UInt32.Parse(carddata[5]);
+            Level = level & 0xff;
+            LScale = (level >> 24) & 0xff;
+            RScale = (level >> 16) & 0xff;
             Race = Int32.Parse(carddata[6]);
             Attribute = Int32.Parse(carddata[7]);
             Atk = Int32.Parse(carddata[8]);
             Def = Int32.Parse(carddata[9]);
-            Category = Int32.Parse(carddata[10]);
+            Category =  Int64.Parse(carddata[10]);
         }
 
         public void SetCardText(string[] cardtext)
@@ -67,7 +70,11 @@ namespace DevPro_CardManager
 
         public int Id { get; private set; }
 
-        public int Level { get; set; }
+        public uint Level { get; set; }
+
+        public uint LScale { get; set; }
+
+        public uint RScale { get; set; }
 
         public string Name = "";
 
@@ -75,7 +82,7 @@ namespace DevPro_CardManager
 
         public int Type { get; set; }
 
-        public int Category { get; set; }
+        public long Category { get; set; }
 
         public int Ot { get; set; }
 
