@@ -95,8 +95,8 @@ namespace DevPro_CardManager.Components
 
         private void convertBtn_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists("DevPatch"))
-                Directory.CreateDirectory("DevPatch");
+            if (!Directory.Exists("DatabasePatch"))
+                Directory.CreateDirectory("DatabasePatch");
             List<string[]> updateCards = convertList.Items.OfType<string[]>().ToList();
             string str = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
             string str2 = Path.Combine(str, "cards.cdb");
@@ -120,7 +120,7 @@ namespace DevPro_CardManager.Components
             }
 
             connection.Close();
-            File.Copy(str2, "DevPatch\\cards.cdb", true);
+            File.Copy(str2, "DatabasePatch\\cards.cdb", true);
             convertList.Items.Clear();
             MessageBox.Show("Complete.");
         }
