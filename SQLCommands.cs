@@ -39,6 +39,26 @@ namespace DevPro_CardManager
             }
         }
 
+        public static bool UpdateCardOt(string cardId, string updatedOt, SQLiteConnection connection)
+        {
+            try
+            {
+                var command = new SQLiteCommand("UPDATE datas SET ot=@updatedOt WHERE id=@cardId", connection);
+
+                command.Parameters.Add(new SQLiteParameter("@updatedOt", updatedOt));
+
+                command.Parameters.Add(new SQLiteParameter("@cardId", cardId));
+
+                DatabaseHelper.ExecuteNonCommand(command);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK);
+                return false;
+            }
+        }
+
         public static bool SaveCard
             (int updateid,int cardid,int ot,int cardalias,int atk,int def,
             int setcode,int type, int lvl,int race,int attribute, int category)

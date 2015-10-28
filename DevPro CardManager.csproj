@@ -64,6 +64,12 @@
     <Compile Include="CDBEditor.Designer.cs">
       <DependentUpon>CDBEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\FormatConverter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\FormatConverter.Designer.cs">
+      <DependentUpon>FormatConverter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\SearchBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -90,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CDBEditor.resx">
       <DependentUpon>CDBEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\FormatConverter.resx">
+      <DependentUpon>FormatConverter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IDConverter.resx">
       <DependentUpon>IDConverter.cs</DependentUpon>

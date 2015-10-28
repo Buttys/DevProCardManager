@@ -16,7 +16,7 @@ namespace DevPro_CardManager
     {
         private const string Cdbdir = @"cards.cdb";
         string m_loadedImage = "";
-        List<int> m_setCodes;
+        List<long> m_setCodes;
         List<int> m_formats;
         List<int> m_cardRaces;
         List<int> m_cardAttributes;
@@ -52,7 +52,7 @@ namespace DevPro_CardManager
 
         private void LoadSetCodesFromFile(string filedir)
         {
-            m_setCodes = new List<int>();
+            m_setCodes = new List<long>();
 
             if (!File.Exists(filedir))
             {
@@ -466,9 +466,9 @@ namespace DevPro_CardManager
             return (CardFormats.SelectedItem == null ? 0 : m_formats[CardFormats.SelectedIndex]);
         }
 
-        private int GetSetCode()
+        private long GetSetCode()
         {
-            int code = (SetCodeLst.SelectedIndex > 0) ? m_setCodes[SetCodeLst.SelectedIndex] : 0;
+            long code = (SetCodeLst.SelectedIndex > 0) ? m_setCodes[SetCodeLst.SelectedIndex] : 0;
             code += ((OtherSetCodeLst.SelectedIndex > 0) ? m_setCodes[OtherSetCodeLst.SelectedIndex] : 0) << 0x10;
             return code;
         }
