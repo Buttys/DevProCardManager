@@ -51,6 +51,8 @@
             this.CardAttribute = new System.Windows.Forms.ComboBox();
             this.ATK = new System.Windows.Forms.TextBox();
             this.DEF = new System.Windows.Forms.MaskedTextBox();
+            this.chkPre = new System.Windows.Forms.CheckBox();
+            this.PreLbl = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label10 = new System.Windows.Forms.Label();
@@ -81,8 +83,6 @@
             this.CardImg = new System.Windows.Forms.PictureBox();
             this.LoadImageBtn = new System.Windows.Forms.Button();
             this.SearchBox = new DevPro_CardManager.Components.SearchBox();
-            this.chkPre = new System.Windows.Forms.CheckBox();
-            this.PreLbl = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -377,6 +377,26 @@
             this.DEF.Size = new System.Drawing.Size(197, 20);
             this.DEF.TabIndex = 30;
             this.DEF.Text = "0";
+            // 
+            // chkPre
+            // 
+            this.chkPre.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.chkPre.AutoSize = true;
+            this.chkPre.Location = new System.Drawing.Point(213, 255);
+            this.chkPre.Name = "chkPre";
+            this.chkPre.Size = new System.Drawing.Size(15, 14);
+            this.chkPre.TabIndex = 31;
+            this.chkPre.UseVisualStyleBackColor = true;
+            // 
+            // PreLbl
+            // 
+            this.PreLbl.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.PreLbl.AutoSize = true;
+            this.PreLbl.Location = new System.Drawing.Point(48, 255);
+            this.PreLbl.Name = "PreLbl";
+            this.PreLbl.Size = new System.Drawing.Size(68, 13);
+            this.PreLbl.TabIndex = 32;
+            this.PreLbl.Text = "Is Prerelease";
             // 
             // groupBox4
             // 
@@ -743,26 +763,6 @@
             this.SearchBox.TabIndex = 2;
             this.SearchBox.TabStop = false;
             this.SearchBox.Text = "Search";
-            // 
-            // chkPre
-            // 
-            this.chkPre.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.chkPre.AutoSize = true;
-            this.chkPre.Location = new System.Drawing.Point(213, 255);
-            this.chkPre.Name = "chkPre";
-            this.chkPre.Size = new System.Drawing.Size(15, 14);
-            this.chkPre.TabIndex = 31;
-            this.chkPre.UseVisualStyleBackColor = true;
-            // 
-            // PreLbl
-            // 
-            this.PreLbl.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.PreLbl.AutoSize = true;
-            this.PreLbl.Location = new System.Drawing.Point(48, 255);
-            this.PreLbl.Name = "PreLbl";
-            this.PreLbl.Size = new System.Drawing.Size(68, 13);
-            this.PreLbl.TabIndex = 32;
-            this.PreLbl.Text = "Is Prerelease";
             // 
             // CDBEditor
             // 
