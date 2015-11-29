@@ -183,6 +183,7 @@ namespace DevPro_CardManager
             }
             ATK.Text = info.Atk.ToString(CultureInfo.InvariantCulture);
             DEF.Text = info.Def.ToString(CultureInfo.InvariantCulture);
+            chkPre.Checked = info.Ot >= 4;
             CardName.Text = info.Name;
             CardDescription.Text = info.Description;
             foreach (string effect in info.EffectStrings)
@@ -601,9 +602,12 @@ namespace DevPro_CardManager
                 command = DatabaseHelper.CreateCommand("INSERT INTO datas (id,ot,alias,setcode,type,atk,def,level,race,attribute,category)" +
                          " VALUES (@id, @ot, @alias, @setcode, @type, @atk, @def, @level, @race, @attribute, @category)", connection);
             }
+            int ot = (CardFormats.SelectedItem == null ? 0 : GetCardFormat());
+            if(chkPre.Checked)
+                ot += 4;
             command.Parameters.Add(new SQLiteParameter("@loadedid", updatecard));
             command.Parameters.Add(new SQLiteParameter("@id", cardid));
-            command.Parameters.Add(new SQLiteParameter("@ot", (CardFormats.SelectedItem == null ? 0 : GetCardFormat())));
+            command.Parameters.Add(new SQLiteParameter("@ot", ot));
             command.Parameters.Add(new SQLiteParameter("@alias", cardalias));
             command.Parameters.Add(new SQLiteParameter("@setcode", GetSetCode()));
             command.Parameters.Add(new SQLiteParameter("@type", GetTypeCode()));
