@@ -326,7 +326,7 @@ namespace DevPro_CardManager
 
         private void LoadData(string dataloc)
         {
-            string str = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
+            string str = Directory.GetCurrentDirectory();
             string str2 = Path.Combine(str, dataloc);
             if (!File.Exists(str2))
             {
@@ -565,7 +565,7 @@ namespace DevPro_CardManager
                 MessageBox.Show("Invalid def value");
                 return false;
             }
-            string str = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
+            string str = Directory.GetCurrentDirectory();
             string str2 = Path.Combine(str, cdbpath);
             if (!File.Exists(str2))
             {
@@ -725,7 +725,7 @@ namespace DevPro_CardManager
                 return;
             }
 
-            string str = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
+            string str = Directory.GetCurrentDirectory();
             string str2 = Path.Combine(str, Cdbdir);
             if (!File.Exists(str2))
             {

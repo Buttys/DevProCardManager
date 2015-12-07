@@ -15,7 +15,7 @@ namespace DevPro_CardManager
             AliasId = Int32.Parse(carddata[2]);
             SetCode = Int64.Parse(carddata[3]);
             Type = Int32.Parse(carddata[4]);
-            Level = Int32.Parse(carddata[5]);
+            Level = 0xfff & Int32.Parse(carddata[5]);
             Race = Int32.Parse(carddata[6]);
             Attribute = Int32.Parse(carddata[7]);
             Atk = Int32.Parse(carddata[8]);

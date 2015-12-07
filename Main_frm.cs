@@ -48,7 +48,7 @@ namespace DevPro_CardManager
             string file = reader.ReadToEnd();
 
             SQLiteConnection.CreateFile("temp.cdb");
-            string str = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
+            string str = Directory.GetCurrentDirectory(); ;
             string str2 = Path.Combine(str, "temp.cdb");
             var connection = new SQLiteConnection("Data Source=" + str2);
             connection.Open();

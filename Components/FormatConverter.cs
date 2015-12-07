@@ -98,7 +98,7 @@ namespace DevPro_CardManager.Components
             if (!Directory.Exists("DatabasePatch"))
                 Directory.CreateDirectory("DatabasePatch");
             List<string[]> updateCards = convertList.Items.OfType<string[]>().ToList();
-            string str = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
+            string str = Directory.GetCurrentDirectory(); ;
             string str2 = Path.Combine(str, "cards.cdb");
             if (!File.Exists(str2))
             {
