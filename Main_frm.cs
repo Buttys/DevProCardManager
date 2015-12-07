@@ -27,6 +27,7 @@ namespace DevPro_CardManager
             formatConverter.Controls[0].Dock = DockStyle.Fill;
 
             TabControl.TabPages.AddRange(new [] { editor, banlisted,idConverter, formatConverter });
+            this.FormBorderStyle = FormBorderStyle.Sizable;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

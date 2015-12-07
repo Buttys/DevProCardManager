@@ -183,7 +183,7 @@ namespace DevPro_CardManager
             }
             ATK.Text = info.Atk.ToString(CultureInfo.InvariantCulture);
             DEF.Text = info.Def.ToString(CultureInfo.InvariantCulture);
-            chkPre.Checked = info.Ot >= 4;
+            chkPre.Checked = (info.Ot & 0x4) > 0;
 
             CardName.Text = info.Name;
             CardDescription.Text = info.Description;
@@ -605,7 +605,7 @@ namespace DevPro_CardManager
             }
             int ot = (CardFormats.SelectedItem == null ? 0 : GetCardFormat());
             if(chkPre.Checked)
-                ot += 4;
+                ot |= 0x4;
             command.Parameters.Add(new SQLiteParameter("@loadedid", updatecard));
             command.Parameters.Add(new SQLiteParameter("@id", cardid));
             command.Parameters.Add(new SQLiteParameter("@ot", ot));
