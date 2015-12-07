@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
@@ -130,6 +130,79 @@ namespace DevPro_CardManager
         private void ExportToSql_Click(object sender, EventArgs e)
         {
             ExportSQLFile("Test.sql");
+        }
+
+        private void CleanDevPro_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("This will clean out any unused images/scripts that are currently not been used by the game, do you want to continue?", "Clean Game Files", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+            {
+                FileInfo[] unusedPics = GetUnusedFiles("pics", "*.jpg", new string[0]);
+                FileInfo[] unusedThumbs = GetUnusedFiles("pics\\thumbnail", "*.jpg", new string[0]);
+                FileInfo[] unusedField = GetUnusedFiles("pics\\field", "*.png", new string[0]);
+                FileInfo[] unusedField2 = GetUnusedFiles ("pics\\field", "*.jpg", new string[0]);
+                FileInfo[] unusedScripts = GetUnusedFiles("script", "*.lua", new string[] { "constant.lua", "utility.lua" }, true);
+
+                try
+                {
+                    foreach (FileInfo file in unusedPics)
+                        file.Delete();
+                    foreach (FileInfo file in unusedThumbs)
+                        file.Delete();
+                    foreach (FileInfo File in unusedField)
+                        File.Delete();
+                    foreach (FileInfo File in unusedField2)
+                        File.Delete();
+                    foreach (FileInfo file in unusedScripts)
+                        file.Delete();
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    MessageBox.Show("Admin rights required.");
+                    return;
+                }
+                catch (IOException)
+                {
+                    MessageBox.Show("Some files are in use and we was unable to complete the removal.");
+                    return;
+                }
+
+                MessageBox.Show((unusedPics.Length + unusedThumbs.Length + unusedField2.Length + unusedField.Length + unusedScripts.Length) + " files were removed!");
+            }
+        }
+
+        private FileInfo[] GetUnusedFiles(string dir,string filetype,string[] exceptions, bool script = false)
+        {
+            if (Directory.Exists(dir))
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(dir);
+                FileInfo[] files = dirInfo.GetFiles(filetype);
+                List<FileInfo> toRemove = new List<FileInfo>();
+                List<string> fileExceptions = new List<string>(exceptions);
+
+                foreach (FileInfo file in files)
+                {
+                    if (!fileExceptions.Contains(file.Name))
+                    {
+                        int id = -1;
+
+                        if (!Int32.TryParse(script ? Path.GetFileNameWithoutExtension(file.Name).Substring(1) : Path.GetFileNameWithoutExtension(file.Name), out id))
+                        {
+                            //not required
+                            toRemove.Add(file);
+                            continue;
+                        }
+                        else
+                        {
+                            if (!Program.CardData.ContainsKey(id))
+                                toRemove.Add(file);
+                        }
+                    }
+                }
+
+                return toRemove.ToArray();
+            }
+
+            return new FileInfo[0];
         }
 
     }
