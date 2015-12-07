@@ -158,7 +158,7 @@ namespace DevPro_CardManager
             Alias.Text = info.AliasId.ToString(CultureInfo.InvariantCulture);
             for (int i = 0; i < m_formats.Count; i++)
             {
-                if (m_formats[i] == info.Ot)
+                if (m_formats[i] == (info.Ot & 0x3))
                 {
                     CardFormats.SelectedIndex = i;
                     break;
@@ -184,6 +184,7 @@ namespace DevPro_CardManager
             ATK.Text = info.Atk.ToString(CultureInfo.InvariantCulture);
             DEF.Text = info.Def.ToString(CultureInfo.InvariantCulture);
             chkPre.Checked = info.Ot >= 4;
+
             CardName.Text = info.Name;
             CardDescription.Text = info.Description;
             foreach (string effect in info.EffectStrings)
@@ -644,7 +645,7 @@ namespace DevPro_CardManager
 
             if (Program.CardData.ContainsKey(cardid))
             {
-                Program.CardData[cardid] = new CardInfos(new [] { cardid.ToString(CultureInfo.InvariantCulture), (CardFormats.SelectedItem == null ? "0" : GetCardFormat().ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
+                Program.CardData[cardid] = new CardInfos(new [] { cardid.ToString(CultureInfo.InvariantCulture), (ot.ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
                     (Level.SelectedItem == null ? "0" : Level.SelectedItem.ToString().Substring(1)), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
                 (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : m_cardAttributes[CardAttribute.SelectedIndex].ToString(CultureInfo.InvariantCulture))),atk.ToString(CultureInfo.InvariantCulture),def.ToString(CultureInfo.InvariantCulture),GetCategoryNumber().ToString(CultureInfo.InvariantCulture)});
 

@@ -54,7 +54,7 @@ namespace DevPro_CardManager.Components
                 g.FillRectangle((selected) ? new SolidBrush(Color.Blue) : new SolidBrush(Color.White), e.Bounds);
 
                 // Print text
-                string format = card.Ot == 1 ? "OCG" : card.Ot == 2 ? "TCG" : card.Ot == 3 ? "TCG/OCG" : "???";
+                string format = (card.Ot & 0x1) > 0 ? "OCG" : (card.Ot & 0x2) > 0 ? "TCG" : (card.Ot & 0x3) > 2 ? "TCG/OCG" : "???";
                 g.DrawString((card.Name == "" ? "???" : card.Name) + "   -  " + format + " > " + data[1], e.Font, (selected) ? Brushes.White : Brushes.Black,
                     convertList.GetItemRectangle(index).Location);
             }
