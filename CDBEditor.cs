@@ -71,7 +71,7 @@ namespace DevPro_CardManager
                 if (parts.Length == 1) continue;
                 
                 int setcode = Convert.ToInt32(parts[1], 16);
-                string setname = line.Split(new string[] { parts[1] }, StringSplitOptions.RemoveEmptyEntries)[1];
+                string setname = line.Split(new string[] { parts[1] }, StringSplitOptions.RemoveEmptyEntries)[1].Trim();
 
                 if (!m_setCodes.ContainsKey(setcode))
                 {
