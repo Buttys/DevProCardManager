@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
 using System.Data.SQLite;
+using DevPro_CardManager.Components;
 
 namespace DevPro_CardManager
 {
@@ -21,13 +22,19 @@ namespace DevPro_CardManager
             var idConverter = new TabPage { Name = "ID Converter", Text = "ID Converter" };
             idConverter.Controls.Add(new IDConverter());
 
-            TabControl.TabPages.AddRange(new [] { editor, banlisted,idConverter });
+            var formatConverter = new TabPage { Name = "Format Converter", Text = "Format Converter" };
+            formatConverter.Controls.Add(new FormatConverter());
+            formatConverter.Controls[0].Dock = DockStyle.Fill;
+
+            TabControl.TabPages.AddRange(new [] { editor, banlisted,idConverter, formatConverter });
+            this.FormBorderStyle = FormBorderStyle.Sizable;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Created by Damien Lawford AKA Buttys" + Environment.NewLine + "Modifications by Rahul Parkar AKA Idiot211" + Environment.NewLine + "Email: killerdamo@virginmedia.com" + Environment.NewLine+
-                "Creator of DevPro Launcher/Server Software - http://devpro.org/" + Environment.NewLine + "CardManager Source code: https://github.com/Buttys/DevProCardManager" 
+                "Creator of DevPro Launcher/Server Software - http://devpro.org/" + Environment.NewLine + "CardManager Source code: https://github.com/Buttys/DevProCardManager" + Environment.NewLine +
+                "Updated by sidschingis and Tic-Tac-Toc. Source code up-to-date : https://github.com/Tic-Tac-Toc/DevProCardManager"
                 , "About", MessageBoxButtons.OK);
         }
 
@@ -42,7 +49,7 @@ namespace DevPro_CardManager
             string file = reader.ReadToEnd();
 
             SQLiteConnection.CreateFile("temp.cdb");
-            string str = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
+            string str = Directory.GetCurrentDirectory(); ;
             string str2 = Path.Combine(str, "temp.cdb");
             var connection = new SQLiteConnection("Data Source=" + str2);
             connection.Open();

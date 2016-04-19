@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -207,7 +207,7 @@ namespace DevPro_CardManager
             Alias.Text = info.AliasId.ToString(CultureInfo.InvariantCulture);
             for (int i = 0; i < m_formats.Count; i++)
             {
-                if (m_formats[i] == info.Ot)
+                if (m_formats[i] == (info.Ot & 0x3))
                 {
                     CardFormats.SelectedIndex = i;
                     break;
@@ -234,6 +234,8 @@ namespace DevPro_CardManager
             }
             ATK.Text = info.Atk.ToString(CultureInfo.InvariantCulture);
             DEF.Text = info.Def.ToString(CultureInfo.InvariantCulture);
+            chkPre.Checked = (info.Ot & 0x4) > 0;
+
             CardName.Text = info.Name;
             CardDescription.Text = info.Description;
             foreach (string effect in info.EffectStrings)
@@ -394,7 +396,7 @@ namespace DevPro_CardManager
 
         private void LoadData(string dataloc)
         {
-            string str = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
+            string str = Directory.GetCurrentDirectory();
             string str2 = Path.Combine(str, dataloc);
             if (!File.Exists(str2))
             {
@@ -662,7 +664,7 @@ namespace DevPro_CardManager
                 MessageBox.Show("Invalid def value");
                 return false;
             }
-            string str = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
+            string str = Directory.GetCurrentDirectory();
             string str2 = Path.Combine(str, cdbpath);
             if (!File.Exists(str2))
             {
@@ -699,9 +701,12 @@ namespace DevPro_CardManager
                 command = DatabaseHelper.CreateCommand("INSERT INTO datas (id,ot,alias,setcode,type,atk,def,level,race,attribute,category)" +
                          " VALUES (@id, @ot, @alias, @setcode, @type, @atk, @def, @level, @race, @attribute, @category)", connection);
             }
+            int ot = (CardFormats.SelectedItem == null ? 0 : GetCardFormat());
+            if(chkPre.Checked)
+                ot |= 0x4;
             command.Parameters.Add(new SQLiteParameter("@loadedid", updatecard));
             command.Parameters.Add(new SQLiteParameter("@id", cardid));
-            command.Parameters.Add(new SQLiteParameter("@ot", (CardFormats.SelectedItem == null ? 0 : GetCardFormat())));
+            command.Parameters.Add(new SQLiteParameter("@ot", ot));
             command.Parameters.Add(new SQLiteParameter("@alias", cardalias));
             command.Parameters.Add(new SQLiteParameter("@setcode", GetSetCode()));
             command.Parameters.Add(new SQLiteParameter("@type", GetTypeCode()));
@@ -738,7 +743,7 @@ namespace DevPro_CardManager
 
             if (Program.CardData.ContainsKey(cardid))
             {
-                Program.CardData[cardid] = new CardInfos(new [] { cardid.ToString(CultureInfo.InvariantCulture), (CardFormats.SelectedItem == null ? "0" : GetCardFormat().ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
+                Program.CardData[cardid] = new CardInfos(new[] { cardid.ToString(CultureInfo.InvariantCulture), (ot.ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
                     GetLevelCode().ToString(), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
                 (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : m_cardAttributes[CardAttribute.SelectedIndex].ToString(CultureInfo.InvariantCulture))),atk.ToString(CultureInfo.InvariantCulture),def.ToString(CultureInfo.InvariantCulture),GetCategoryNumber().ToString(CultureInfo.InvariantCulture)});
 
@@ -819,7 +824,7 @@ namespace DevPro_CardManager
                 return;
             }
 
-            string str = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
+            string str = Directory.GetCurrentDirectory();
             string str2 = Path.Combine(str, Cdbdir);
             if (!File.Exists(str2))
             {

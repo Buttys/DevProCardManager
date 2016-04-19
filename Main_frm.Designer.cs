@@ -32,10 +32,10 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TabControl = new System.Windows.Forms.TabControl();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CleanDevPro = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TabControl = new System.Windows.Forms.TabControl();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,9 +62,24 @@
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CleanDevPro});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // CleanDevPro
+            // 
+            this.CleanDevPro.Name = "CleanDevPro";
+            this.CleanDevPro.Size = new System.Drawing.Size(179, 22);
+            this.CleanDevPro.Text = "Clean DevPro Install";
+            this.CleanDevPro.Click += new System.EventHandler(this.CleanDevPro_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -82,21 +97,6 @@
             this.TabControl.Size = new System.Drawing.Size(911, 613);
             this.TabControl.TabIndex = 1;
             // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CleanDevPro});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // CleanDevPro
-            // 
-            this.CleanDevPro.Name = "CleanDevPro";
-            this.CleanDevPro.Size = new System.Drawing.Size(179, 22);
-            this.CleanDevPro.Text = "Clean DevPro Install";
-            this.CleanDevPro.Click += new System.EventHandler(this.CleanDevPro_Click);
-            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -104,12 +104,11 @@
             this.ClientSize = new System.Drawing.Size(911, 637);
             this.Controls.Add(this.TabControl);
             this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximizeBox = false;
             this.Name = "MainFrm";
-            this.Text = "YGOPro CardManager v1.2";
+            this.Text = "YGOPro CardManager v1.3";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

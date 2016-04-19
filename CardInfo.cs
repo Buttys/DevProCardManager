@@ -47,11 +47,11 @@ namespace DevPro_CardManager
             return typeArray.Cast<CardType>().Where(type => ((Type & (int) type) != 0)).ToArray();
         }
 
-        //public int[] GetCardSets(List<int>setArray)
-        //{
-        //    var sets = new List<int> {setArray.IndexOf(SetCode & 0xffff), setArray.IndexOf(SetCode >> 0x10)};
-        //    return sets.ToArray();
-        //}
+        public long[] GetCardSets(List<long> setArray)
+        {
+            var sets = new List<long> {setArray.IndexOf(SetCode & 0xffff), setArray.IndexOf(SetCode >> 0x10)};
+            return sets.ToArray();
+        }
 
         public object Clone()
         {

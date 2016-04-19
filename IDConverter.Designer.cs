@@ -1,4 +1,5 @@
-﻿namespace DevPro_CardManager
+﻿using DevPro_CardManager.Components;
+namespace DevPro_CardManager
 {
     sealed partial class IDConverter
     {

@@ -99,7 +99,7 @@ namespace DevPro_CardManager
             {
                 if (updateCdb)
                 {
-                    string str = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
+                    string str = Directory.GetCurrentDirectory(); ;
                     string str2 = Path.Combine(str, "cards.cdb");
                     if (!File.Exists(str2))
                     {
@@ -121,7 +121,7 @@ namespace DevPro_CardManager
 
                 if (updateImage)
                 {
-                    string mainDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
+                    string mainDir = Directory.GetCurrentDirectory(); ;
                     const string picFolderName = "pics";
                     const string tumbnailFolderName = "pics\\thumbnail";
                     string picName = updateCard[0] + ".jpg";
@@ -147,7 +147,7 @@ namespace DevPro_CardManager
 
                 if (updateScript)
                 {
-                    string mainDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
+                    string mainDir = Directory.GetCurrentDirectory(); ;
                     const string scriptFolderName = "script";
                     string scriptName = "c" + updateCard[0] + ".lua";
                     string newScriptName = "c" + updateCard[1] + ".lua";
