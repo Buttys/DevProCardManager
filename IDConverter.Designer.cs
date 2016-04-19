@@ -45,9 +45,10 @@ namespace DevPro_CardManager
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.NewId = new System.Windows.Forms.TextBox();
-            this.SearchBox = new DevPro_CardManager.Components.SearchBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.ConvertButton = new System.Windows.Forms.Button();
+            this.SearchBox = new DevPro_CardManager.Components.SearchBox();
+            this.chkremovepre = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel8.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -132,8 +133,8 @@ namespace DevPro_CardManager
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 84.08072F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.91928F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 78.02691F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.97309F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(349, 446);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
@@ -141,9 +142,9 @@ namespace DevPro_CardManager
             // 
             this.groupBox4.Controls.Add(this.tableLayoutPanel9);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox4.Location = new System.Drawing.Point(3, 378);
+            this.groupBox4.Location = new System.Drawing.Point(3, 351);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(343, 65);
+            this.groupBox4.Size = new System.Drawing.Size(343, 92);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Convert Options";
@@ -157,13 +158,15 @@ namespace DevPro_CardManager
             this.tableLayoutPanel9.Controls.Add(this.patchchk, 0, 1);
             this.tableLayoutPanel9.Controls.Add(this.imagechk, 0, 0);
             this.tableLayoutPanel9.Controls.Add(this.cdbchk, 1, 0);
+            this.tableLayoutPanel9.Controls.Add(this.chkremovepre, 0, 2);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel9.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
-            this.tableLayoutPanel9.RowCount = 2;
+            this.tableLayoutPanel9.RowCount = 3;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(337, 46);
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(337, 73);
             this.tableLayoutPanel9.TabIndex = 0;
             // 
             // checkBox1
@@ -226,7 +229,7 @@ namespace DevPro_CardManager
             this.UpdateCardsList.IntegralHeight = false;
             this.UpdateCardsList.Location = new System.Drawing.Point(3, 3);
             this.UpdateCardsList.Name = "UpdateCardsList";
-            this.UpdateCardsList.Size = new System.Drawing.Size(343, 369);
+            this.UpdateCardsList.Size = new System.Drawing.Size(343, 342);
             this.UpdateCardsList.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -268,16 +271,6 @@ namespace DevPro_CardManager
             this.NewId.Text = "New ID";
             this.NewId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // SearchBox
-            // 
-            this.SearchBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchBox.Location = new System.Drawing.Point(3, 3);
-            this.SearchBox.Name = "SearchBox";
-            this.SearchBox.Size = new System.Drawing.Size(354, 425);
-            this.SearchBox.TabIndex = 4;
-            this.SearchBox.TabStop = false;
-            this.SearchBox.Text = "Search";
-            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.ConvertButton);
@@ -298,6 +291,27 @@ namespace DevPro_CardManager
             this.ConvertButton.Text = "Convert";
             this.ConvertButton.UseVisualStyleBackColor = true;
             this.ConvertButton.Click += new System.EventHandler(this.ConvertButton_Click);
+            // 
+            // SearchBox
+            // 
+            this.SearchBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SearchBox.Location = new System.Drawing.Point(3, 3);
+            this.SearchBox.Name = "SearchBox";
+            this.SearchBox.Size = new System.Drawing.Size(354, 425);
+            this.SearchBox.TabIndex = 4;
+            this.SearchBox.TabStop = false;
+            this.SearchBox.Text = "Search";
+            // 
+            // chkremovepre
+            // 
+            this.chkremovepre.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.chkremovepre.AutoSize = true;
+            this.chkremovepre.Location = new System.Drawing.Point(23, 53);
+            this.chkremovepre.Name = "chkremovepre";
+            this.chkremovepre.Size = new System.Drawing.Size(122, 17);
+            this.chkremovepre.TabIndex = 4;
+            this.chkremovepre.Text = "Remove Pre-release";
+            this.chkremovepre.UseVisualStyleBackColor = true;
             // 
             // IDConverter
             // 
@@ -345,5 +359,6 @@ namespace DevPro_CardManager
         private System.Windows.Forms.Button AddButton;
         private Components.SearchBox SearchBox;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkremovepre;
     }
 }

@@ -68,7 +68,7 @@ namespace DevPro_CardManager
 
         public string Description { get; set; }
 
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
         public uint Level { get; set; }
 

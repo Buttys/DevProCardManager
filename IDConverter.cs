@@ -95,27 +95,37 @@ namespace DevPro_CardManager
                     Directory.CreateDirectory("DevPatch\\pics\\thumbnail");
             }
 
+            string str = "cards.cdb";
             foreach (var updateCard in updateCards)
             {
+                
                 if (updateCdb)
                 {
-                    string str = Directory.GetCurrentDirectory(); ;
-                    string str2 = Path.Combine(str, "cards.cdb");
-                    if (!File.Exists(str2))
+                    if (!File.Exists(str))
                     {
                         MessageBox.Show("cards.cdb not found.");
                         return;
                     }
 
-                    var connection = new SQLiteConnection("Data Source=" + str2);
+                    int cardid = Int32.Parse(updateCard[0]);
+                    int newid = Int32.Parse(updateCard[1]);
+                    CardInfos card = Program.CardData[cardid];
+                    card.Id = newid;
+                    if (chkremovepre.Checked)
+                        card.Ot = card.Ot & 0x03;
+                    Program.CardData.Add(newid, card);
+                    
+
+                    var connection = new SQLiteConnection("Data Source=" + str);
                     connection.Open();
 
                     SQLiteCommands.UpdateCardId(updateCard[0], updateCard[1], connection);
+                    if(chkremovepre.Checked)
+                        SQLiteCommands.UpdateCardOt(updateCard[1], card.Ot.ToString(), connection);
 
                     connection.Close();
 
-                    if(patchchk.Checked)
-                        File.Copy(str2, "DevPatch\\cards.cdb",true);
+                    Program.CardData.RenameKey(cardid, newid);
 
                 }
 
@@ -169,10 +179,11 @@ namespace DevPro_CardManager
                                 File.Copy(newScriptPath, Path.Combine("DevPatch\\script", newScriptName), true);
                     }
                 }
+                
 
-                Program.CardData.RenameKey(Convert.ToInt32(updateCard[0]), Convert.ToInt32(updateCard[1]));
-
-            }                
+            }
+            if (patchchk.Checked)
+                File.Copy(str, "DevPatch\\cards.cdb", true);
             UpdateCardsList.Items.Clear();
             MessageBox.Show("Complete.");
         }
