@@ -396,9 +396,7 @@ namespace DevPro_CardManager
 
         private void LoadData(string dataloc)
         {
-            string str = Directory.GetCurrentDirectory();
-            string str2 = Path.Combine(str, dataloc);
-            if (!File.Exists(str2))
+            if (!File.Exists(dataloc))
             {
                 MessageBox.Show(dataloc + " not found.");
                 return;
@@ -408,7 +406,7 @@ namespace DevPro_CardManager
 
 
 
-            var connection = new SQLiteConnection("Data Source=" + str2);
+            var connection = new SQLiteConnection("Data Source=" + dataloc);
             connection.Open();
 
             var datacommand = new SQLiteCommand("SELECT id, ot, alias, setcode, type, level, race, attribute, atk, def, category FROM datas", connection);
