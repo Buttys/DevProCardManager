@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -66,7 +66,7 @@ namespace DevPro_CardManager
             {
                 //!setcode 0x8d Ghostrick
                 string line = reader.ReadLine();
-                if (line == null || !line.StartsWith("!setcode")) continue;
+                if (line == null || !line.StartsWith("!setname")) continue;
                 string[] parts = line.Split(' ');
                 if (parts.Length == 1) continue;
                 
