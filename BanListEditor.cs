@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -240,11 +240,11 @@ namespace DevPro_CardManager
             e.DrawFocusRectangle();
         }
 
-        private void BanAnimeCardsBtn_Click(object sender, EventArgs e)
+        private void BanOCGBtn_Click(object sender, EventArgs e)
         {
             foreach (int id in Program.CardData.Keys)
             {
-                if (Program.CardData[id].Ot == 4)
+                if (Program.CardData[id].Ot == 1)
                 {
                     if (GetBanListCard(id) == null)
                     {
@@ -255,7 +255,21 @@ namespace DevPro_CardManager
                 }
             }
         }
-
+        private void BanTCGBtn_Click(object sender, EventArgs e)
+        {
+            foreach (int id in Program.CardData.Keys)
+            {
+                if (Program.CardData[id].Ot == 2)
+                {
+                    if (GetBanListCard(id) == null)
+                    {
+                        BanListCard card = new BanListCard { ID = id, Banvalue = 0, Name = Program.CardData[id].Name };
+                        BannedList.Items.Add(card);
+                        m_banlists[BanList.SelectedItem.ToString()].Add(card);
+                    }
+                }
+            }
+        }
         private void Savebtn_Click(object sender, EventArgs e)
         {
             SaveBanList();
