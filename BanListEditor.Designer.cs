@@ -1,4 +1,4 @@
-﻿namespace DevPro_CardManager
+namespace DevPro_CardManager
 {
     sealed partial class BanListEditor
     {
@@ -48,7 +48,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.Savebtn = new System.Windows.Forms.Button();
-            this.BanAnimeCardsBtn = new System.Windows.Forms.Button();
+            this.BanOCGCardsBtn = new System.Windows.Forms.Button();
+            this.BanTCGCards = new System.Windows.Forms.Button();
             this.Clearbtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -289,7 +290,8 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.Savebtn);
-            this.flowLayoutPanel1.Controls.Add(this.BanAnimeCardsBtn);
+            this.flowLayoutPanel1.Controls.Add(this.BanOCGCardsBtn);
+            this.flowLayoutPanel1.Controls.Add(this.BanTCGCards);
             this.flowLayoutPanel1.Controls.Add(this.Clearbtn);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
@@ -309,19 +311,29 @@
             this.Savebtn.UseVisualStyleBackColor = true;
             this.Savebtn.Click += new System.EventHandler(this.Savebtn_Click);
             // 
-            // BanAnimeCardsBtn
+            // BanOCGCardsBtn
             // 
-            this.BanAnimeCardsBtn.Location = new System.Drawing.Point(398, 3);
-            this.BanAnimeCardsBtn.Name = "BanAnimeCardsBtn";
-            this.BanAnimeCardsBtn.Size = new System.Drawing.Size(106, 23);
-            this.BanAnimeCardsBtn.TabIndex = 10;
-            this.BanAnimeCardsBtn.Text = "Ban Anime Cards";
-            this.BanAnimeCardsBtn.UseVisualStyleBackColor = true;
-            this.BanAnimeCardsBtn.Click += new System.EventHandler(this.BanAnimeCardsBtn_Click);
+            this.BanOCGCardsBtn.Location = new System.Drawing.Point(398, 3);
+            this.BanOCGCardsBtn.Name = "BanOCGCardsBtn";
+            this.BanOCGCardsBtn.Size = new System.Drawing.Size(106, 23);
+            this.BanOCGCardsBtn.TabIndex = 10;
+            this.BanOCGCardsBtn.Text = "Ban OCG Cards";
+            this.BanOCGCardsBtn.UseVisualStyleBackColor = true;
+            this.BanOCGCardsBtn.Click += new System.EventHandler(this.BanOCGBtn_Click);
+            // 
+            // BanTCGCards
+            // 
+            this.BanTCGCards.Location = new System.Drawing.Point(286, 3);
+            this.BanTCGCards.Name = "BanTCGCards";
+            this.BanTCGCards.Size = new System.Drawing.Size(106, 23);
+            this.BanTCGCards.TabIndex = 12;
+            this.BanTCGCards.Text = "Ban TCG Cards";
+            this.BanTCGCards.UseVisualStyleBackColor = true;
+            this.BanTCGCards.Click += new System.EventHandler(this.BanTCGBtn_Click);
             // 
             // Clearbtn
             // 
-            this.Clearbtn.Location = new System.Drawing.Point(317, 3);
+            this.Clearbtn.Location = new System.Drawing.Point(205, 3);
             this.Clearbtn.Name = "Clearbtn";
             this.Clearbtn.Size = new System.Drawing.Size(75, 23);
             this.Clearbtn.TabIndex = 11;
@@ -377,7 +389,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button Savebtn;
-        private System.Windows.Forms.Button BanAnimeCardsBtn;
+        private System.Windows.Forms.Button BanOCGCardsBtn;
         private System.Windows.Forms.Button Clearbtn;
+        private System.Windows.Forms.Button BanTCGCards;
     }
 }
