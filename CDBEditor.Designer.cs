@@ -1,4 +1,4 @@
-﻿namespace DevPro_CardManager
+namespace DevPro_CardManager
 {
     sealed partial class CDBEditor
     {
@@ -273,7 +273,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(100, 25);
             this.label4.TabIndex = 18;
-            this.label4.Text = "Set Codes";
+            this.label4.Text = "Setnames";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // SetCodeOne
