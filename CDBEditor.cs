@@ -15,7 +15,6 @@ namespace DevPro_CardManager
     public sealed partial class CDBEditor : Form
     {
         private const string Cdbdir = "cards.cdb";
-        string m_loadedImage = "";
         Dictionary<int,string> m_setCodes;
         List<int> m_formats;
         List<int> m_cardRaces;
@@ -473,7 +472,6 @@ namespace DevPro_CardManager
             }
             m_loadedCard = 0;
             CardImg.Image = Resources.unknown;
-            m_loadedImage = "";
         }
 
         private void DeleteEffectbtn_Click(object sender, EventArgs e)
@@ -624,10 +622,7 @@ namespace DevPro_CardManager
         private void SaveCardbtn_Click(object sender, EventArgs e)
         {
             if (SaveCardtoCDB(Cdbdir))
-            {
-                SaveImage(CardID.Text);
                 m_loadedCard = Convert.ToInt32(CardID.Text);
-            }
 
         }
 
@@ -637,8 +632,9 @@ namespace DevPro_CardManager
             int cardalias;
             int atk;
             int def;
-            bool overwrite = false;
-
+            int ot = (CardFormats.SelectedItem == null ? 0 : GetCardFormat());
+            if(chkPre.Checked)
+                ot |= 0x4;
 
             if (!Int32.TryParse(CardID.Text, out cardid))
             {
@@ -664,145 +660,54 @@ namespace DevPro_CardManager
             }
             string str = Directory.GetCurrentDirectory();
             string str2 = Path.Combine(str, cdbpath);
+
+            CardInfos newCardInfo = new CardInfos(new[] { cardid.ToString(CultureInfo.InvariantCulture), (ot.ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
+                GetLevelCode().ToString(), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
+                (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : m_cardAttributes[CardAttribute.SelectedIndex].ToString(CultureInfo.InvariantCulture))),atk.ToString(CultureInfo.InvariantCulture),def.ToString(CultureInfo.InvariantCulture),GetCategoryNumber().ToString(CultureInfo.InvariantCulture)});
+
+            var cardtextarray = new List<string> { cardid.ToString(CultureInfo.InvariantCulture), CardName.Text, CardDescription.Text };
+
+            for (var i = 0; i < 17; i++)
+            {
+                cardtextarray.Add((i < EffectList.Items.Count ? EffectList.Items[i].ToString() : string.Empty));
+            }
+
+            newCardInfo.SetCardText(cardtextarray.ToArray());
+
+            //save/update card
+
             if (!File.Exists(str2))
             {
                 SQLiteConnection.CreateFile(cdbpath);
             }
             var connection = new SQLiteConnection("Data Source=" + str2);
             connection.Open();
-
             //check if card id exsists
+            bool overwrite = SQLiteCommands.ContainsCard(updatecard, connection);
 
-            SQLiteCommand checkcommand = DatabaseHelper.CreateCommand("SELECT COUNT(*) FROM datas WHERE id= @id", connection);
-            checkcommand.Parameters.Add(new SQLiteParameter("@id", updatecard));
-            if (DatabaseHelper.ExecuteIntCommand(checkcommand) == 1)
+            if (overwrite)
             {
-                if (MessageBox.Show("Overwrite current card?", "Found", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Overwrite current card?", "Found", MessageBoxButtons.YesNo) == DialogResult.No)
                 {
-                    overwrite = true;
-                }
-                else
-                {
+                    connection.Close();
                     return false;
                 }
             }
 
+            SQLiteCommands.SaveCard(newCardInfo, connection, updatecard, overwrite);
 
-            SQLiteCommand command;
-            if (overwrite)
-            {
-                command = DatabaseHelper.CreateCommand("UPDATE datas" +
-         " SET id= @id, ot = @ot, alias= @alias, setcode= @setcode, type= @type, atk= @atk, def= @def, level= @level, race= @race, attribute= @attribute, category= @category WHERE id = @loadedid", connection);
-            }
-            else
-            {
-                command = DatabaseHelper.CreateCommand("INSERT INTO datas (id,ot,alias,setcode,type,atk,def,level,race,attribute,category)" +
-                         " VALUES (@id, @ot, @alias, @setcode, @type, @atk, @def, @level, @race, @attribute, @category)", connection);
-            }
-            int ot = (CardFormats.SelectedItem == null ? 0 : GetCardFormat());
-            if(chkPre.Checked)
-                ot |= 0x4;
-            command.Parameters.Add(new SQLiteParameter("@loadedid", updatecard));
-            command.Parameters.Add(new SQLiteParameter("@id", cardid));
-            command.Parameters.Add(new SQLiteParameter("@ot", ot));
-            command.Parameters.Add(new SQLiteParameter("@alias", cardalias));
-            command.Parameters.Add(new SQLiteParameter("@setcode", GetSetCode()));
-            command.Parameters.Add(new SQLiteParameter("@type", GetTypeCode()));
-            command.Parameters.Add(new SQLiteParameter("@atk", atk));
-            command.Parameters.Add(new SQLiteParameter("@def", def));
-            command.Parameters.Add(new SQLiteParameter("@level", GetLevelCode()));
-            command.Parameters.Add(new SQLiteParameter("@race", (Race.SelectedItem == null ? 0 : (Race.SelectedItem == null ? 0 : m_cardRaces[Race.SelectedIndex]))));
-            command.Parameters.Add(new SQLiteParameter("@attribute", (CardAttribute.SelectedItem == null ? 0 : (CardAttribute.SelectedItem == null ? 0 : m_cardAttributes[CardAttribute.SelectedIndex]))));
-            command.Parameters.Add(new SQLiteParameter("@category", GetCategoryNumber()));
-            DatabaseHelper.ExecuteNonCommand(command);
-            if (overwrite)
-            {
-                command = DatabaseHelper.CreateCommand("UPDATE texts" +
-                    " SET id= @id,name= @name,desc= @des,str1= @str1,str2= @str2,str3= @str3,str4= @str4,str5= @str5,str6= @str6,str7= @str7,str8= @str8,str9= @str9,str10= @str10,str11= @str11,str12= @str12,str13= @str13,str14= @str14,str15= @str15,str16= @str16 WHERE id= @loadedid", connection);
-            }
-            else
-            {
-                command = DatabaseHelper.CreateCommand("INSERT INTO texts (id,name,desc,str1,str2,str3,str4,str5,str6,str7,str8,str9,str10,str11,str12,str13,str14,str15,str16)" +
-                    " VALUES (@id,@name,@des,@str1,@str2,@str3,@str4,@str5,@str6,@str7,@str8,@str9,@str10,@str11,@str12,@str13,@str14,@str15,@str16)", connection);
-            }
-            command.Parameters.Add(new SQLiteParameter("@loadedid", updatecard));
-            command.Parameters.Add(new SQLiteParameter("@id", cardid));
-            command.Parameters.Add(new SQLiteParameter("@name", CardName.Text));
-            command.Parameters.Add(new SQLiteParameter("@des", CardDescription.Text));
-            var parameters = new List<SQLiteParameter>();
-            for (int i = 0; i < 16; i++)
-            {
-                parameters.Add(new SQLiteParameter("@str" + (i + 1), (i < EffectList.Items.Count ? EffectList.Items[i].ToString() : string.Empty)));
-            }
-            command.Parameters.AddRange(parameters.ToArray());
-            DatabaseHelper.ExecuteNonCommand(command);
             connection.Close();
-            MessageBox.Show("Card Saved");
+
+            if (cardid != updatecard)
+                Program.CardData.RenameKey(updatecard, cardid);
 
             if (Program.CardData.ContainsKey(cardid))
-            {
-                Program.CardData[cardid] = new CardInfos(new[] { cardid.ToString(CultureInfo.InvariantCulture), (ot.ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
-                    GetLevelCode().ToString(), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
-                (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : m_cardAttributes[CardAttribute.SelectedIndex].ToString(CultureInfo.InvariantCulture))),atk.ToString(CultureInfo.InvariantCulture),def.ToString(CultureInfo.InvariantCulture),GetCategoryNumber().ToString(CultureInfo.InvariantCulture)});
-
-                var cardtextarray = new List<string> {cardid.ToString(CultureInfo.InvariantCulture), CardName.Text, CardDescription.Text};
-
-                for (var i = 0; i < 17; i++)
-                {
-                    cardtextarray.Add((i < EffectList.Items.Count ? EffectList.Items[i].ToString() : string.Empty));
-                }
-
-                Program.CardData[cardid].SetCardText(cardtextarray.ToArray());
-            }
+                Program.CardData[cardid] = newCardInfo;
             else
-            {
-                Program.CardData.Add(cardid, new CardInfos(new [] { cardid.ToString(CultureInfo.InvariantCulture), (CardFormats.SelectedItem == null ? "0" : GetCardFormat().ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
-                    GetLevelCode().ToString(), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
-                (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : m_cardAttributes[CardAttribute.SelectedIndex].ToString(CultureInfo.InvariantCulture))),atk.ToString(CultureInfo.InvariantCulture),def.ToString(CultureInfo.InvariantCulture),GetCategoryNumber().ToString(CultureInfo.InvariantCulture)}));
+                Program.CardData.Add(cardid, newCardInfo);
 
-                var cardtextarray = new List<string> {cardid.ToString(CultureInfo.InvariantCulture), CardName.Text, CardDescription.Text};
-
-                for (int i = 0; i < 17; i++)
-                {
-                    cardtextarray.Add((i < EffectList.Items.Count ? EffectList.Items[i].ToString() : string.Empty));
-                }
-
-                Program.CardData[cardid].SetCardText(cardtextarray.ToArray());
-            }
+            MessageBox.Show("Card Saved");
             return true;
-        }
-        public void SaveImage(string cardid)
-        {
-            if (m_loadedImage != "")
-            {
-                // Save card image
-                ImageResizer.SaveImage(CardImg.Image,
-                        "pics\\" + cardid + ".jpg", 177, 254);
-                //Save card thumbnail
-                ImageResizer.SaveImage(CardImg.Image,
-                        "pics\\thumbnail\\" + cardid + ".jpg", 44, 64);
-            }
-        }
-
-        private void LoadImageBtn_Click(object sender, EventArgs e)
-        {
-            m_loadedImage = "";
-            string imagepath = ImageResizer.OpenFileWindow("Set Image ", "", "Images|*.jpg;*.jpeg;*.png;");
-            if (imagepath != null)
-            {
-                if (File.Exists(imagepath))
-                {
-                    using (var stream = new FileStream(imagepath, FileMode.Open, FileAccess.Read))
-                    {
-                        CardImg.Image = Image.FromStream(stream);
-                    }
-                    m_loadedImage = imagepath;
-                }
-                else
-                {
-                    CardImg.Image = Resources.unknown;
-                }
-            }
         }
 
         private void DeleteBtn_Click(object sender, EventArgs e)
@@ -831,9 +736,7 @@ namespace DevPro_CardManager
             var connection = new SQLiteConnection("Data Source=" + str2);
             connection.Open();
 
-            SQLiteCommand checkcommand = DatabaseHelper.CreateCommand("SELECT COUNT(*) FROM datas WHERE id= @id", connection);
-            checkcommand.Parameters.Add(new SQLiteParameter("@id", cardid));
-            if (DatabaseHelper.ExecuteIntCommand(checkcommand) == 1)
+            if (SQLiteCommands.ContainsCard(cardid,connection))
             {
                 if (MessageBox.Show("Are you sure you want to delete " + Program.CardData[cardid].Name + "?", "Found", MessageBoxButtons.YesNo) == DialogResult.No)
                 {
@@ -841,13 +744,7 @@ namespace DevPro_CardManager
                 }
             }
 
-            SQLiteCommand command = DatabaseHelper.CreateCommand("DELETE FROM datas WHERE id= @id", connection);
-            command.Parameters.Add(new SQLiteParameter("@id", cardid));
-            DatabaseHelper.ExecuteIntCommand(command);
-
-            command = DatabaseHelper.CreateCommand("DELETE FROM texts WHERE id= @id", connection);
-            command.Parameters.Add(new SQLiteParameter("@id", cardid));
-            DatabaseHelper.ExecuteIntCommand(command);
+            SQLiteCommands.DeleteCard(cardid, connection);
 
             Program.CardData.Remove(cardid);
             Clearbtn_Click(null, EventArgs.Empty);

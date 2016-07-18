@@ -87,7 +87,6 @@ namespace DevPro_CardManager
             this.OpenScriptBtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.CardImg = new System.Windows.Forms.PictureBox();
-            this.LoadImageBtn = new System.Windows.Forms.Button();
             this.SearchBox = new DevPro_CardManager.Components.SearchBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -790,16 +789,14 @@ namespace DevPro_CardManager
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.SearchBox, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.CardImg, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.LoadImageBtn, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.SearchBox, 0, 2);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 254F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 219F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 11F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(171, 587);
             this.tableLayoutPanel2.TabIndex = 0;
@@ -816,24 +813,13 @@ namespace DevPro_CardManager
             this.CardImg.TabIndex = 0;
             this.CardImg.TabStop = false;
             // 
-            // LoadImageBtn
-            // 
-            this.LoadImageBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LoadImageBtn.Location = new System.Drawing.Point(48, 257);
-            this.LoadImageBtn.Name = "LoadImageBtn";
-            this.LoadImageBtn.Size = new System.Drawing.Size(75, 23);
-            this.LoadImageBtn.TabIndex = 1;
-            this.LoadImageBtn.Text = "Set Image";
-            this.LoadImageBtn.UseVisualStyleBackColor = true;
-            this.LoadImageBtn.Click += new System.EventHandler(this.LoadImageBtn_Click);
-            // 
             // SearchBox
             // 
             this.SearchBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchBox.Location = new System.Drawing.Point(3, 286);
+            this.SearchBox.Location = new System.Drawing.Point(3, 257);
             this.SearchBox.Name = "SearchBox";
-            this.SearchBox.Size = new System.Drawing.Size(165, 298);
-            this.SearchBox.TabIndex = 2;
+            this.SearchBox.Size = new System.Drawing.Size(165, 327);
+            this.SearchBox.TabIndex = 3;
             this.SearchBox.TabStop = false;
             this.SearchBox.Text = "Search";
             // 
@@ -916,8 +902,6 @@ namespace DevPro_CardManager
         private System.Windows.Forms.CheckedListBox CategoryList;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.PictureBox CardImg;
-        private System.Windows.Forms.Button LoadImageBtn;
-        private Components.SearchBox SearchBox;
         private System.Windows.Forms.CheckBox chkPre;
         private System.Windows.Forms.Label PreLbl;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
@@ -932,5 +916,6 @@ namespace DevPro_CardManager
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox LScale;
         private System.Windows.Forms.ComboBox RScale;
+        private Components.SearchBox SearchBox;
     }
 }
