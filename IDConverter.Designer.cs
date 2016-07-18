@@ -41,14 +41,14 @@ namespace DevPro_CardManager
             this.patchchk = new System.Windows.Forms.CheckBox();
             this.imagechk = new System.Windows.Forms.CheckBox();
             this.cdbchk = new System.Windows.Forms.CheckBox();
+            this.chkremovepre = new System.Windows.Forms.CheckBox();
             this.UpdateCardsList = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.NewId = new System.Windows.Forms.TextBox();
+            this.SearchBox = new DevPro_CardManager.Components.SearchBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.ConvertButton = new System.Windows.Forms.Button();
-            this.SearchBox = new DevPro_CardManager.Components.SearchBox();
-            this.chkremovepre = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel8.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -221,6 +221,17 @@ namespace DevPro_CardManager
             this.cdbchk.Text = "CDB";
             this.cdbchk.UseVisualStyleBackColor = true;
             // 
+            // chkremovepre
+            // 
+            this.chkremovepre.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.chkremovepre.AutoSize = true;
+            this.chkremovepre.Location = new System.Drawing.Point(23, 53);
+            this.chkremovepre.Name = "chkremovepre";
+            this.chkremovepre.Size = new System.Drawing.Size(122, 17);
+            this.chkremovepre.TabIndex = 4;
+            this.chkremovepre.Text = "Remove Pre-release";
+            this.chkremovepre.UseVisualStyleBackColor = true;
+            // 
             // UpdateCardsList
             // 
             this.UpdateCardsList.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -271,6 +282,16 @@ namespace DevPro_CardManager
             this.NewId.Text = "New ID";
             this.NewId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // SearchBox
+            // 
+            this.SearchBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SearchBox.Location = new System.Drawing.Point(3, 3);
+            this.SearchBox.Name = "SearchBox";
+            this.SearchBox.Size = new System.Drawing.Size(354, 425);
+            this.SearchBox.TabIndex = 4;
+            this.SearchBox.TabStop = false;
+            this.SearchBox.Text = "Search";
+            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.ConvertButton);
@@ -291,27 +312,6 @@ namespace DevPro_CardManager
             this.ConvertButton.Text = "Convert";
             this.ConvertButton.UseVisualStyleBackColor = true;
             this.ConvertButton.Click += new System.EventHandler(this.ConvertButton_Click);
-            // 
-            // SearchBox
-            // 
-            this.SearchBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchBox.Location = new System.Drawing.Point(3, 3);
-            this.SearchBox.Name = "SearchBox";
-            this.SearchBox.Size = new System.Drawing.Size(354, 425);
-            this.SearchBox.TabIndex = 4;
-            this.SearchBox.TabStop = false;
-            this.SearchBox.Text = "Search";
-            // 
-            // chkremovepre
-            // 
-            this.chkremovepre.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.chkremovepre.AutoSize = true;
-            this.chkremovepre.Location = new System.Drawing.Point(23, 53);
-            this.chkremovepre.Name = "chkremovepre";
-            this.chkremovepre.Size = new System.Drawing.Size(122, 17);
-            this.chkremovepre.TabIndex = 4;
-            this.chkremovepre.Text = "Remove Pre-release";
-            this.chkremovepre.UseVisualStyleBackColor = true;
             // 
             // IDConverter
             // 
