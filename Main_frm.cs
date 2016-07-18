@@ -26,7 +26,10 @@ namespace DevPro_CardManager
             formatConverter.Controls.Add(new FormatConverter());
             formatConverter.Controls[0].Dock = DockStyle.Fill;
 
-            TabControl.TabPages.AddRange(new [] { editor, banlisted,idConverter, formatConverter });
+            var replayExtracter = new TabPage { Name = "Replay Deck Extracter", Text = "Replay Deck Extracter" };
+            replayExtracter.Controls.Add(new ReplayExtracter());
+
+            TabControl.TabPages.AddRange(new [] { editor, banlisted,idConverter, formatConverter, replayExtracter });
             this.FormBorderStyle = FormBorderStyle.Sizable;
         }
 
