@@ -115,7 +115,7 @@ namespace DevPro_CardManager
             this.BtnLoadDeck.Name = "BtnLoadDeck";
             this.BtnLoadDeck.Size = new System.Drawing.Size(75, 23);
             this.BtnLoadDeck.TabIndex = 0;
-            this.BtnLoadDeck.Text = "Load Deck";
+            this.BtnLoadDeck.Text = "Load Replay";
             this.BtnLoadDeck.UseVisualStyleBackColor = true;
             this.BtnLoadDeck.Click += new System.EventHandler(this.BtnLoadDeck_Click);
             // 
