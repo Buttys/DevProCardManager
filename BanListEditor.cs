@@ -68,7 +68,7 @@ namespace DevPro_CardManager
                 }
                 else
                 {
-                    string[] parts = line.Split(' ');
+                    string[] parts = line.Split(new char[] { ' ' },StringSplitOptions.RemoveEmptyEntries);
                     if (!Program.CardData.ContainsKey(Int32.Parse(parts[0])))
                         continue;
 
