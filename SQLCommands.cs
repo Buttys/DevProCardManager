@@ -7,12 +7,16 @@ namespace DevPro_CardManager
 {
     public static class SQLiteCommands
     {
-        public static void RenameKey<TKey, TValue>(this IDictionary<TKey, TValue> dic,
-                                      TKey fromKey, TKey toKey)
+        public static List<string[]> LoadData(SQLiteConnection connection)
         {
-            TValue value = dic[fromKey];
-            dic.Remove(fromKey);
-            dic[toKey] = value;
+            SQLiteCommand datacommand = new SQLiteCommand("SELECT id, ot, alias, setcode, type, level, race, attribute, atk, def, category FROM datas", connection);
+            return DatabaseHelper.ExecuteStringCommand(datacommand, 11);
+        }
+
+        public static List<string[]> LoadText(SQLiteConnection connection)
+        {
+            SQLiteCommand textcommand = new SQLiteCommand("SELECT id, name, desc, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, str14, str15, str16 FROM texts", connection);
+            return DatabaseHelper.ExecuteStringCommand(textcommand,19);
         }
 
         public static bool UpdateCardId(string cardId, string updatedId, SQLiteConnection connection)
@@ -146,6 +150,6 @@ namespace DevPro_CardManager
                 MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK);
                 return false;
             }
-}
+        }
     }
 }

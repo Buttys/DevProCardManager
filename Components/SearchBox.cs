@@ -74,10 +74,10 @@ namespace DevPro_CardManager.Components
                 if (m_searchInput.Text != "Search")
                 {
                     m_searchList.Items.Clear();
-                    foreach (int card in Program.CardData.Keys.Where(card => Program.CardData[card].Id.ToString(CultureInfo.InvariantCulture).ToLower().StartsWith(m_searchInput.Text.ToLower()) ||
-                                                                             Program.CardData[card].Name.ToLower().Contains(m_searchInput.Text.ToLower())))
+                    foreach (int card in CardManager.GetKeys().Where(card => CardManager.GetCard(card).Id.ToString(CultureInfo.InvariantCulture).ToLower().StartsWith(m_searchInput.Text.ToLower()) ||
+                                                                             CardManager.GetCard(card).Name.ToLower().Contains(m_searchInput.Text.ToLower())))
                     {
-                        AddCardToList(Program.CardData[card].Id.ToString(CultureInfo.InvariantCulture));
+                        AddCardToList(CardManager.GetCard(card).Id.ToString(CultureInfo.InvariantCulture));
                     }
                 }
             }
@@ -106,11 +106,11 @@ namespace DevPro_CardManager.Components
             {
                 string text = m_searchList.Items[index].ToString();
                 Graphics g = e.Graphics;
-                if (!Program.CardData.ContainsKey(Int32.Parse(text)))
+                if (!CardManager.ContainsCard(Int32.Parse(text)))
                     m_searchList.Items.Remove(text);
                 else
                 {
-                    CardInfos card = Program.CardData[Int32.Parse(text)];
+                    CardInfos card = CardManager.GetCard(Int32.Parse(text));
 
                     g.FillRectangle((selected) ? new SolidBrush(Color.Blue) : new SolidBrush(Color.White), e.Bounds);
 

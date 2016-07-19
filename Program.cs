@@ -8,7 +8,6 @@ namespace DevPro_CardManager
 {
     static class Program
     {
-        public static Dictionary<int, CardInfos> CardData = new Dictionary<int, CardInfos>();
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -27,8 +26,6 @@ namespace DevPro_CardManager
             Exception exception = e.ExceptionObject as Exception ?? new Exception();
 
             File.WriteAllText("crash_" + DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss") + ".txt", exception.ToString());
-
-            MessageBox.Show(exception.ToString());
 
             Console.WriteLine(exception.ToString());
             Process.GetCurrentProcess().Kill();

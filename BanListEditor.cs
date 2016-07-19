@@ -69,13 +69,13 @@ namespace DevPro_CardManager
                 else
                 {
                     string[] parts = line.Split(new char[] { ' ' },StringSplitOptions.RemoveEmptyEntries);
-                    if (!Program.CardData.ContainsKey(Int32.Parse(parts[0])))
+                    if (!CardManager.ContainsCard(Int32.Parse(parts[0])))
                         continue;
 
-                    if (Program.CardData[Int32.Parse(parts[0])].Name == "")
+                    if (CardManager.GetCard(Int32.Parse(parts[0])).Name == "")
                         continue;
 
-                    BanListCard card = new BanListCard { ID = Int32.Parse(parts[0]), Banvalue = Int32.Parse(parts[1]), Name = Program.CardData[Int32.Parse(parts[0])].Name };
+                    BanListCard card = new BanListCard { ID = Int32.Parse(parts[0]), Banvalue = Int32.Parse(parts[1]), Name = CardManager.GetCard(Int32.Parse(parts[0])).Name };
                     if (!m_banlists.ContainsKey(BanList.Items[BanList.Items.Count - 1].ToString()))
                     {
                         
@@ -155,7 +155,7 @@ namespace DevPro_CardManager
             if (e.Data.GetDataPresent(DataFormats.StringFormat))
             {
                 int id = Int32.Parse(e.Data.GetData(DataFormats.Text).ToString());
-                CardInfos cardinfo = Program.CardData[id];
+                CardInfos cardinfo = CardManager.GetCard(id);
                 BanListCard bancard = new BanListCard() { ID = id, Name = cardinfo.Name, Banvalue = (list == BannedList ? 0:list == LimitedList ? 1:2)};
 
 
@@ -224,7 +224,7 @@ namespace DevPro_CardManager
             {
                 BanListCard card = (BanListCard)list.Items[index];
                 Graphics g = e.Graphics;
-                if (!Program.CardData.ContainsKey(card.ID))
+                if (!CardManager.ContainsCard(card.ID))
                     list.Items.Remove(card);
                 else
                 {
@@ -242,30 +242,32 @@ namespace DevPro_CardManager
 
         private void BanOCGBtn_Click(object sender, EventArgs e)
         {
-            foreach (int id in Program.CardData.Keys)
+            foreach (int id in CardManager.GetKeys())
             {
-                if (Program.CardData[id].Ot == 1)
+                CardInfos card = CardManager.GetCard(id);
+                if (card.Ot == 1)
                 {
                     if (GetBanListCard(id) == null)
                     {
-                        BanListCard card = new BanListCard {ID = id, Banvalue = 0, Name = Program.CardData[id].Name};
-                        BannedList.Items.Add(card);
-                        m_banlists[BanList.SelectedItem.ToString()].Add(card);
+                        BanListCard bancard = new BanListCard {ID = id, Banvalue = 0, Name = card.Name};
+                        BannedList.Items.Add(bancard);
+                        m_banlists[BanList.SelectedItem.ToString()].Add(bancard);
                     }
                 }
             }
         }
         private void BanTCGBtn_Click(object sender, EventArgs e)
         {
-            foreach (int id in Program.CardData.Keys)
+            foreach (int id in CardManager.GetKeys())
             {
-                if (Program.CardData[id].Ot == 2)
+                CardInfos card = CardManager.GetCard(id);
+                if (card.Ot == 2)
                 {
                     if (GetBanListCard(id) == null)
                     {
-                        BanListCard card = new BanListCard { ID = id, Banvalue = 0, Name = Program.CardData[id].Name };
-                        BannedList.Items.Add(card);
-                        m_banlists[BanList.SelectedItem.ToString()].Add(card);
+                        BanListCard bancard = new BanListCard { ID = id, Banvalue = 0, Name = card.Name };
+                        BannedList.Items.Add(bancard);
+                        m_banlists[BanList.SelectedItem.ToString()].Add(bancard);
                     }
                 }
             }

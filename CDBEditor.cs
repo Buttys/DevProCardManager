@@ -29,7 +29,7 @@ namespace DevPro_CardManager
             Visible = true;
             SearchBox.List.DoubleClick +=CardList_DoubleClick;
             SetDataTypes();
-            LoadData(Cdbdir);
+            CardManager.LoadCDB(Cdbdir,false);
             LScale.SelectedIndex = 0;
             RScale.SelectedIndex = 0;
         }
@@ -196,11 +196,11 @@ namespace DevPro_CardManager
 
         private bool LoadCard(int cardid)
         {
-            if (!Program.CardData.ContainsKey(cardid))
+            if (!CardManager.ContainsCard(cardid))
                 return false;
 
             Clearbtn_Click(null, EventArgs.Empty);
-            CardInfos info = Program.CardData[cardid];
+            CardInfos info = CardManager.GetCard(cardid);
 
             CardID.Text = info.Id.ToString(CultureInfo.InvariantCulture);
             Alias.Text = info.AliasId.ToString(CultureInfo.InvariantCulture);
@@ -391,39 +391,6 @@ namespace DevPro_CardManager
                                                         : CheckState.Unchecked);
                 index++;
             }
-        }
-
-        private void LoadData(string dataloc)
-        {
-            if (!File.Exists(dataloc))
-            {
-                MessageBox.Show(dataloc + " not found.");
-                return;
-            }
-            //LoadData(cdbdir, "SELECT id, ot, alias, setcode, type, level, race, attribute, atk, def, category FROM datas", cdbdata);
-            //LoadData(cdbdir, "SELECT id, name, desc, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, str14, str15, str16 FROM texts", cdbenglishtext);
-
-
-
-            var connection = new SQLiteConnection("Data Source=" + dataloc);
-            connection.Open();
-
-            var datacommand = new SQLiteCommand("SELECT id, ot, alias, setcode, type, level, race, attribute, atk, def, category FROM datas", connection);
-            var textcommand = new SQLiteCommand("SELECT id, name, desc, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, str14, str15, str16 FROM texts", connection);
-            List<string[]> datas = DatabaseHelper.ExecuteStringCommand(datacommand, 11);
-            List<string[]> texts = DatabaseHelper.ExecuteStringCommand(textcommand, 19);
-
-            foreach (string[] row in datas)
-            {
-                if (!Program.CardData.ContainsKey(Int32.Parse(row[0])))
-                    Program.CardData.Add(Int32.Parse(row[0]), new CardInfos(row));
-            }
-            foreach (string[] row in texts)
-            {
-                if (Program.CardData.ContainsKey(Int32.Parse(row[0])))
-                    Program.CardData[Int32.Parse(row[0])].SetCardText(row);
-            }
-            connection.Close();
         }
 
         private void LoadCardImage(int id)
@@ -699,12 +666,9 @@ namespace DevPro_CardManager
             connection.Close();
 
             if (cardid != updatecard)
-                Program.CardData.RenameKey(updatecard, cardid);
+                CardManager.RenameKey(updatecard, cardid);
 
-            if (Program.CardData.ContainsKey(cardid))
-                Program.CardData[cardid] = newCardInfo;
-            else
-                Program.CardData.Add(cardid, newCardInfo);
+            CardManager.UpdateOrAddCard(newCardInfo);
 
             MessageBox.Show("Card Saved");
             return true;
@@ -721,7 +685,7 @@ namespace DevPro_CardManager
                 return;
             }
 
-            if (!Program.CardData.ContainsKey(cardid))
+            if (!CardManager.ContainsCard(cardid))
             {
                 MessageBox.Show("Unable to find card to delete.", "Error", MessageBoxButtons.OK);
                 return;
@@ -738,7 +702,7 @@ namespace DevPro_CardManager
 
             if (SQLiteCommands.ContainsCard(cardid,connection))
             {
-                if (MessageBox.Show("Are you sure you want to delete " + Program.CardData[cardid].Name + "?", "Found", MessageBoxButtons.YesNo) == DialogResult.No)
+                if (MessageBox.Show("Are you sure you want to delete " + CardManager.GetCard(cardid).Name + "?", "Found", MessageBoxButtons.YesNo) == DialogResult.No)
                 {
                     return;
                 }
@@ -746,7 +710,7 @@ namespace DevPro_CardManager
 
             SQLiteCommands.DeleteCard(cardid, connection);
 
-            Program.CardData.Remove(cardid);
+            CardManager.RemoveCard(cardid);
             Clearbtn_Click(null, EventArgs.Empty);
         }
 
@@ -759,9 +723,9 @@ namespace DevPro_CardManager
                     Process.Start(file);
                 else
                 {
-                    if (Program.CardData.ContainsKey(m_loadedCard))
+                    if (CardManager.ContainsCard(m_loadedCard))
                     {
-                        CardInfos card = Program.CardData[m_loadedCard];
+                        CardInfos card = CardManager.GetCard(m_loadedCard);
                         string[] lines = { "--" + card.Name, "function c"+ m_loadedCard + ".initial_effect(c)", string.Empty, "end"};
                         File.WriteAllLines(file, lines);
                         Process.Start(file);

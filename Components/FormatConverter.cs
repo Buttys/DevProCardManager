@@ -49,7 +49,7 @@ namespace DevPro_CardManager.Components
                 var data = (string[])convertList.Items[index];
                 Graphics g = e.Graphics;
 
-                CardInfos card = Program.CardData[Int32.Parse(data[0])];
+                CardInfos card = CardManager.GetCard(Int32.Parse(data[0]));
 
                 g.FillRectangle((selected) ? new SolidBrush(Color.Blue) : new SolidBrush(Color.White), e.Bounds);
 

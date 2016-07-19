@@ -105,7 +105,7 @@ namespace DevPro_CardManager
                         }
                         else
                         {
-                            if (!Program.CardData.ContainsKey(id))
+                            if (!CardManager.ContainsCard(id))
                                 toRemove.Add(file);
                         }
                     }

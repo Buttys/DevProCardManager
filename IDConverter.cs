@@ -55,7 +55,7 @@ namespace DevPro_CardManager
                 return;
             }
 
-            if (Program.CardData.ContainsKey(newId) || updateCards.Exists(x => x[1] == newId.ToString(CultureInfo.InvariantCulture)))
+            if (CardManager.ContainsCard(newId) || updateCards.Exists(x => x[1] == newId.ToString(CultureInfo.InvariantCulture)))
             {
                 MessageBox.Show("New Id is already been used.", "Error!", MessageBoxButtons.OK);
                 return;
@@ -109,13 +109,15 @@ namespace DevPro_CardManager
 
                     int cardid = Int32.Parse(updateCard[0]);
                     int newid = Int32.Parse(updateCard[1]);
-                    CardInfos card = Program.CardData[cardid];
+                    CardManager.RenameKey(cardid, newid);
+
+                    CardInfos card = CardManager.GetCard(cardid);
                     card.Id = newid;
                     if (chkremovepre.Checked)
                         card.Ot = card.Ot & 0x03;
-                    Program.CardData.Add(newid, card);
                     
-
+                    CardManager.UpdateOrAddCard(card);
+                    
                     var connection = new SQLiteConnection("Data Source=" + str);
                     connection.Open();
 
@@ -124,8 +126,6 @@ namespace DevPro_CardManager
                         SQLiteCommands.UpdateCardOt(updateCard[1], card.Ot.ToString(), connection);
 
                     connection.Close();
-
-                    Program.CardData.RenameKey(cardid, newid);
 
                 }
 
@@ -220,7 +220,7 @@ namespace DevPro_CardManager
                 var data = (string[])UpdateCardsList.Items[index];
                 Graphics g = e.Graphics;
 
-                CardInfos card = Program.CardData[Int32.Parse(data[0])];
+                CardInfos card = CardManager.GetCard(Int32.Parse(data[0]));
 
                 g.FillRectangle((selected) ? new SolidBrush(Color.Blue) : new SolidBrush(Color.White), e.Bounds);
 

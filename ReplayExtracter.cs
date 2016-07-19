@@ -42,8 +42,8 @@ namespace DevPro_CardManager
 
                 CardInfos card = null;
 
-                if (Program.CardData.ContainsKey(Int32.Parse(text)))
-                    card = Program.CardData[Int32.Parse(text)];
+                if (CardManager.ContainsCard(Int32.Parse(text)))
+                    card = CardManager.GetCard(Int32.Parse(text));
 
                 g.FillRectangle((selected) ? new SolidBrush(Color.Blue) : new SolidBrush(Color.White), e.Bounds);
 

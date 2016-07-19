@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DevPro_CardManager</RootNamespace>
-    <AssemblyName>DevPro CardManager</AssemblyName>
+    <AssemblyName>YGOPro CardManager</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -58,6 +58,7 @@
       <DependentUpon>BanListEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="CardInfo.cs" />
+    <Compile Include="CardManager.cs" />
     <Compile Include="CDBEditor.cs">
       <SubType>Form</SubType>
     </Compile>
