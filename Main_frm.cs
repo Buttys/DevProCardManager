@@ -1,18 +1,34 @@
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using System.IO;
 using DevPro_CardManager.Components;
+using System.IO;
 
 namespace DevPro_CardManager
 {
     public partial class MainFrm : Form
     {
+        private CDBEditor Editor;
         public MainFrm()
         {
             InitializeComponent();
+
+            //load master cdb
+            if (File.Exists("cards.cdb"))
+                CardManager.LoadCDB("cards.cdb", false, true);
+            else
+                loadMasterCDBToolStripMenuItem_Click(null, EventArgs.Empty);
+
+            //check for expansions
+            if(Directory.Exists("expansions"))
+            {
+                string[] expansions = Directory.GetFiles("expansions", "*.cdb");
+                foreach (string xpack in expansions)
+                    CardManager.LoadCDB(xpack, true);
+            }
+
             var editor = new TabPage {Name = "Editor", Text = "Card Editor" };
-            editor.Controls.Add(new CDBEditor());
+            Editor = new CDBEditor();
+            editor.Controls.Add(Editor);
 
             var banlisted = new TabPage { Name = "Banlist Editor", Text = "Banlist Editor" };
             banlisted.Controls.Add(new BanListEditor());
@@ -29,6 +45,7 @@ namespace DevPro_CardManager
 
             TabControl.TabPages.AddRange(new [] { editor, banlisted,idConverter, formatConverter, replayExtracter });
             this.FormBorderStyle = FormBorderStyle.Sizable;
+
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -44,78 +61,40 @@ namespace DevPro_CardManager
             Application.Exit();
         }
 
-        private void CleanDevPro_Click(object sender, EventArgs e)
+        private void loadMasterCDBToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("This will clean out any unused images/scripts that are currently not been used by the game, do you want to continue?", "Clean Game Files", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+            OpenFileDialog dataFile = new OpenFileDialog();
+            dataFile.Filter = "YGOPro Database (*.cdb)|*.cdb";
+            dataFile.Title = "Select master database";
+            if (dataFile.ShowDialog() == DialogResult.OK)
             {
-                FileInfo[] unusedPics = GetUnusedFiles("pics", "*.jpg", new string[0]);
-                FileInfo[] unusedThumbs = GetUnusedFiles("pics\\thumbnail", "*.jpg", new string[0]);
-                FileInfo[] unusedField = GetUnusedFiles("pics\\field", "*.png", new string[0]);
-                FileInfo[] unusedField2 = GetUnusedFiles ("pics\\field", "*.jpg", new string[0]);
-                FileInfo[] unusedScripts = GetUnusedFiles("script", "*.lua", new string[] { "constant.lua", "utility.lua" }, true);
-
-                try
-                {
-                    foreach (FileInfo file in unusedPics)
-                        file.Delete();
-                    foreach (FileInfo file in unusedThumbs)
-                        file.Delete();
-                    foreach (FileInfo File in unusedField)
-                        File.Delete();
-                    foreach (FileInfo File in unusedField2)
-                        File.Delete();
-                    foreach (FileInfo file in unusedScripts)
-                        file.Delete();
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    MessageBox.Show("Admin rights required.");
-                    return;
-                }
-                catch (IOException)
-                {
-                    MessageBox.Show("Some files are in use and we was unable to complete the removal.");
-                    return;
-                }
-
-                MessageBox.Show((unusedPics.Length + unusedThumbs.Length + unusedField2.Length + unusedField.Length + unusedScripts.Length) + " files were removed!");
+                if(CardManager.Count > 0)
+                    if (MessageBox.Show("Loading this cdb will reload the database. Are you sure?", "Clear Data", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                        return;
+                CardManager.LoadCDB(dataFile.FileName, false,true);
+                if(Editor != null)
+                    Editor.UpdateDatabases();
             }
         }
 
-        private FileInfo[] GetUnusedFiles(string dir,string filetype,string[] exceptions, bool script = false)
+        private void loadExpansionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(dir))
+            OpenFileDialog dataFile = new OpenFileDialog();
+            dataFile.Filter = "YGOPro Database (*.cdb)|*.cdb";
+            dataFile.Title = "Load expansion database";
+            dataFile.Multiselect = true;
+            if (dataFile.ShowDialog() == DialogResult.OK)
             {
-                DirectoryInfo dirInfo = new DirectoryInfo(dir);
-                FileInfo[] files = dirInfo.GetFiles(filetype);
-                List<FileInfo> toRemove = new List<FileInfo>();
-                List<string> fileExceptions = new List<string>(exceptions);
-
-                foreach (FileInfo file in files)
-                {
-                    if (!fileExceptions.Contains(file.Name))
-                    {
-                        int id = -1;
-
-                        if (!Int32.TryParse(script ? Path.GetFileNameWithoutExtension(file.Name).Substring(1) : Path.GetFileNameWithoutExtension(file.Name), out id))
-                        {
-                            //not required
-                            toRemove.Add(file);
-                            continue;
-                        }
-                        else
-                        {
-                            if (!CardManager.ContainsCard(id))
-                                toRemove.Add(file);
-                        }
-                    }
-                }
-
-                return toRemove.ToArray();
+                bool overwrite = MessageBox.Show("Overwrite any exsisting cards?", "Load Expansion", MessageBoxButtons.YesNo) == DialogResult.Yes;
+                foreach (string file in dataFile.FileNames)
+                        CardManager.LoadCDB(file, overwrite);
+                Editor.UpdateDatabases();
             }
-
-            return new FileInfo[0];
         }
 
+        private void MainFrm_Load(object sender, EventArgs e)
+        {
+            Activate(); //bring the form to the front after loading the cdb
+        }
     }
 }
