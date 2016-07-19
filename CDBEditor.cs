@@ -6,15 +6,14 @@ using System.Globalization;
 using System.Windows.Forms;
 using DevPro_CardManager.Enums;
 using System.IO;
-using System.Reflection;
 using System.Data.SQLite;
 using DevPro_CardManager.Properties;
+using System.Reflection;
 
 namespace DevPro_CardManager
 {
     public sealed partial class CDBEditor : Form
     {
-        private const string Cdbdir = "cards.cdb";
         Dictionary<int,string> m_setCodes;
         List<int> m_formats;
         List<int> m_cardRaces;
@@ -29,38 +28,54 @@ namespace DevPro_CardManager
             Visible = true;
             SearchBox.List.DoubleClick +=CardList_DoubleClick;
             SetDataTypes();
-            CardManager.LoadCDB(Cdbdir,false);
             LScale.SelectedIndex = 0;
             RScale.SelectedIndex = 0;
+            UpdateDatabases();
+            if (CDBSelect.Items.Count > 0)
+                CDBSelect.SelectedIndex = 0;
         }
 
         private void SetDataTypes()
         {
-            LoadCardFormatsFromFile("Assets\\cardformats.txt");
-            LoadCardRacesFromFile("Assets\\cardraces.txt");
-            LoadCardAttributesFromFile("assets\\cardattributes.txt");
+            LoadCardFormatsFromFile(CreateFileStreamFromString(Resources.cardformats));
+            LoadCardRacesFromFile(CreateFileStreamFromString(Resources.cardraces));
+            LoadCardAttributesFromFile(CreateFileStreamFromString(Resources.cardattributes));
+            LoadSetCodesFromFile(CreateFileStreamFromString(Resources.setname));
+            if (File.Exists("cardformats.txt"))
+                LoadCardFormatsFromFile(CreateFileStreamFromString(File.ReadAllText("cardformats.txt")));
+            if (File.Exists("cardraces.txt"))
+                LoadCardRacesFromFile(CreateFileStreamFromString(File.ReadAllText("cardraces.txt")));
+            if (File.Exists("cardattributes.txt"))
+                LoadCardAttributesFromFile(CreateFileStreamFromString(File.ReadAllText("cardattributes.txt")));
+            if (File.Exists("setname.txt"))
+                LoadSetCodesFromFile(CreateFileStreamFromString(File.ReadAllText("setname.txt")));
             for (int i = 1; i < 13; i++)
                 Level.Items.Add("★" + i);
             for (int i = 0; i < 14; i++)
                 LScale.Items.Add(i);
             for (int i = 0; i < 14; i++)
                 RScale.Items.Add(i);
-            if (!LoadSetCodesFromFile("strings.conf"))
-                LoadSetCodesFromOldFile("Assets\\setname.txt");
             CardTypeList.Items.AddRange(Enum.GetNames(typeof(CardType)));
         }
 
-        private bool LoadSetCodesFromFile(string filedir)
+        private Stream CreateFileStreamFromString(string file)
+        {
+            MemoryStream stream = new MemoryStream();
+            StreamWriter writer = new StreamWriter(stream);
+            writer.Write(file);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
+
+        private bool LoadSetCodesFromFile(Stream file)
         {
             m_setCodes = new Dictionary<int,string>();
             List<string> setnames = new List<string>();
 
-            if (!File.Exists(filedir))
-                return false;
-
             m_setCodes.Add(0, "None");
 
-            var reader = new StreamReader(File.OpenRead(filedir));
+            var reader = new StreamReader(file);
             while (!reader.EndOfStream)
             {
                 //!setcode 0x8d Ghostrick
@@ -91,47 +106,11 @@ namespace DevPro_CardManager
             return true;
         }
 
-        private void LoadSetCodesFromOldFile(string filedir)
-        {
-            m_setCodes = new Dictionary<int, string>();
-            List<string> setnames = new List<string>();
-
-            if (!File.Exists(filedir))
-                return;
-
-            var reader = new StreamReader(File.OpenRead(filedir));
-            while (!reader.EndOfStream)
-            {
- 	            string line = reader.ReadLine();
-	            if (line == null) continue;
- 	            string[] parts = line.Split(' ');
- 	            if (parts.Length == 1) continue;
-	            string setname = line.Substring(parts[0].Length, line.Length - parts[0].Length).Trim();
-                int setcode = Convert.ToInt32(parts[0], 16);
-
-                if (!m_setCodes.ContainsKey(setcode))
-                {
-                    setnames.Add(setname);
-                    m_setCodes.Add(setcode, setname);
-                }
-            }
-            setnames.Sort();
-            SetCodeOne.Items.AddRange(setnames.ToArray());
-            SetCodeTwo.Items.AddRange(setnames.ToArray());
-            SetCodeThree.Items.AddRange(setnames.ToArray());
-            SetCodeFour.Items.AddRange(setnames.ToArray());
-        }
-
-        private void LoadCardFormatsFromFile(string filedir)
+        private void LoadCardFormatsFromFile(Stream file)
         {
             m_formats = new List<int>();
 
-            if (!File.Exists(filedir))
-            {
-                return;
-            }
-
-            var reader = new StreamReader(File.OpenRead(filedir));
+            var reader = new StreamReader(file);
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
@@ -146,16 +125,11 @@ namespace DevPro_CardManager
             }
         }
 
-        private void LoadCardRacesFromFile(string filedir)
+        private void LoadCardRacesFromFile(Stream file)
         {
             m_cardRaces = new List<int>();
 
-            if (!File.Exists(filedir))
-            {
-                return;
-            }
-
-            var reader = new StreamReader(File.OpenRead(filedir));
+            var reader = new StreamReader(file);
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
@@ -170,16 +144,11 @@ namespace DevPro_CardManager
             }
         }
 
-        private void LoadCardAttributesFromFile(string filedir)
+        private void LoadCardAttributesFromFile(Stream file)
         {
             m_cardAttributes = new List<int>();
 
-            if (!File.Exists(filedir))
-            {
-                return;
-            }
-
-            var reader = new StreamReader(File.OpenRead(filedir));
+            var reader = new StreamReader(file);
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
@@ -264,6 +233,8 @@ namespace DevPro_CardManager
             SetCategoryCheckBoxs(info.Category);
 
             m_loadedCard = info.Id;
+
+            CDBSelect.SelectedIndex = info.source - 1;
 
             return true;
         }
@@ -588,7 +559,15 @@ namespace DevPro_CardManager
 
         private void SaveCardbtn_Click(object sender, EventArgs e)
         {
-            if (SaveCardtoCDB(Cdbdir))
+            string dir = string.Empty;
+            if (CDBSelect.Items.Count > 0)
+                dir = CardManager.GetDatabaseDir(CDBSelect.SelectedIndex + 1);
+            else
+            {
+                MessageBox.Show("No cdb selected!");
+                return;
+            }
+            if (SaveCardtoCDB(dir))
                 m_loadedCard = Convert.ToInt32(CardID.Text);
 
         }
@@ -625,12 +604,16 @@ namespace DevPro_CardManager
                 MessageBox.Show("Invalid def value");
                 return false;
             }
-            string str = Directory.GetCurrentDirectory();
-            string str2 = Path.Combine(str, cdbpath);
+            if (CDBSelect.Items.Count == 0)
+            {
+                MessageBox.Show("No loaded database");
+                return false;
+            }
 
             CardInfos newCardInfo = new CardInfos(new[] { cardid.ToString(CultureInfo.InvariantCulture), (ot.ToString(CultureInfo.InvariantCulture)),cardalias.ToString(CultureInfo.InvariantCulture),GetSetCode().ToString(CultureInfo.InvariantCulture),GetTypeCode().ToString(CultureInfo.InvariantCulture),
                 GetLevelCode().ToString(), (Race.SelectedItem == null ? "0" : (Race.SelectedItem == null ? "0" : m_cardRaces[Race.SelectedIndex].ToString(CultureInfo.InvariantCulture))),
-                (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : m_cardAttributes[CardAttribute.SelectedIndex].ToString(CultureInfo.InvariantCulture))),atk.ToString(CultureInfo.InvariantCulture),def.ToString(CultureInfo.InvariantCulture),GetCategoryNumber().ToString(CultureInfo.InvariantCulture)});
+                (CardAttribute.SelectedItem == null ? "0" : (CardAttribute.SelectedItem == null ? "0" : m_cardAttributes[CardAttribute.SelectedIndex].ToString(CultureInfo.InvariantCulture))),atk.ToString(CultureInfo.InvariantCulture),def.ToString(CultureInfo.InvariantCulture),GetCategoryNumber().ToString(CultureInfo.InvariantCulture)}
+            , CDBSelect.SelectedIndex + 1);
 
             var cardtextarray = new List<string> { cardid.ToString(CultureInfo.InvariantCulture), CardName.Text, CardDescription.Text };
 
@@ -641,13 +624,20 @@ namespace DevPro_CardManager
 
             newCardInfo.SetCardText(cardtextarray.ToArray());
 
-            //save/update card
+            //check source DB
 
-            if (!File.Exists(str2))
+            if (CardManager.ContainsCard(cardid))
             {
-                SQLiteConnection.CreateFile(cdbpath);
+                if (CardManager.GetCard(cardid).source != newCardInfo.source)
+                {
+                    if(MessageBox.Show("Copy to new database?","",MessageBoxButtons.YesNo) != DialogResult.Yes)
+                        return false;
+                }
             }
-            var connection = new SQLiteConnection("Data Source=" + str2);
+
+
+            //save/update card
+            var connection = new SQLiteConnection("Data Source=" + CardManager.GetDatabaseDir(newCardInfo.source));
             connection.Open();
             //check if card id exsists
             bool overwrite = SQLiteCommands.ContainsCard(updatecard, connection);
@@ -691,13 +681,9 @@ namespace DevPro_CardManager
                 return;
             }
 
-            string str = Directory.GetCurrentDirectory();
-            string str2 = Path.Combine(str, Cdbdir);
-            if (!File.Exists(str2))
-            {
-                SQLiteConnection.CreateFile(Cdbdir);
-            }
-            var connection = new SQLiteConnection("Data Source=" + str2);
+            string dir = CardManager.GetDatabaseDir(CardManager.GetCard(cardid).source);
+
+            var connection = new SQLiteConnection("Data Source=" + dir);
             connection.Open();
 
             if (SQLiteCommands.ContainsCard(cardid,connection))
@@ -732,6 +718,12 @@ namespace DevPro_CardManager
                     }
                 }
             }
+        }
+
+        public void UpdateDatabases()
+        {
+            CDBSelect.Items.Clear();
+            CDBSelect.Items.AddRange(CardManager.GetDatabaseNames());
         }
 
     }

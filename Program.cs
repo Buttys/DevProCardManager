@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -14,7 +13,9 @@ namespace DevPro_CardManager
         [STAThread]
         static void Main()
         {
+#if !DEBUG
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+#endif
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

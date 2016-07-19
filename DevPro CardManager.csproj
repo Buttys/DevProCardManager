@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="CardInfo.cs" />
     <Compile Include="CardManager.cs" />
+    <Compile Include="CDBData.cs" />
     <Compile Include="CDBEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,18 +155,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\cardattributes.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\cardformats.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\cardraces.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\setname.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Assets\cardattributes.txt" />
+    <Content Include="Assets\cardformats.txt" />
+    <Content Include="Assets\cardraces.txt" />
+    <Content Include="Assets\setname.txt" />
     <Content Include="gemfusion.ico" />
     <Content Include="System.Data.SQLite.dll" />
     <None Include="Resources\unknown.jpg" />

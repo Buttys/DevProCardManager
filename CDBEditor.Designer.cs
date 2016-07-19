@@ -69,6 +69,7 @@ namespace DevPro_CardManager
             this.Clearbtn = new System.Windows.Forms.Button();
             this.SaveCardbtn = new System.Windows.Forms.Button();
             this.DeleteBtn = new System.Windows.Forms.Button();
+            this.CDBSelect = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.EffectList = new System.Windows.Forms.ListBox();
@@ -541,6 +542,7 @@ namespace DevPro_CardManager
             this.flowLayoutPanel2.Controls.Add(this.Clearbtn);
             this.flowLayoutPanel2.Controls.Add(this.SaveCardbtn);
             this.flowLayoutPanel2.Controls.Add(this.DeleteBtn);
+            this.flowLayoutPanel2.Controls.Add(this.CDBSelect);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(303, 547);
@@ -577,6 +579,14 @@ namespace DevPro_CardManager
             this.DeleteBtn.Text = "Delete Card";
             this.DeleteBtn.UseVisualStyleBackColor = true;
             this.DeleteBtn.Click += new System.EventHandler(this.DeleteBtn_Click);
+            // 
+            // CDBSelect
+            // 
+            this.CDBSelect.FormattingEnabled = true;
+            this.CDBSelect.Location = new System.Drawing.Point(23, 3);
+            this.CDBSelect.Name = "CDBSelect";
+            this.CDBSelect.Size = new System.Drawing.Size(121, 21);
+            this.CDBSelect.TabIndex = 3;
             // 
             // groupBox5
             // 
@@ -917,5 +927,6 @@ namespace DevPro_CardManager
         private System.Windows.Forms.ComboBox LScale;
         private System.Windows.Forms.ComboBox RScale;
         private Components.SearchBox SearchBox;
+        private System.Windows.Forms.ComboBox CDBSelect;
     }
 }

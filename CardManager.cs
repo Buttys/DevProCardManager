@@ -8,6 +8,7 @@ namespace DevPro_CardManager
     public static class CardManager
     {
         private static Dictionary<int, CardInfos> CardData = new Dictionary<int, CardInfos>();
+        private static Dictionary<int, CDBData> loadedCDB = new Dictionary<int, CDBData>();
 
         private static void RenameKey<TKey, TValue>(this IDictionary<TKey, TValue> dic,
                               TKey fromKey, TKey toKey)
@@ -17,10 +18,16 @@ namespace DevPro_CardManager
             dic[toKey] = value;
         }
 
-        public static bool LoadCDB(string dir, bool overwrite)
+        public static bool LoadCDB(string dir, bool overwrite,bool clearData = false)
         {
             if (!File.Exists(dir))
                 return false;
+
+            if (clearData)
+            {
+                CardData.Clear();
+                loadedCDB.Clear();
+            }
 
             SQLiteConnection connection = new SQLiteConnection("Data Source=" + dir);
             List<string[]> datas = new List<string[]>();
@@ -39,14 +46,17 @@ namespace DevPro_CardManager
                 return false;
             }
 
+            int cdbsource = loadedCDB.Count + 1;
+            loadedCDB.Add(cdbsource, new CDBData(clearData ? "Master": Path.GetFileNameWithoutExtension(dir), dir));
+
             foreach (string[] row in datas)
             {
                 if (overwrite)
-                    CardManager.UpdateOrAddCard(new CardInfos(row));
+                    CardManager.UpdateOrAddCard(new CardInfos(row, cdbsource));
                 else
                 {
                     if (!CardManager.ContainsCard(Int32.Parse(row[0])))
-                        CardManager.UpdateOrAddCard(new CardInfos(row));
+                        CardManager.UpdateOrAddCard(new CardInfos(row, cdbsource));
                 }
             }
             foreach (string[] row in texts)
@@ -93,6 +103,26 @@ namespace DevPro_CardManager
         public static Dictionary<int, CardInfos>.KeyCollection GetKeys()
         {
             return CardData.Keys;
+        }
+
+        public static int Count
+        {
+          get { return CardData.Count; }
+        }
+
+        public static string GetDatabaseDir(int source)
+        {
+            if (loadedCDB.ContainsKey(source))
+                return loadedCDB[source].Dir;
+            return null;
+        }
+
+        public static string[] GetDatabaseNames()
+        {
+            List<string> keys = new List<string>();
+            foreach (int key in loadedCDB.Keys)
+                keys.Add(loadedCDB[key].Name);
+            return keys.ToArray();
         }
     }
 }

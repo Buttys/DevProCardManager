@@ -174,7 +174,7 @@ namespace DevPro_CardManager.Components
                     _deckData.Add(deck);
                 }
             }
-            catch(Exception x)
+            catch(Exception)
             {
                 //failed invalid data?
                 return false;

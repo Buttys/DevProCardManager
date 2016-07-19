@@ -7,8 +7,13 @@ namespace DevPro_CardManager
 {
     public class CardInfos: ICloneable
     {
+        public int source
+        {
+            get;
+            private set;
+        }
 
-        public CardInfos(IList<string> carddata)
+        public CardInfos(IList<string> carddata, int cdbsource)
         {
             Id = Int32.Parse(carddata[0]);
             Ot = Int32.Parse(carddata[1]);
@@ -24,6 +29,7 @@ namespace DevPro_CardManager
             Atk = Int32.Parse(carddata[8]);
             Def = Int32.Parse(carddata[9]);
             Category =  Int64.Parse(carddata[10]);
+            source = cdbsource; 
         }
 
         public void SetCardText(string[] cardtext)
