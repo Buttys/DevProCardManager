@@ -87,8 +87,8 @@ namespace DevPro_CardManager
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.OpenScriptBtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.CardImg = new System.Windows.Forms.PictureBox();
             this.SearchBox = new DevPro_CardManager.Components.SearchBox();
+            this.CardImg = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -811,6 +811,16 @@ namespace DevPro_CardManager
             this.tableLayoutPanel2.Size = new System.Drawing.Size(171, 587);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
+            // SearchBox
+            // 
+            this.SearchBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SearchBox.Location = new System.Drawing.Point(3, 257);
+            this.SearchBox.Name = "SearchBox";
+            this.SearchBox.Size = new System.Drawing.Size(165, 327);
+            this.SearchBox.TabIndex = 3;
+            this.SearchBox.TabStop = false;
+            this.SearchBox.Text = "Search";
+            // 
             // CardImg
             // 
             this.CardImg.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -822,16 +832,6 @@ namespace DevPro_CardManager
             this.CardImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.CardImg.TabIndex = 0;
             this.CardImg.TabStop = false;
-            // 
-            // SearchBox
-            // 
-            this.SearchBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchBox.Location = new System.Drawing.Point(3, 257);
-            this.SearchBox.Name = "SearchBox";
-            this.SearchBox.Size = new System.Drawing.Size(165, 327);
-            this.SearchBox.TabIndex = 3;
-            this.SearchBox.TabStop = false;
-            this.SearchBox.Text = "Search";
             // 
             // CDBEditor
             // 

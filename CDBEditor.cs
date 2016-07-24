@@ -8,13 +8,12 @@ using DevPro_CardManager.Enums;
 using System.IO;
 using System.Data.SQLite;
 using DevPro_CardManager.Properties;
-using System.Reflection;
 
 namespace DevPro_CardManager
 {
     public sealed partial class CDBEditor : Form
     {
-        Dictionary<int,string> m_setCodes;
+        Dictionary<int,string> m_setCodes = new Dictionary<int, string>();
         List<int> m_formats;
         List<int> m_cardRaces;
         List<int> m_cardAttributes;
@@ -27,7 +26,9 @@ namespace DevPro_CardManager
             Dock = DockStyle.Fill;
             Visible = true;
             SearchBox.List.DoubleClick +=CardList_DoubleClick;
+            m_setCodes.Add(0, "None");
             SetDataTypes();
+            UpdateSetCodes();
             LScale.SelectedIndex = 0;
             RScale.SelectedIndex = 0;
             UpdateDatabases();
@@ -49,6 +50,8 @@ namespace DevPro_CardManager
                 LoadCardAttributesFromFile(CreateFileStreamFromString(File.ReadAllText("cardattributes.txt")));
             if (File.Exists("setname.txt"))
                 LoadSetCodesFromFile(CreateFileStreamFromString(File.ReadAllText("setname.txt")));
+            if (File.Exists("strings.conf"))
+                LoadSetCodesFromFile(CreateFileStreamFromString(File.ReadAllText("strings.conf")));
             for (int i = 1; i < 13; i++)
                 Level.Items.Add("★" + i);
             for (int i = 0; i < 14; i++)
@@ -70,31 +73,40 @@ namespace DevPro_CardManager
 
         private bool LoadSetCodesFromFile(Stream file)
         {
-            m_setCodes = new Dictionary<int,string>();
-            List<string> setnames = new List<string>();
-
-            m_setCodes.Add(0, "None");
-
-            var reader = new StreamReader(file);
-            while (!reader.EndOfStream)
+            try
             {
-                //!setcode 0x8d Ghostrick
-                string line = reader.ReadLine();
-                if (line == null || !line.StartsWith("!setname")) continue;
-                string[] parts = line.Split(' ');
-                if (parts.Length == 1) continue;
-                
-                int setcode = Convert.ToInt32(parts[1], 16);
-                string setname = line.Split(new string[] { parts[1] }, StringSplitOptions.RemoveEmptyEntries)[1].Trim();
-
-                if (!m_setCodes.ContainsKey(setcode))
+                var reader = new StreamReader(file);
+                while (!reader.EndOfStream)
                 {
-                    setnames.Add(setname);
-                    m_setCodes.Add(setcode, setname);
+                    //!setcode 0x8d Ghostrick
+                    string line = reader.ReadLine();
+                    if (line == null || !line.StartsWith("!setname")) continue;
+                    string[] parts = line.Split(' ');
+                    if (parts.Length == 1) continue;
+
+                    int setcode = Convert.ToInt32(parts[1], 16);
+                    string setname = line.Split(new string[] { parts[1] }, StringSplitOptions.RemoveEmptyEntries)[1].Trim();
+
+                    if (!m_setCodes.ContainsKey(setcode))
+                        m_setCodes.Add(setcode, setname);
+                    else
+                        m_setCodes[setcode] = setname;
                 }
             }
-            if (setnames.Count == 0)
+            catch(Exception)
+            {
                 return false;
+            }
+
+            return true;
+        }
+
+        private void UpdateSetCodes()
+        {
+            List<string> setnames = new List<string>();
+
+            foreach (int set in m_setCodes.Keys)
+                setnames.Add(m_setCodes[set]);
 
             setnames.Sort();
             setnames.Insert(0, "None");
@@ -103,7 +115,6 @@ namespace DevPro_CardManager
             SetCodeThree.Items.AddRange(setnames.ToArray());
             SetCodeFour.Items.AddRange(setnames.ToArray());
 
-            return true;
         }
 
         private void LoadCardFormatsFromFile(Stream file)
