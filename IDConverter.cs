@@ -78,6 +78,8 @@ namespace DevPro_CardManager
 
         private void ConvertButton_Click(object sender, EventArgs e)
         {
+
+            ConvertButton.Enabled = false;
             bool updateCdb = cdbchk.Checked;
             bool updateScript = patchchk.Checked;
             bool updateImage = imagechk.Checked;
@@ -111,7 +113,7 @@ namespace DevPro_CardManager
                     int newid = Int32.Parse(updateCard[1]);
                     CardManager.RenameKey(cardid, newid);
 
-                    CardInfos card = CardManager.GetCard(cardid);
+                    CardInfos card = CardManager.GetCard(newid);
                     card.Id = newid;
                     if (chkremovepre.Checked)
                         card.Ot = card.Ot & 0x03;
@@ -186,6 +188,7 @@ namespace DevPro_CardManager
                 File.Copy(str, "DevPatch\\cards.cdb", true);
             UpdateCardsList.Items.Clear();
             MessageBox.Show("Complete.");
+            ConvertButton.Enabled = true;
         }
 
         #region Form Desgin
