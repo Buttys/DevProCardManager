@@ -279,6 +279,7 @@ namespace DevPro_CardManager
             // SetCodeOne
             // 
             this.SetCodeOne.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SetCodeOne.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.SetCodeOne.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SetCodeOne.FormattingEnabled = true;
             this.SetCodeOne.Location = new System.Drawing.Point(109, 78);
@@ -289,6 +290,7 @@ namespace DevPro_CardManager
             // SetCodeTwo
             // 
             this.SetCodeTwo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SetCodeTwo.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.SetCodeTwo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SetCodeTwo.FormattingEnabled = true;
             this.SetCodeTwo.Location = new System.Drawing.Point(109, 103);
@@ -299,6 +301,7 @@ namespace DevPro_CardManager
             // SetCodeThree
             // 
             this.SetCodeThree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SetCodeThree.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.SetCodeThree.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SetCodeThree.FormattingEnabled = true;
             this.SetCodeThree.Location = new System.Drawing.Point(109, 128);
@@ -328,6 +331,7 @@ namespace DevPro_CardManager
             // SetCodeFour
             // 
             this.SetCodeFour.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SetCodeFour.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.SetCodeFour.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SetCodeFour.FormattingEnabled = true;
             this.SetCodeFour.Location = new System.Drawing.Point(109, 153);

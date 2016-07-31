@@ -83,7 +83,7 @@ namespace DevPro_CardManager
                 command.Parameters.Add(new SQLiteParameter("@type", card.Type));
                 command.Parameters.Add(new SQLiteParameter("@atk", card.Atk));
                 command.Parameters.Add(new SQLiteParameter("@def", card.Def));
-                command.Parameters.Add(new SQLiteParameter("@level", card.Level));
+                command.Parameters.Add(new SQLiteParameter("@level", card.GetLevelCode()));
                 command.Parameters.Add(new SQLiteParameter("@race", card.Race));
                 command.Parameters.Add(new SQLiteParameter("@attribute", card.Attribute));
                 command.Parameters.Add(new SQLiteParameter("@category", card.Category));
