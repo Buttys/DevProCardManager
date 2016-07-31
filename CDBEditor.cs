@@ -25,7 +25,11 @@ namespace DevPro_CardManager
             TopLevel = false;
             Dock = DockStyle.Fill;
             Visible = true;
-            SearchBox.List.DoubleClick +=CardList_DoubleClick;
+            SetCodeOne.DrawItem += DrawList;
+            SetCodeTwo.DrawItem += DrawList;
+            SetCodeThree.DrawItem += DrawList;
+            SetCodeFour.DrawItem += DrawList;
+            SearchBox.List.DoubleClick += CardList_DoubleClick;
             m_setCodes.Add(0, "None");
             SetDataTypes();
             UpdateSetCodes();
@@ -103,13 +107,12 @@ namespace DevPro_CardManager
 
         private void UpdateSetCodes()
         {
-            List<string> setnames = new List<string>();
+            List<object> setnames = new List<object>();
 
             foreach (int set in m_setCodes.Keys)
-                setnames.Add(m_setCodes[set]);
+                setnames.Add(set);
 
             setnames.Sort();
-            setnames.Insert(0, "None");
             SetCodeOne.Items.AddRange(setnames.ToArray());
             SetCodeTwo.Items.AddRange(setnames.ToArray());
             SetCodeThree.Items.AddRange(setnames.ToArray());
@@ -223,22 +226,22 @@ namespace DevPro_CardManager
 
             long setcode = info.SetCode & 0xffff;
             if (m_setCodes.ContainsKey((int)setcode))
-                SetCodeOne.SelectedItem = m_setCodes[(int)setcode];
+                SetCodeOne.SelectedItem = (int)setcode;
             else
                 SetCodeOne.SelectedItem = m_setCodes[0];
             setcode = info.SetCode >> 16 & 0xffff;
             if (m_setCodes.ContainsKey((int)setcode))
-                SetCodeTwo.SelectedItem = m_setCodes[(int)setcode];
+                SetCodeTwo.SelectedItem = (int)setcode;
             else
                 SetCodeTwo.SelectedItem = m_setCodes[0];
             setcode = info.SetCode >> 32 & 0xffff;
             if (m_setCodes.ContainsKey((int)setcode))
-                SetCodeThree.SelectedItem = m_setCodes[(int)setcode];
+                SetCodeThree.SelectedItem = (int)setcode;
             else
-                SetCodeThree.SelectedItem = m_setCodes[0];
+                SetCodeThree.SelectedItem = 0;
             setcode = info.SetCode >> 48 & 0xffff;
             if (m_setCodes.ContainsKey((int)setcode))
-                SetCodeFour.SelectedItem = m_setCodes[(int)setcode];
+                SetCodeFour.SelectedItem = (int)setcode;
             else
                 SetCodeFour.SelectedItem = m_setCodes[0];
             SetCategoryCheckBoxs(info.Category);
@@ -490,10 +493,10 @@ namespace DevPro_CardManager
         {
             MemoryStream m_stream = new MemoryStream();
             BinaryWriter m_writer = new BinaryWriter(m_stream);
-            m_writer.Write((short)((SetCodeOne.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeOne.SelectedItem.ToString()) : 0));
-            m_writer.Write((short)((SetCodeTwo.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeTwo.SelectedItem.ToString()) : 0));
-            m_writer.Write((short)((SetCodeThree.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeThree.SelectedItem.ToString()) : 0));
-            m_writer.Write((short)((SetCodeFour.SelectedIndex > 0) ? GetSetCodeFromString(SetCodeFour.SelectedItem.ToString()) : 0));
+            m_writer.Write((short)((SetCodeOne.SelectedIndex > 0) ? (int)SetCodeOne.SelectedItem : 0));
+            m_writer.Write((short)((SetCodeTwo.SelectedIndex > 0) ? (int)SetCodeTwo.SelectedItem : 0));
+            m_writer.Write((short)((SetCodeThree.SelectedIndex > 0) ? (int)SetCodeThree.SelectedItem : 0));
+            m_writer.Write((short)((SetCodeFour.SelectedIndex > 0) ? (int)SetCodeFour.SelectedItem : 0));
             return BitConverter.ToInt64(m_stream.ToArray(),0);
         }
 
@@ -737,5 +740,18 @@ namespace DevPro_CardManager
             CDBSelect.Items.AddRange(CardManager.GetDatabaseNames());
         }
 
+        private void DrawList(object sender, DrawItemEventArgs e)
+        {
+            int index = e.Index;
+
+            if (index < 0)
+                return;
+            ComboBox combobox = (ComboBox)sender;
+
+            e.DrawBackground();
+            e.Graphics.FillRectangle(new SolidBrush(e.BackColor), e.Bounds);
+            e.Graphics.DrawString(m_setCodes[(int)combobox.Items[index]], e.Font, new SolidBrush(e.ForeColor), e.Bounds);
+            e.DrawFocusRectangle();
+        }
     }
 }

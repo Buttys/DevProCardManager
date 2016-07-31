@@ -2,6 +2,7 @@
 using DevPro_CardManager.Enums;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace DevPro_CardManager
 {
@@ -57,6 +58,17 @@ namespace DevPro_CardManager
         {
             var sets = new List<long> {setArray.IndexOf(SetCode & 0xffff), setArray.IndexOf(SetCode >> 0x10)};
             return sets.ToArray();
+        }
+
+        public int GetLevelCode()
+        {
+            MemoryStream m_stream = new MemoryStream();
+            BinaryWriter m_writer = new BinaryWriter(m_stream);
+            m_writer.Write((byte)Level);
+            m_writer.Write((byte)0);
+            m_writer.Write((byte)RScale);
+            m_writer.Write((byte)LScale);
+            return BitConverter.ToInt32(m_stream.ToArray(), 0);
         }
 
         public object Clone()
