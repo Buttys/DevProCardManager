@@ -284,7 +284,7 @@
 !setname 0xe0 Amorphage
 !setname 0xe1 Metalfoes
 !setname 0xe2 Tramid
-!setname 0xe3 Houkai
+!setname 0xe3 Cubic
 !setname 0xe4 Celtic Guard
 !setname 0xe5 Cipher
 !setname 0xe6 Cardian
@@ -294,8 +294,6 @@
 !setname 0x1ea Predator Plant
 !setname 0xea Crystron
 !setname 0xeb Chemical Beast
-!setname 0x1ed Abyss
-!setname 0x11ed Abyss Actor
-!setname 0x21ed Abyss Script
-!setname 0x1ef Darklord/Fallen One
-!setname 0x1f0 Subterror
+!setname 0xec Abyss
+!setname 0x10ec Abyss Actor
+!setname 0x20ec Abyss Script
