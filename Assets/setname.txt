@@ -170,7 +170,7 @@
 !setname 0x1081 Fire King Avatar
 !setname 0x82 Dododo
 !setname 0x100 Synchron Synchos
-!setname 0x101 Syncro Fusions
+!setname 0x101 Synchro Fusions
 !setname 0x102 Evil Hero Fusions
 !setname 0x83 Gimmick Puppet
 !setname 0x101b Mecha Phantom Beast
