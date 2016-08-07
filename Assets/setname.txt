@@ -283,7 +283,7 @@
 !setname 0xdf Lunalight
 !setname 0xe0 Amorphage
 !setname 0xe1 Metalfoes
-!setname 0xe2 Tramid
+!setname 0xe2 Triamid
 !setname 0xe3 Cubic
 !setname 0xe4 Celtic Guard
 !setname 0xe5 Cipher
@@ -297,3 +297,8 @@
 !setname 0xec Abyss
 !setname 0x10ec Abyss Actor
 !setname 0x20ec Abyss Script
+!setname 0xef Darklord/Fallen One
+!setname 0xed Subterror
+!setname 0x10ed Subterror Behemoth
+!setname 0xee SPYRAL
+!setname 0x10ee SPYRAL GEAR
