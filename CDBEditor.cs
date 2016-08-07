@@ -108,11 +108,28 @@ namespace DevPro_CardManager
         private void UpdateSetCodes()
         {
             List<object> setnames = new List<object>();
+            Dictionary<string, int> setstrings = new Dictionary<string, int>();
+            List<string> sortedSetNames = new List<string>();
 
             foreach (int set in m_setCodes.Keys)
-                setnames.Add(set);
+                if(!setstrings.ContainsKey(m_setCodes[set]))
+                    setstrings.Add(m_setCodes[set], set);
 
-            setnames.Sort();
+            foreach (string set in setstrings.Keys)
+                sortedSetNames.Add(set);
+
+            sortedSetNames.Sort();
+
+
+            foreach (string setname in sortedSetNames)
+                if(setstrings[setname] != 0)
+                    setnames.Add(setstrings[setname]);
+
+            SetCodeOne.Items.Add(0);
+            SetCodeTwo.Items.Add(0);
+            SetCodeThree.Items.Add(0);
+            SetCodeFour.Items.Add(0);
+
             SetCodeOne.Items.AddRange(setnames.ToArray());
             SetCodeTwo.Items.AddRange(setnames.ToArray());
             SetCodeThree.Items.AddRange(setnames.ToArray());
