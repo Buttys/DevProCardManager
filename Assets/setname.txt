@@ -291,7 +291,6 @@
 !setname 0xe7 Silent Swordsman
 !setname 0xe8 Silent Magician
 !setname 0xe9 Magna Warrior
-!setname 0x1ea Predator Plant
 !setname 0xea Crystron
 !setname 0xeb Chemical Beast
 !setname 0xec Abyss
