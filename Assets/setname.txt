@@ -301,3 +301,7 @@
 !setname 0x10ed Subterror Behemoth
 !setname 0xee SPYRAL
 !setname 0x10ee SPYRAL GEAR
+!setname 0x20ee SPYRAL MISSION
+!setname 0xf0 Wind Witch
+!setname 0xf1 Juunishishi
+!setname 0xf2 Pendulum Dragon
