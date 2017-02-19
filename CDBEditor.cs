@@ -359,6 +359,9 @@ namespace DevPro_CardManager
                     case CardType.Pendulum:
                         CardTypeList.SetItemCheckState(22, CheckState.Checked);
                         break;
+                    case CardType.SpecialSummon:
+                        CardTypeList.SetItemCheckState(23, CheckState.Checked);
+                        break;
                 }
             }
         }
@@ -585,6 +588,8 @@ namespace DevPro_CardManager
                 code += (int)CardType.Xyz;
             if (CardTypeList.GetItemCheckState(22) == CheckState.Checked)
                 code += (int)CardType.Pendulum;
+            if (CardTypeList.GetItemCheckState(23) == CheckState.Checked)
+                code += (int)CardType.SpecialSummon;
             return code;
         }
 
