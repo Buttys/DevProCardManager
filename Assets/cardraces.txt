@@ -23,4 +23,4 @@
 0x200000 DevineBeast
 0x400000 Creator God
 0x800000 Wyrm
-0x1000000 Cybers
+0x1000000 Cyverse
