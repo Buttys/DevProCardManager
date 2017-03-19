@@ -408,6 +408,14 @@ namespace DevPro_CardManager
                 }
             }
             else
+            if (File.Exists("pics//" + id + ".png"))
+            {
+                using (var stream = new FileStream("pics//" + id + ".png", FileMode.Open, FileAccess.Read))
+                    {
+                    CardImg.Image = Image.FromStream(stream);
+                    }
+            }
+            else
             {
                 CardImg.Image = Resources.unknown;
             }
