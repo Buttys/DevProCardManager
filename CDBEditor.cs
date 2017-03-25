@@ -35,6 +35,7 @@ namespace DevPro_CardManager
             UpdateSetCodes();
             LScale.SelectedIndex = 0;
             RScale.SelectedIndex = 0;
+
             UpdateDatabases();
             if (CDBSelect.Items.Count > 0)
                 CDBSelect.SelectedIndex = 0;
@@ -63,6 +64,7 @@ namespace DevPro_CardManager
             for (int i = 0; i < 14; i++)
                 RScale.Items.Add(i);
             CardTypeList.Items.AddRange(Enum.GetNames(typeof(CardType)));
+            LinkMarkerList.Items.AddRange(Enum.GetNames(typeof(LinkMarker)));
         }
 
         private Stream CreateFileStreamFromString(string file)
@@ -362,10 +364,45 @@ namespace DevPro_CardManager
                     case CardType.SpecialSummon:
                         CardTypeList.SetItemCheckState(23, CheckState.Checked);
                         break;
+                    case CardType.Link:
+                        CardTypeList.SetItemCheckState(24, CheckState.Checked);
+                        break;
                 }
             }
         }
-
+        private void SetCardTypes(IEnumerable<LinkMarker> types)
+        {
+            foreach (var linkmarker in types)
+            {
+                switch (linkmarker)
+                {
+                    case LinkMarker.BottomLeft:
+                        CardTypeList.SetItemCheckState(0, CheckState.Checked);
+                        break;
+                    case LinkMarker.Bottom:
+                        CardTypeList.SetItemCheckState(1, CheckState.Checked);
+                        break;
+                    case LinkMarker.BottomRight:
+                        CardTypeList.SetItemCheckState(2, CheckState.Checked);
+                        break;
+                    case LinkMarker.Left:
+                        CardTypeList.SetItemCheckState(3, CheckState.Checked);
+                        break;
+                    case LinkMarker.Right:
+                        CardTypeList.SetItemCheckState(4, CheckState.Checked);
+                        break;
+                    case LinkMarker.TopLeft:
+                        CardTypeList.SetItemCheckState(5, CheckState.Checked);
+                        break;
+                    case LinkMarker.Top:
+                        CardTypeList.SetItemCheckState(6, CheckState.Checked);
+                        break;
+                    case LinkMarker.TopRight:
+                        CardTypeList.SetItemCheckState(7, CheckState.Checked);
+                        break;
+                }
+            }
+        }
         private int GetCategoryNumber()
         {
             int selectedIndex = 0;
@@ -441,6 +478,7 @@ namespace DevPro_CardManager
             CardName.Clear();
             CardDescription.Clear();
             EffectList.Items.Clear();
+            
 
             for (int i = 0; i < CardTypeList.Items.Count; i++)
             {
@@ -449,6 +487,10 @@ namespace DevPro_CardManager
             for (int i = 0; i < CategoryList.Items.Count; i++)
             {
                 CategoryList.SetItemCheckState(i, CheckState.Unchecked);
+            }
+            for (int i = 0; i < LinkMarkerList.Items.Count; i++)
+            {
+                LinkMarkerList.SetItemCheckState(i, CheckState.Unchecked);
             }
             m_loadedCard = 0;
             CardImg.Image = Resources.unknown;
@@ -598,6 +640,8 @@ namespace DevPro_CardManager
                 code += (int)CardType.Pendulum;
             if (CardTypeList.GetItemCheckState(23) == CheckState.Checked)
                 code += (int)CardType.SpecialSummon;
+            if (CardTypeList.GetItemCheckState(24) == CheckState.Checked)
+                code += (int)CardType.Link;
             return code;
         }
 

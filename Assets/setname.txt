@@ -110,6 +110,7 @@
 !setname 0x4f Buster
 !setname 0x104f /Assault Mode
 !setname 0x50 Venom
+!setname 0x1050 Starving Venom
 !setname 0x51 Gadget
 !setname 0x52 Guardian
 !setname 0x53 Constellar
