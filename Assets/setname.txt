@@ -325,3 +325,7 @@
 !setname 0x20f8 Supreme King Servant Dragon
 !setname 0xf9 True King
 !setname 0xfa Mythic Radiance Dragon
+!setname 0xfb Trickster
+!setname 0xfc Gouki
+!setname 0xfd Star Grail
+!setname 0xfe Star Relic
