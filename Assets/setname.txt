@@ -67,6 +67,7 @@
 !setname 0x1034 Crystal Beast
 !setname 0x2034 Rainbow
 !setname 0x93 Cyber
+!setname 0x4093 Cyberdark
 !setname 0x94 Cybernetic
 !setname 0x1093 Cyber Dragon
 !setname 0x2093 Cyber Angel
@@ -329,3 +330,4 @@
 !setname 0xfc Gouki
 !setname 0xfd Star Grail
 !setname 0xfe Star Relic
+!setname 0xff Clear Wing
