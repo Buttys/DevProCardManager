@@ -320,12 +320,12 @@
 !setname 0x1046 Fusion Dragon
 !setname 0x2073 Xyz Dragon
 !setname 0x1f7 Pendulumgraph
-!setname 0xf7 Lyrical Luscinia
+!setname 0xf7 Lyrilusc
 !setname 0xf8 Supreme King
 !setname 0x10f8 Supreme King Gate
-!setname 0x20f8 Supreme King Servant Dragon
+!setname 0x20f8 Supreme King Dragon
 !setname 0xf9 True King
-!setname 0xfa Mythic Radiance Dragon
+!setname 0xfa Phantasm Spiral
 !setname 0xfb Trickster
 !setname 0xfc Gouki
 !setname 0xfd Star Grail
