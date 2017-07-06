@@ -6,9 +6,9 @@
         Bottom = 2,
         BottomRight = 4,
         Left = 8,
-        Right = 16,
-        TopLeft = 32,
-        Top = 64,
-        TopRight = 128
+        Right = 32,
+        TopLeft = 64,
+        Top = 128,
+        TopRight = 256
     }
 }
