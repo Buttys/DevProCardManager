@@ -13,7 +13,7 @@ namespace DevPro_CardManager
 {
     public sealed partial class CDBEditor : Form
     {
-        Dictionary<int,string> m_setCodes = new Dictionary<int, string>();
+        Dictionary<int, string> m_setCodes = new Dictionary<int, string>();
         List<int> m_formats;
         List<int> m_cardRaces;
         List<int> m_cardAttributes;
@@ -99,7 +99,7 @@ namespace DevPro_CardManager
                         m_setCodes[setcode] = setname;
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -114,7 +114,7 @@ namespace DevPro_CardManager
             List<string> sortedSetNames = new List<string>();
 
             foreach (int set in m_setCodes.Keys)
-                if(!setstrings.ContainsKey(m_setCodes[set]))
+                if (!setstrings.ContainsKey(m_setCodes[set]))
                     setstrings.Add(m_setCodes[set], set);
 
             foreach (string set in setstrings.Keys)
@@ -124,7 +124,7 @@ namespace DevPro_CardManager
 
 
             foreach (string setname in sortedSetNames)
-                if(setstrings[setname] != 0)
+                if (setstrings[setname] != 0)
                     setnames.Add(setstrings[setname]);
 
             SetCodeOne.Items.Add(0);
@@ -448,9 +448,9 @@ namespace DevPro_CardManager
             if (File.Exists("pics//" + id + ".png"))
             {
                 using (var stream = new FileStream("pics//" + id + ".png", FileMode.Open, FileAccess.Read))
-                    {
+                {
                     CardImg.Image = Image.FromStream(stream);
-                    }
+                }
             }
             else
             {
@@ -478,7 +478,7 @@ namespace DevPro_CardManager
             CardName.Clear();
             CardDescription.Clear();
             EffectList.Items.Clear();
-            
+
 
             for (int i = 0; i < CardTypeList.Items.Count; i++)
             {
@@ -567,13 +567,13 @@ namespace DevPro_CardManager
             m_writer.Write((short)((SetCodeTwo.SelectedIndex > 0) ? (int)SetCodeTwo.SelectedItem : 0));
             m_writer.Write((short)((SetCodeThree.SelectedIndex > 0) ? (int)SetCodeThree.SelectedItem : 0));
             m_writer.Write((short)((SetCodeFour.SelectedIndex > 0) ? (int)SetCodeFour.SelectedItem : 0));
-            return BitConverter.ToInt64(m_stream.ToArray(),0);
+            return BitConverter.ToInt64(m_stream.ToArray(), 0);
         }
 
         private int GetSetCodeFromString(string name)
         {
-            foreach(var item in m_setCodes)
-                if(item.Value == name)
+            foreach (var item in m_setCodes)
+                if (item.Value == name)
                     return item.Key;
             return 0;
         }
@@ -667,7 +667,7 @@ namespace DevPro_CardManager
             int atk;
             int def;
             int ot = (CardFormats.SelectedItem == null ? 0 : GetCardFormat());
-            if(chkPre.Checked)
+            if (chkPre.Checked)
                 ot |= 0x4;
 
             if (!Int32.TryParse(CardID.Text, out cardid))
@@ -718,7 +718,7 @@ namespace DevPro_CardManager
             {
                 if (CardManager.GetCard(cardid).source != newCardInfo.source)
                 {
-                    if(MessageBox.Show("Copy to new database?","",MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    if (MessageBox.Show("Copy to new database?", "", MessageBoxButtons.YesNo) != DialogResult.Yes)
                         return false;
                 }
             }
@@ -774,7 +774,7 @@ namespace DevPro_CardManager
             var connection = new SQLiteConnection("Data Source=" + dir);
             connection.Open();
 
-            if (SQLiteCommands.ContainsCard(cardid,connection))
+            if (SQLiteCommands.ContainsCard(cardid, connection))
             {
                 if (MessageBox.Show("Are you sure you want to delete " + CardManager.GetCard(cardid).Name + "?", "Found", MessageBoxButtons.YesNo) == DialogResult.No)
                 {
@@ -800,7 +800,7 @@ namespace DevPro_CardManager
                     if (CardManager.ContainsCard(m_loadedCard))
                     {
                         CardInfos card = CardManager.GetCard(m_loadedCard);
-                        string[] lines = { "--" + card.Name, "function c"+ m_loadedCard + ".initial_effect(c)", string.Empty, "end"};
+                        string[] lines = { "--" + card.Name, "function c" + m_loadedCard + ".initial_effect(c)", string.Empty, "end" };
                         File.WriteAllLines(file, lines);
                         Process.Start(file);
                     }

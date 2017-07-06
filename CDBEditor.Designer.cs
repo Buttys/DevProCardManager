@@ -84,13 +84,13 @@ namespace DevPro_CardManager
             this.CardTypeList = new System.Windows.Forms.CheckedListBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.CategoryList = new System.Windows.Forms.CheckedListBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.LinkMarkerList = new System.Windows.Forms.CheckedListBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.OpenScriptBtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.SearchBox = new DevPro_CardManager.Components.SearchBox();
             this.CardImg = new System.Windows.Forms.PictureBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.LinkMarkerList = new System.Windows.Forms.CheckedListBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -104,10 +104,10 @@ namespace DevPro_CardManager
             this.tableLayoutPanel5.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CardImg)).BeginInit();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -587,7 +587,6 @@ namespace DevPro_CardManager
             this.flowLayoutPanel2.Controls.Add(this.Clearbtn);
             this.flowLayoutPanel2.Controls.Add(this.SaveCardbtn);
             this.flowLayoutPanel2.Controls.Add(this.DeleteBtn);
-            this.flowLayoutPanel2.Controls.Add(this.CDBSelect);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(484, 673);
@@ -632,7 +631,7 @@ namespace DevPro_CardManager
             // CDBSelect
             // 
             this.CDBSelect.FormattingEnabled = true;
-            this.CDBSelect.Location = new System.Drawing.Point(308, 40);
+            this.CDBSelect.Location = new System.Drawing.Point(151, 4);
             this.CDBSelect.Margin = new System.Windows.Forms.Padding(4);
             this.CDBSelect.Name = "CDBSelect";
             this.CDBSelect.Size = new System.Drawing.Size(160, 24);
@@ -753,7 +752,7 @@ namespace DevPro_CardManager
             this.tableLayoutPanel5.ColumnCount = 3;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.71598F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.28402F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 152F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 153F));
             this.tableLayoutPanel5.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.groupBox6, 1, 0);
             this.tableLayoutPanel5.Controls.Add(this.groupBox3, 2, 0);
@@ -797,7 +796,7 @@ namespace DevPro_CardManager
             this.groupBox6.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox6.Size = new System.Drawing.Size(178, 162);
+            this.groupBox6.Size = new System.Drawing.Size(177, 162);
             this.groupBox6.TabIndex = 1;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Card Category";
@@ -842,12 +841,31 @@ namespace DevPro_CardManager
             this.CategoryList.Location = new System.Drawing.Point(4, 19);
             this.CategoryList.Margin = new System.Windows.Forms.Padding(4);
             this.CategoryList.Name = "CategoryList";
-            this.CategoryList.Size = new System.Drawing.Size(170, 139);
+            this.CategoryList.Size = new System.Drawing.Size(169, 139);
             this.CategoryList.TabIndex = 0;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.LinkMarkerList);
+            this.groupBox3.Location = new System.Drawing.Point(321, 3);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(147, 163);
+            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Link Marker";
+            // 
+            // LinkMarkerList
+            // 
+            this.LinkMarkerList.FormattingEnabled = true;
+            this.LinkMarkerList.Location = new System.Drawing.Point(6, 20);
+            this.LinkMarkerList.Name = "LinkMarkerList";
+            this.LinkMarkerList.Size = new System.Drawing.Size(117, 140);
+            this.LinkMarkerList.TabIndex = 0;
             // 
             // flowLayoutPanel3
             // 
             this.flowLayoutPanel3.Controls.Add(this.OpenScriptBtn);
+            this.flowLayoutPanel3.Controls.Add(this.CDBSelect);
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(4, 673);
@@ -909,24 +927,6 @@ namespace DevPro_CardManager
             this.CardImg.TabIndex = 0;
             this.CardImg.TabStop = false;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.LinkMarkerList);
-            this.groupBox3.Location = new System.Drawing.Point(322, 3);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(147, 163);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Link Marker";
-            // 
-            // LinkMarkerList
-            // 
-            this.LinkMarkerList.FormattingEnabled = true;
-            this.LinkMarkerList.Location = new System.Drawing.Point(6, 20);
-            this.LinkMarkerList.Name = "LinkMarkerList";
-            this.LinkMarkerList.Size = new System.Drawing.Size(117, 140);
-            this.LinkMarkerList.TabIndex = 0;
-            // 
             // CDBEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -953,10 +953,10 @@ namespace DevPro_CardManager
             this.tableLayoutPanel5.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.flowLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.CardImg)).EndInit();
-            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
