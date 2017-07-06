@@ -69,7 +69,6 @@ namespace DevPro_CardManager
             this.Clearbtn = new System.Windows.Forms.Button();
             this.SaveCardbtn = new System.Windows.Forms.Button();
             this.DeleteBtn = new System.Windows.Forms.Button();
-            this.CDBSelect = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.EffectList = new System.Windows.Forms.ListBox();
@@ -88,9 +87,10 @@ namespace DevPro_CardManager
             this.LinkMarkerList = new System.Windows.Forms.CheckedListBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.OpenScriptBtn = new System.Windows.Forms.Button();
+            this.CDBSelect = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.SearchBox = new DevPro_CardManager.Components.SearchBox();
             this.CardImg = new System.Windows.Forms.PictureBox();
+            this.SearchBox = new DevPro_CardManager.Components.SearchBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -628,15 +628,6 @@ namespace DevPro_CardManager
             this.DeleteBtn.UseVisualStyleBackColor = true;
             this.DeleteBtn.Click += new System.EventHandler(this.DeleteBtn_Click);
             // 
-            // CDBSelect
-            // 
-            this.CDBSelect.FormattingEnabled = true;
-            this.CDBSelect.Location = new System.Drawing.Point(151, 4);
-            this.CDBSelect.Margin = new System.Windows.Forms.Padding(4);
-            this.CDBSelect.Name = "CDBSelect";
-            this.CDBSelect.Size = new System.Drawing.Size(160, 24);
-            this.CDBSelect.TabIndex = 3;
-            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.tableLayoutPanel7);
@@ -679,6 +670,7 @@ namespace DevPro_CardManager
             this.EffectList.Name = "EffectList";
             this.EffectList.Size = new System.Drawing.Size(304, 108);
             this.EffectList.TabIndex = 1;
+            this.EffectList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EffectList_MouseDoubleClick);
             // 
             // EffectInput
             // 
@@ -752,7 +744,7 @@ namespace DevPro_CardManager
             this.tableLayoutPanel5.ColumnCount = 3;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.71598F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.28402F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 153F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 169F));
             this.tableLayoutPanel5.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.groupBox6, 1, 0);
             this.tableLayoutPanel5.Controls.Add(this.groupBox3, 2, 0);
@@ -773,7 +765,7 @@ namespace DevPro_CardManager
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(125, 162);
+            this.groupBox1.Size = new System.Drawing.Size(118, 162);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Card Types";
@@ -785,18 +777,19 @@ namespace DevPro_CardManager
             this.CardTypeList.Location = new System.Drawing.Point(4, 19);
             this.CardTypeList.Margin = new System.Windows.Forms.Padding(4);
             this.CardTypeList.Name = "CardTypeList";
-            this.CardTypeList.Size = new System.Drawing.Size(117, 139);
+            this.CardTypeList.Size = new System.Drawing.Size(110, 139);
             this.CardTypeList.TabIndex = 0;
+            this.CardTypeList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.CardTypeList_ItemCheck);
             // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.CategoryList);
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox6.Location = new System.Drawing.Point(137, 4);
+            this.groupBox6.Location = new System.Drawing.Point(130, 4);
             this.groupBox6.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox6.Size = new System.Drawing.Size(177, 162);
+            this.groupBox6.Size = new System.Drawing.Size(168, 162);
             this.groupBox6.TabIndex = 1;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Card Category";
@@ -841,13 +834,13 @@ namespace DevPro_CardManager
             this.CategoryList.Location = new System.Drawing.Point(4, 19);
             this.CategoryList.Margin = new System.Windows.Forms.Padding(4);
             this.CategoryList.Name = "CategoryList";
-            this.CategoryList.Size = new System.Drawing.Size(169, 139);
+            this.CategoryList.Size = new System.Drawing.Size(160, 139);
             this.CategoryList.TabIndex = 0;
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.LinkMarkerList);
-            this.groupBox3.Location = new System.Drawing.Point(321, 3);
+            this.groupBox3.Location = new System.Drawing.Point(305, 3);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(147, 163);
             this.groupBox3.TabIndex = 2;
@@ -856,6 +849,7 @@ namespace DevPro_CardManager
             // 
             // LinkMarkerList
             // 
+            this.LinkMarkerList.Enabled = false;
             this.LinkMarkerList.FormattingEnabled = true;
             this.LinkMarkerList.Location = new System.Drawing.Point(6, 20);
             this.LinkMarkerList.Name = "LinkMarkerList";
@@ -885,6 +879,15 @@ namespace DevPro_CardManager
             this.OpenScriptBtn.UseVisualStyleBackColor = true;
             this.OpenScriptBtn.Click += new System.EventHandler(this.OpenScriptBtn_Click);
             // 
+            // CDBSelect
+            // 
+            this.CDBSelect.FormattingEnabled = true;
+            this.CDBSelect.Location = new System.Drawing.Point(151, 4);
+            this.CDBSelect.Margin = new System.Windows.Forms.Padding(4);
+            this.CDBSelect.Name = "CDBSelect";
+            this.CDBSelect.Size = new System.Drawing.Size(160, 24);
+            this.CDBSelect.TabIndex = 3;
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
@@ -902,18 +905,6 @@ namespace DevPro_CardManager
             this.tableLayoutPanel2.Size = new System.Drawing.Size(228, 722);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
-            // SearchBox
-            // 
-            this.SearchBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchBox.Location = new System.Drawing.Point(4, 317);
-            this.SearchBox.Margin = new System.Windows.Forms.Padding(4);
-            this.SearchBox.Name = "SearchBox";
-            this.SearchBox.Padding = new System.Windows.Forms.Padding(4);
-            this.SearchBox.Size = new System.Drawing.Size(220, 401);
-            this.SearchBox.TabIndex = 3;
-            this.SearchBox.TabStop = false;
-            this.SearchBox.Text = "Search";
-            // 
             // CardImg
             // 
             this.CardImg.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -926,6 +917,18 @@ namespace DevPro_CardManager
             this.CardImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.CardImg.TabIndex = 0;
             this.CardImg.TabStop = false;
+            // 
+            // SearchBox
+            // 
+            this.SearchBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SearchBox.Location = new System.Drawing.Point(4, 317);
+            this.SearchBox.Margin = new System.Windows.Forms.Padding(4);
+            this.SearchBox.Name = "SearchBox";
+            this.SearchBox.Padding = new System.Windows.Forms.Padding(4);
+            this.SearchBox.Size = new System.Drawing.Size(220, 401);
+            this.SearchBox.TabIndex = 3;
+            this.SearchBox.TabStop = false;
+            this.SearchBox.Text = "Search";
             // 
             // CDBEditor
             // 

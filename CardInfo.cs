@@ -54,6 +54,15 @@ namespace DevPro_CardManager
             return typeArray.Cast<CardType>().Where(type => ((Type & (int) type) != 0)).ToArray();
         }
 
+        public LinkMarker[] GetLinkMarkers()
+        {
+            List<LinkMarker> Markers = new List<LinkMarker>();
+            foreach (LinkMarker marker in Enum.GetValues(typeof(LinkMarker)))
+                if ((Def & (int)marker) != 0)
+                    Markers.Add(marker);
+            return Markers.ToArray();
+        }
+
         public long[] GetCardSets(List<long> setArray)
         {
             var sets = new List<long> {setArray.IndexOf(SetCode & 0xffff), setArray.IndexOf(SetCode >> 0x10)};
