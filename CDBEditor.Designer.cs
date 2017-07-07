@@ -90,8 +90,8 @@ namespace DevPro_CardManager
             this.OpenScriptBtn = new System.Windows.Forms.Button();
             this.CDBSelect = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.CardImg = new System.Windows.Forms.PictureBox();
             this.SearchBox = new DevPro_CardManager.Components.SearchBox();
+            this.CardImg = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -121,7 +121,7 @@ namespace DevPro_CardManager
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -141,7 +141,7 @@ namespace DevPro_CardManager
             this.tableLayoutPanel3.Controls.Add(this.flowLayoutPanel3, 0, 2);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(240, 4);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 67.97274F));
@@ -156,9 +156,9 @@ namespace DevPro_CardManager
             this.groupBox2.Controls.Add(this.tableLayoutPanel4);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(4, 4);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(472, 483);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
@@ -198,7 +198,7 @@ namespace DevPro_CardManager
             this.tableLayoutPanel4.Controls.Add(this.RScale, 1, 9);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 19);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 15;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
@@ -234,7 +234,7 @@ namespace DevPro_CardManager
             // 
             this.CardID.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CardID.Location = new System.Drawing.Point(176, 4);
-            this.CardID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CardID.Margin = new System.Windows.Forms.Padding(4);
             this.CardID.Name = "CardID";
             this.CardID.Size = new System.Drawing.Size(284, 22);
             this.CardID.TabIndex = 0;
@@ -243,7 +243,7 @@ namespace DevPro_CardManager
             // 
             this.Alias.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Alias.Location = new System.Drawing.Point(176, 35);
-            this.Alias.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Alias.Margin = new System.Windows.Forms.Padding(4);
             this.Alias.Name = "Alias";
             this.Alias.Size = new System.Drawing.Size(284, 22);
             this.Alias.TabIndex = 1;
@@ -266,7 +266,7 @@ namespace DevPro_CardManager
             this.CardFormats.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CardFormats.FormattingEnabled = true;
             this.CardFormats.Location = new System.Drawing.Point(176, 66);
-            this.CardFormats.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CardFormats.Margin = new System.Windows.Forms.Padding(4);
             this.CardFormats.Name = "CardFormats";
             this.CardFormats.Size = new System.Drawing.Size(284, 24);
             this.CardFormats.TabIndex = 4;
@@ -300,7 +300,7 @@ namespace DevPro_CardManager
             this.SetCodeOne.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SetCodeOne.FormattingEnabled = true;
             this.SetCodeOne.Location = new System.Drawing.Point(176, 97);
-            this.SetCodeOne.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SetCodeOne.Margin = new System.Windows.Forms.Padding(4);
             this.SetCodeOne.Name = "SetCodeOne";
             this.SetCodeOne.Size = new System.Drawing.Size(284, 23);
             this.SetCodeOne.TabIndex = 19;
@@ -312,7 +312,7 @@ namespace DevPro_CardManager
             this.SetCodeTwo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SetCodeTwo.FormattingEnabled = true;
             this.SetCodeTwo.Location = new System.Drawing.Point(176, 128);
-            this.SetCodeTwo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SetCodeTwo.Margin = new System.Windows.Forms.Padding(4);
             this.SetCodeTwo.Name = "SetCodeTwo";
             this.SetCodeTwo.Size = new System.Drawing.Size(284, 23);
             this.SetCodeTwo.TabIndex = 20;
@@ -324,7 +324,7 @@ namespace DevPro_CardManager
             this.SetCodeThree.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SetCodeThree.FormattingEnabled = true;
             this.SetCodeThree.Location = new System.Drawing.Point(176, 159);
-            this.SetCodeThree.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SetCodeThree.Margin = new System.Windows.Forms.Padding(4);
             this.SetCodeThree.Name = "SetCodeThree";
             this.SetCodeThree.Size = new System.Drawing.Size(284, 23);
             this.SetCodeThree.TabIndex = 31;
@@ -335,7 +335,7 @@ namespace DevPro_CardManager
             this.Level.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Level.FormattingEnabled = true;
             this.Level.Location = new System.Drawing.Point(176, 221);
-            this.Level.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Level.Margin = new System.Windows.Forms.Padding(4);
             this.Level.Name = "Level";
             this.Level.Size = new System.Drawing.Size(284, 24);
             this.Level.TabIndex = 26;
@@ -357,7 +357,7 @@ namespace DevPro_CardManager
             this.SetCodeFour.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SetCodeFour.FormattingEnabled = true;
             this.SetCodeFour.Location = new System.Drawing.Point(176, 190);
-            this.SetCodeFour.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SetCodeFour.Margin = new System.Windows.Forms.Padding(4);
             this.SetCodeFour.Name = "SetCodeFour";
             this.SetCodeFour.Size = new System.Drawing.Size(284, 23);
             this.SetCodeFour.TabIndex = 32;
@@ -368,7 +368,7 @@ namespace DevPro_CardManager
             this.chkPre.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.chkPre.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chkPre.Location = new System.Drawing.Point(176, 438);
-            this.chkPre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPre.Margin = new System.Windows.Forms.Padding(4);
             this.chkPre.Name = "chkPre";
             this.chkPre.Size = new System.Drawing.Size(284, 18);
             this.chkPre.TabIndex = 4;
@@ -378,7 +378,7 @@ namespace DevPro_CardManager
             // 
             this.DEF.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DEF.Location = new System.Drawing.Point(176, 407);
-            this.DEF.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DEF.Margin = new System.Windows.Forms.Padding(4);
             this.DEF.Name = "DEF";
             this.DEF.Size = new System.Drawing.Size(284, 22);
             this.DEF.TabIndex = 30;
@@ -388,7 +388,7 @@ namespace DevPro_CardManager
             // 
             this.ATK.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ATK.Location = new System.Drawing.Point(176, 376);
-            this.ATK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ATK.Margin = new System.Windows.Forms.Padding(4);
             this.ATK.Name = "ATK";
             this.ATK.Size = new System.Drawing.Size(284, 22);
             this.ATK.TabIndex = 29;
@@ -400,7 +400,7 @@ namespace DevPro_CardManager
             this.CardAttribute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CardAttribute.FormattingEnabled = true;
             this.CardAttribute.Location = new System.Drawing.Point(176, 345);
-            this.CardAttribute.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CardAttribute.Margin = new System.Windows.Forms.Padding(4);
             this.CardAttribute.Name = "CardAttribute";
             this.CardAttribute.Size = new System.Drawing.Size(284, 24);
             this.CardAttribute.TabIndex = 28;
@@ -411,7 +411,7 @@ namespace DevPro_CardManager
             this.Race.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Race.FormattingEnabled = true;
             this.Race.Location = new System.Drawing.Point(176, 314);
-            this.Race.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Race.Margin = new System.Windows.Forms.Padding(4);
             this.Race.Name = "Race";
             this.Race.Size = new System.Drawing.Size(284, 24);
             this.Race.TabIndex = 27;
@@ -495,7 +495,7 @@ namespace DevPro_CardManager
             this.LScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LScale.FormattingEnabled = true;
             this.LScale.Location = new System.Drawing.Point(176, 252);
-            this.LScale.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LScale.Margin = new System.Windows.Forms.Padding(4);
             this.LScale.Name = "LScale";
             this.LScale.Size = new System.Drawing.Size(284, 24);
             this.LScale.TabIndex = 35;
@@ -506,7 +506,7 @@ namespace DevPro_CardManager
             this.RScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.RScale.FormattingEnabled = true;
             this.RScale.Location = new System.Drawing.Point(176, 283);
-            this.RScale.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.RScale.Margin = new System.Windows.Forms.Padding(4);
             this.RScale.Name = "RScale";
             this.RScale.Size = new System.Drawing.Size(284, 24);
             this.RScale.TabIndex = 36;
@@ -516,9 +516,9 @@ namespace DevPro_CardManager
             this.groupBox4.Controls.Add(this.tableLayoutPanel6);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(484, 4);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox4.Size = new System.Drawing.Size(472, 483);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
@@ -535,7 +535,7 @@ namespace DevPro_CardManager
             this.tableLayoutPanel6.Controls.Add(this.label11, 0, 1);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(4, 19);
-            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
@@ -558,7 +558,7 @@ namespace DevPro_CardManager
             // 
             this.CardName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CardName.Location = new System.Drawing.Point(155, 4);
-            this.CardName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CardName.Margin = new System.Windows.Forms.Padding(4);
             this.CardName.Name = "CardName";
             this.CardName.Size = new System.Drawing.Size(305, 22);
             this.CardName.TabIndex = 2;
@@ -567,7 +567,7 @@ namespace DevPro_CardManager
             // 
             this.CardDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CardDescription.Location = new System.Drawing.Point(155, 35);
-            this.CardDescription.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CardDescription.Margin = new System.Windows.Forms.Padding(4);
             this.CardDescription.Multiline = true;
             this.CardDescription.Name = "CardDescription";
             this.CardDescription.Size = new System.Drawing.Size(305, 421);
@@ -592,7 +592,7 @@ namespace DevPro_CardManager
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(484, 673);
-            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(472, 45);
             this.flowLayoutPanel2.TabIndex = 4;
@@ -600,7 +600,7 @@ namespace DevPro_CardManager
             // Clearbtn
             // 
             this.Clearbtn.Location = new System.Drawing.Point(357, 4);
-            this.Clearbtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Clearbtn.Margin = new System.Windows.Forms.Padding(4);
             this.Clearbtn.Name = "Clearbtn";
             this.Clearbtn.Size = new System.Drawing.Size(111, 28);
             this.Clearbtn.TabIndex = 0;
@@ -611,7 +611,7 @@ namespace DevPro_CardManager
             // SaveCardbtn
             // 
             this.SaveCardbtn.Location = new System.Drawing.Point(238, 4);
-            this.SaveCardbtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SaveCardbtn.Margin = new System.Windows.Forms.Padding(4);
             this.SaveCardbtn.Name = "SaveCardbtn";
             this.SaveCardbtn.Size = new System.Drawing.Size(111, 28);
             this.SaveCardbtn.TabIndex = 1;
@@ -622,7 +622,7 @@ namespace DevPro_CardManager
             // DeleteBtn
             // 
             this.DeleteBtn.Location = new System.Drawing.Point(119, 4);
-            this.DeleteBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DeleteBtn.Margin = new System.Windows.Forms.Padding(4);
             this.DeleteBtn.Name = "DeleteBtn";
             this.DeleteBtn.Size = new System.Drawing.Size(111, 28);
             this.DeleteBtn.TabIndex = 2;
@@ -635,9 +635,9 @@ namespace DevPro_CardManager
             this.groupBox5.Controls.Add(this.tableLayoutPanel7);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(484, 495);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox5.Size = new System.Drawing.Size(472, 170);
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
@@ -654,7 +654,7 @@ namespace DevPro_CardManager
             this.tableLayoutPanel7.Controls.Add(this.AddEffectbtn, 0, 1);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(4, 19);
-            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 2;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 79.02098F));
@@ -668,7 +668,7 @@ namespace DevPro_CardManager
             this.EffectList.FormattingEnabled = true;
             this.EffectList.ItemHeight = 16;
             this.EffectList.Location = new System.Drawing.Point(156, 4);
-            this.EffectList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EffectList.Margin = new System.Windows.Forms.Padding(4);
             this.EffectList.Name = "EffectList";
             this.EffectList.Size = new System.Drawing.Size(304, 108);
             this.EffectList.TabIndex = 1;
@@ -678,7 +678,7 @@ namespace DevPro_CardManager
             // 
             this.EffectInput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EffectInput.Location = new System.Drawing.Point(156, 120);
-            this.EffectInput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EffectInput.Margin = new System.Windows.Forms.Padding(4);
             this.EffectInput.Name = "EffectInput";
             this.EffectInput.Size = new System.Drawing.Size(304, 22);
             this.EffectInput.TabIndex = 2;
@@ -691,7 +691,7 @@ namespace DevPro_CardManager
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 4);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(144, 108);
             this.flowLayoutPanel1.TabIndex = 3;
@@ -699,7 +699,7 @@ namespace DevPro_CardManager
             // DeleteEffectbtn
             // 
             this.DeleteEffectbtn.Location = new System.Drawing.Point(40, 4);
-            this.DeleteEffectbtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DeleteEffectbtn.Margin = new System.Windows.Forms.Padding(4);
             this.DeleteEffectbtn.Name = "DeleteEffectbtn";
             this.DeleteEffectbtn.Size = new System.Drawing.Size(100, 28);
             this.DeleteEffectbtn.TabIndex = 1;
@@ -710,7 +710,7 @@ namespace DevPro_CardManager
             // MoveEffectUp
             // 
             this.MoveEffectUp.Location = new System.Drawing.Point(40, 40);
-            this.MoveEffectUp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MoveEffectUp.Margin = new System.Windows.Forms.Padding(4);
             this.MoveEffectUp.Name = "MoveEffectUp";
             this.MoveEffectUp.Size = new System.Drawing.Size(100, 28);
             this.MoveEffectUp.TabIndex = 2;
@@ -721,7 +721,7 @@ namespace DevPro_CardManager
             // MoveEffectDown
             // 
             this.MoveEffectDown.Location = new System.Drawing.Point(40, 76);
-            this.MoveEffectDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MoveEffectDown.Margin = new System.Windows.Forms.Padding(4);
             this.MoveEffectDown.Name = "MoveEffectDown";
             this.MoveEffectDown.Size = new System.Drawing.Size(100, 28);
             this.MoveEffectDown.TabIndex = 3;
@@ -733,7 +733,7 @@ namespace DevPro_CardManager
             // 
             this.AddEffectbtn.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.AddEffectbtn.Location = new System.Drawing.Point(48, 120);
-            this.AddEffectbtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.AddEffectbtn.Margin = new System.Windows.Forms.Padding(4);
             this.AddEffectbtn.Name = "AddEffectbtn";
             this.AddEffectbtn.Size = new System.Drawing.Size(100, 23);
             this.AddEffectbtn.TabIndex = 4;
@@ -746,13 +746,13 @@ namespace DevPro_CardManager
             this.tableLayoutPanel5.ColumnCount = 3;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.71598F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.28402F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 192F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 193F));
             this.tableLayoutPanel5.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.groupBox6, 1, 0);
             this.tableLayoutPanel5.Controls.Add(this.groupBox3, 2, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(4, 495);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -764,9 +764,9 @@ namespace DevPro_CardManager
             this.groupBox1.Controls.Add(this.CardTypeList);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(4, 4);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(108, 162);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
@@ -777,7 +777,7 @@ namespace DevPro_CardManager
             this.CardTypeList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CardTypeList.FormattingEnabled = true;
             this.CardTypeList.Location = new System.Drawing.Point(4, 19);
-            this.CardTypeList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CardTypeList.Margin = new System.Windows.Forms.Padding(4);
             this.CardTypeList.Name = "CardTypeList";
             this.CardTypeList.Size = new System.Drawing.Size(100, 139);
             this.CardTypeList.TabIndex = 0;
@@ -788,10 +788,10 @@ namespace DevPro_CardManager
             this.groupBox6.Controls.Add(this.CategoryList);
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox6.Location = new System.Drawing.Point(120, 4);
-            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox6.Size = new System.Drawing.Size(155, 162);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox6.Size = new System.Drawing.Size(154, 162);
             this.groupBox6.TabIndex = 1;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Card Category";
@@ -834,15 +834,15 @@ namespace DevPro_CardManager
             "Xyz-Related",
             "Negate Effect"});
             this.CategoryList.Location = new System.Drawing.Point(4, 19);
-            this.CategoryList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CategoryList.Margin = new System.Windows.Forms.Padding(4);
             this.CategoryList.Name = "CategoryList";
-            this.CategoryList.Size = new System.Drawing.Size(147, 139);
+            this.CategoryList.Size = new System.Drawing.Size(146, 139);
             this.CategoryList.TabIndex = 0;
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.panel1);
-            this.groupBox3.Location = new System.Drawing.Point(282, 2);
+            this.groupBox3.Location = new System.Drawing.Point(281, 2);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -856,7 +856,7 @@ namespace DevPro_CardManager
             this.panel1.Controls.Add(this.linkMarkerPanel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 17);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(141, 143);
             this.panel1.TabIndex = 0;
@@ -865,7 +865,7 @@ namespace DevPro_CardManager
             // 
             this.linkMarkerPanel.Enabled = false;
             this.linkMarkerPanel.Location = new System.Drawing.Point(27, 22);
-            this.linkMarkerPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.linkMarkerPanel.Margin = new System.Windows.Forms.Padding(4);
             this.linkMarkerPanel.Name = "linkMarkerPanel";
             this.linkMarkerPanel.Size = new System.Drawing.Size(95, 89);
             this.linkMarkerPanel.TabIndex = 0;
@@ -877,7 +877,7 @@ namespace DevPro_CardManager
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(4, 673);
-            this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(472, 45);
             this.flowLayoutPanel3.TabIndex = 7;
@@ -885,7 +885,7 @@ namespace DevPro_CardManager
             // OpenScriptBtn
             // 
             this.OpenScriptBtn.Location = new System.Drawing.Point(319, 4);
-            this.OpenScriptBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.OpenScriptBtn.Margin = new System.Windows.Forms.Padding(4);
             this.OpenScriptBtn.Name = "OpenScriptBtn";
             this.OpenScriptBtn.Size = new System.Drawing.Size(149, 28);
             this.OpenScriptBtn.TabIndex = 0;
@@ -897,7 +897,7 @@ namespace DevPro_CardManager
             // 
             this.CDBSelect.FormattingEnabled = true;
             this.CDBSelect.Location = new System.Drawing.Point(151, 4);
-            this.CDBSelect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CDBSelect.Margin = new System.Windows.Forms.Padding(4);
             this.CDBSelect.Name = "CDBSelect";
             this.CDBSelect.Size = new System.Drawing.Size(160, 24);
             this.CDBSelect.TabIndex = 3;
@@ -910,7 +910,7 @@ namespace DevPro_CardManager
             this.tableLayoutPanel2.Controls.Add(this.CardImg, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 313F));
@@ -918,19 +918,6 @@ namespace DevPro_CardManager
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(228, 722);
             this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // CardImg
-            // 
-            this.CardImg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CardImg.ErrorImage = null;
-            this.CardImg.Image = global::DevPro_CardManager.Properties.Resources.unknown;
-            this.CardImg.Location = new System.Drawing.Point(4, 4);
-            this.CardImg.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.CardImg.Name = "CardImg";
-            this.CardImg.Size = new System.Drawing.Size(220, 305);
-            this.CardImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.CardImg.TabIndex = 0;
-            this.CardImg.TabStop = false;
             // 
             // SearchBox
             // 
@@ -944,6 +931,19 @@ namespace DevPro_CardManager
             this.SearchBox.TabStop = false;
             this.SearchBox.Text = "Search";
             // 
+            // CardImg
+            // 
+            this.CardImg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CardImg.ErrorImage = null;
+            this.CardImg.Image = global::DevPro_CardManager.Properties.Resources.unknown;
+            this.CardImg.Location = new System.Drawing.Point(4, 4);
+            this.CardImg.Margin = new System.Windows.Forms.Padding(4);
+            this.CardImg.Name = "CardImg";
+            this.CardImg.Size = new System.Drawing.Size(220, 305);
+            this.CardImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.CardImg.TabIndex = 0;
+            this.CardImg.TabStop = false;
+            // 
             // CDBEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -951,7 +951,7 @@ namespace DevPro_CardManager
             this.ClientSize = new System.Drawing.Size(1204, 730);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "CDBEditor";
             this.Text = "CDBEditor";
             this.tableLayoutPanel1.ResumeLayout(false);

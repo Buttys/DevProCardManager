@@ -869,11 +869,13 @@ namespace DevPro_CardManager
             {
                 label5.Text = "Link Number";
                 linkMarkerPanel.Enabled = true;
+                DEF.Enabled = false;
             }
             else if (((CheckedListBox)sender).Items[e.Index].ToString() == "Link" && e.NewValue == CheckState.Unchecked)
             {
                 label5.Text = "Level";
                 linkMarkerPanel.Enabled = false;
+                DEF.Enabled = true;
             }
         }
 
