@@ -18,6 +18,7 @@ namespace DevPro_CardManager
         List<int> m_cardRaces;
         List<int> m_cardAttributes;
         int m_loadedCard;
+        Dictionary<LinkMarker, CheckBox> linkMarkers = new Dictionary<LinkMarker, CheckBox>();
 
         public CDBEditor()
         {
@@ -64,7 +65,24 @@ namespace DevPro_CardManager
             for (int i = 0; i < 14; i++)
                 RScale.Items.Add(i);
             CardTypeList.Items.AddRange(Enum.GetNames(typeof(CardType)));
-            LinkMarkerList.Items.AddRange(Enum.GetNames(typeof(LinkMarker)));
+            
+            foreach (LinkMarker marker in Enum.GetValues(typeof(LinkMarker)) )
+            {
+                CheckBox chkBox = new CheckBox();
+
+                chkBox.Text = "";
+                chkBox.Width = 16;
+                chkBox.Height = 16;
+
+                if (marker == LinkMarker.Middle)
+                {
+                    chkBox.Enabled = false;
+                    chkBox.Checked = false;
+                }
+
+                linkMarkers.Add(marker, chkBox);
+                linkMarkerPanel.Controls.Add(chkBox);
+            }
         }
 
         private Stream CreateFileStreamFromString(string file)
@@ -245,7 +263,7 @@ namespace DevPro_CardManager
             if (CardTypeList.CheckedItems.Contains("Link"))
             {
                 SetCardMarkers(info.GetLinkMarkers());
-                LinkMarkerList.Enabled = true;
+                linkMarkerPanel.Enabled = true;
             }
 
                 long setcode = info.SetCode & 0xffff;
@@ -380,34 +398,10 @@ namespace DevPro_CardManager
         {
             foreach (var linkmarker in types)
             {
-                switch (linkmarker)
-                {
-                    case LinkMarker.BottomLeft:
-                        LinkMarkerList.SetItemCheckState(0, CheckState.Checked);
-                        break;
-                    case LinkMarker.Bottom:
-                        LinkMarkerList.SetItemCheckState(1, CheckState.Checked);
-                        break;
-                    case LinkMarker.BottomRight:
-                        LinkMarkerList.SetItemCheckState(2, CheckState.Checked);
-                        break;
-                    case LinkMarker.Left:
-                        LinkMarkerList.SetItemCheckState(3, CheckState.Checked);
-                        break;
-                    case LinkMarker.Right:
-                        LinkMarkerList.SetItemCheckState(4, CheckState.Checked);
-                        break;
-                    case LinkMarker.TopLeft:
-                        LinkMarkerList.SetItemCheckState(5, CheckState.Checked);
-                        break;
-                    case LinkMarker.Top:
-                        LinkMarkerList.SetItemCheckState(6, CheckState.Checked);
-                        break;
-                    case LinkMarker.TopRight:
-                        LinkMarkerList.SetItemCheckState(7, CheckState.Checked);
-                        break;
-                }
+                linkMarkers[linkmarker].Checked = true;
             }
+
+            linkMarkers[LinkMarker.Middle].Checked = false;
         }
 
         private int GetCategoryNumber()
@@ -495,10 +489,14 @@ namespace DevPro_CardManager
             {
                 CategoryList.SetItemCheckState(i, CheckState.Unchecked);
             }
-            for (int i = 0; i < LinkMarkerList.Items.Count; i++)
+
+            foreach (CheckBox chkBox in linkMarkers.Values)
             {
-                LinkMarkerList.SetItemCheckState(i, CheckState.Unchecked);
+                chkBox.Checked = false;
             }
+
+            linkMarkerPanel.Enabled = false;
+
             m_loadedCard = 0;
             CardImg.Image = Resources.unknown;
         }
@@ -655,22 +653,14 @@ namespace DevPro_CardManager
         private int GetLinkMarkers()
         {
             int code = 0;
-            if (LinkMarkerList.GetItemCheckState(0) == CheckState.Checked)
-                code += (int)LinkMarker.BottomLeft;
-            if (LinkMarkerList.GetItemCheckState(1) == CheckState.Checked)
-                code += (int)LinkMarker.Bottom;
-            if (LinkMarkerList.GetItemCheckState(2) == CheckState.Checked)
-                code += (int)LinkMarker.BottomRight;
-            if (LinkMarkerList.GetItemCheckState(3) == CheckState.Checked)
-                code += (int)LinkMarker.Left;
-            if (LinkMarkerList.GetItemCheckState(4) == CheckState.Checked)
-                code += (int)LinkMarker.Right;
-            if (LinkMarkerList.GetItemCheckState(5) == CheckState.Checked)
-                code += (int)LinkMarker.TopLeft;
-            if (LinkMarkerList.GetItemCheckState(6) == CheckState.Checked)
-                code += (int)LinkMarker.Top;
-            if (LinkMarkerList.GetItemCheckState(7) == CheckState.Checked)
-                code += (int)LinkMarker.TopRight;
+            foreach (KeyValuePair<LinkMarker, CheckBox> kv in linkMarkers)
+            {
+                if (kv.Key != LinkMarker.Middle && kv.Value.Checked)
+                {
+                    code += (int) kv.Key;
+                }
+            }
+
             return code;
         }
 
@@ -865,12 +855,12 @@ namespace DevPro_CardManager
             if ((((CheckedListBox)sender).Items[e.Index].ToString() == "Link" && e.NewValue == CheckState.Checked))
             {
                 label5.Text = "Link Number";
-                LinkMarkerList.Enabled = true;
+                linkMarkerPanel.Enabled = true;
             }
             else if (((CheckedListBox)sender).Items[e.Index].ToString() == "Link" && e.NewValue == CheckState.Unchecked)
             {
                 label5.Text = "Level";
-                LinkMarkerList.Enabled = false;
+                linkMarkerPanel.Enabled = false;
             }
         }
 
