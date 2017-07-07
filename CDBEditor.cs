@@ -864,7 +864,7 @@ namespace DevPro_CardManager
         {
             if ((((CheckedListBox)sender).Items[e.Index].ToString() == "Link" && e.NewValue == CheckState.Checked))
             {
-                label5.Text = "Link Number/Level";
+                label5.Text = "Link Number";
                 LinkMarkerList.Enabled = true;
             }
             else if (((CheckedListBox)sender).Items[e.Index].ToString() == "Link" && e.NewValue == CheckState.Unchecked)
