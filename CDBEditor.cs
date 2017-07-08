@@ -65,7 +65,7 @@ namespace DevPro_CardManager
             for (int i = 0; i < 14; i++)
                 RScale.Items.Add(i);
             CardTypeList.Items.AddRange(Enum.GetNames(typeof(CardType)));
-            
+
             foreach (LinkMarker marker in Enum.GetValues(typeof(LinkMarker)) )
             {
                 CheckBox chkBox = new CheckBox();
@@ -81,8 +81,21 @@ namespace DevPro_CardManager
                 }
 
                 linkMarkers.Add(marker, chkBox);
-                linkMarkerPanel.Controls.Add(chkBox);
             }
+            DisplayLinkMarkers();
+        }
+
+        private void DisplayLinkMarkers()
+        {            
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.TopLeft]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.Top]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.TopRight]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.Left]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.Middle]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.Right]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.BottomLeft]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.Bottom]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.BottomRight]);
         }
 
         private Stream CreateFileStreamFromString(string file)
@@ -856,11 +869,13 @@ namespace DevPro_CardManager
             {
                 label5.Text = "Link Number";
                 linkMarkerPanel.Enabled = true;
+                DEF.Enabled = false;
             }
             else if (((CheckedListBox)sender).Items[e.Index].ToString() == "Link" && e.NewValue == CheckState.Unchecked)
             {
                 label5.Text = "Level";
                 linkMarkerPanel.Enabled = false;
+                DEF.Enabled = true;
             }
         }
 
