@@ -13,11 +13,12 @@ namespace DevPro_CardManager
 {
     public sealed partial class CDBEditor : Form
     {
-        Dictionary<int,string> m_setCodes = new Dictionary<int, string>();
+        Dictionary<int, string> m_setCodes = new Dictionary<int, string>();
         List<int> m_formats;
         List<int> m_cardRaces;
         List<int> m_cardAttributes;
         int m_loadedCard;
+        Dictionary<LinkMarker, CheckBox> linkMarkers = new Dictionary<LinkMarker, CheckBox>();
 
         public CDBEditor()
         {
@@ -35,6 +36,7 @@ namespace DevPro_CardManager
             UpdateSetCodes();
             LScale.SelectedIndex = 0;
             RScale.SelectedIndex = 0;
+
             UpdateDatabases();
             if (CDBSelect.Items.Count > 0)
                 CDBSelect.SelectedIndex = 0;
@@ -63,6 +65,37 @@ namespace DevPro_CardManager
             for (int i = 0; i < 14; i++)
                 RScale.Items.Add(i);
             CardTypeList.Items.AddRange(Enum.GetNames(typeof(CardType)));
+
+            foreach (LinkMarker marker in Enum.GetValues(typeof(LinkMarker)) )
+            {
+                CheckBox chkBox = new CheckBox();
+
+                chkBox.Text = "";
+                chkBox.Width = 16;
+                chkBox.Height = 16;
+
+                if (marker == LinkMarker.Middle)
+                {
+                    chkBox.Enabled = false;
+                    chkBox.Checked = false;
+                }
+
+                linkMarkers.Add(marker, chkBox);
+            }
+            DisplayLinkMarkers();
+        }
+
+        private void DisplayLinkMarkers()
+        {            
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.TopLeft]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.Top]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.TopRight]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.Left]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.Middle]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.Right]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.BottomLeft]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.Bottom]);
+            linkMarkerPanel.Controls.Add(linkMarkers[LinkMarker.BottomRight]);
         }
 
         private Stream CreateFileStreamFromString(string file)
@@ -97,7 +130,7 @@ namespace DevPro_CardManager
                         m_setCodes[setcode] = setname;
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -112,7 +145,7 @@ namespace DevPro_CardManager
             List<string> sortedSetNames = new List<string>();
 
             foreach (int set in m_setCodes.Keys)
-                if(!setstrings.ContainsKey(m_setCodes[set]))
+                if (!setstrings.ContainsKey(m_setCodes[set]))
                     setstrings.Add(m_setCodes[set], set);
 
             foreach (string set in setstrings.Keys)
@@ -122,7 +155,7 @@ namespace DevPro_CardManager
 
 
             foreach (string setname in sortedSetNames)
-                if(setstrings[setname] != 0)
+                if (setstrings[setname] != 0)
                     setnames.Add(setstrings[setname]);
 
             SetCodeOne.Items.Add(0);
@@ -240,8 +273,13 @@ namespace DevPro_CardManager
             foreach (string effect in info.EffectStrings)
                 EffectList.Items.Add(effect);
             SetCardTypes(info.GetCardTypes());
+            if (CardTypeList.CheckedItems.Contains("Link"))
+            {
+                SetCardMarkers(info.GetLinkMarkers());
+                linkMarkerPanel.Enabled = true;
+            }
 
-            long setcode = info.SetCode & 0xffff;
+                long setcode = info.SetCode & 0xffff;
             if (m_setCodes.ContainsKey((int)setcode))
                 SetCodeOne.SelectedItem = (int)setcode;
             else
@@ -359,8 +397,24 @@ namespace DevPro_CardManager
                     case CardType.Pendulum:
                         CardTypeList.SetItemCheckState(22, CheckState.Checked);
                         break;
+                    case CardType.SpecialSummon:
+                        CardTypeList.SetItemCheckState(23, CheckState.Checked);
+                        break;
+                    case CardType.Link:
+                        CardTypeList.SetItemCheckState(24, CheckState.Checked);
+                        break;
                 }
             }
+        }
+
+        private void SetCardMarkers(IEnumerable<LinkMarker> types)
+        {
+            foreach (var linkmarker in types)
+            {
+                linkMarkers[linkmarker].Checked = true;
+            }
+
+            linkMarkers[LinkMarker.Middle].Checked = false;
         }
 
         private int GetCategoryNumber()
@@ -405,6 +459,14 @@ namespace DevPro_CardManager
                 }
             }
             else
+            if (File.Exists("pics//" + id + ".png"))
+            {
+                using (var stream = new FileStream("pics//" + id + ".png", FileMode.Open, FileAccess.Read))
+                {
+                    CardImg.Image = Image.FromStream(stream);
+                }
+            }
+            else
             {
                 CardImg.Image = Resources.unknown;
             }
@@ -431,6 +493,7 @@ namespace DevPro_CardManager
             CardDescription.Clear();
             EffectList.Items.Clear();
 
+
             for (int i = 0; i < CardTypeList.Items.Count; i++)
             {
                 CardTypeList.SetItemCheckState(i, CheckState.Unchecked);
@@ -439,6 +502,14 @@ namespace DevPro_CardManager
             {
                 CategoryList.SetItemCheckState(i, CheckState.Unchecked);
             }
+
+            foreach (CheckBox chkBox in linkMarkers.Values)
+            {
+                chkBox.Checked = false;
+            }
+
+            linkMarkerPanel.Enabled = false;
+
             m_loadedCard = 0;
             CardImg.Image = Resources.unknown;
         }
@@ -514,13 +585,13 @@ namespace DevPro_CardManager
             m_writer.Write((short)((SetCodeTwo.SelectedIndex > 0) ? (int)SetCodeTwo.SelectedItem : 0));
             m_writer.Write((short)((SetCodeThree.SelectedIndex > 0) ? (int)SetCodeThree.SelectedItem : 0));
             m_writer.Write((short)((SetCodeFour.SelectedIndex > 0) ? (int)SetCodeFour.SelectedItem : 0));
-            return BitConverter.ToInt64(m_stream.ToArray(),0);
+            return BitConverter.ToInt64(m_stream.ToArray(), 0);
         }
 
         private int GetSetCodeFromString(string name)
         {
-            foreach(var item in m_setCodes)
-                if(item.Value == name)
+            foreach (var item in m_setCodes)
+                if (item.Value == name)
                     return item.Key;
             return 0;
         }
@@ -585,6 +656,24 @@ namespace DevPro_CardManager
                 code += (int)CardType.Xyz;
             if (CardTypeList.GetItemCheckState(22) == CheckState.Checked)
                 code += (int)CardType.Pendulum;
+            if (CardTypeList.GetItemCheckState(23) == CheckState.Checked)
+                code += (int)CardType.SpecialSummon;
+            if (CardTypeList.GetItemCheckState(24) == CheckState.Checked)
+                code += (int)CardType.Link;
+            return code;
+        }
+
+        private int GetLinkMarkers()
+        {
+            int code = 0;
+            foreach (KeyValuePair<LinkMarker, CheckBox> kv in linkMarkers)
+            {
+                if (kv.Key != LinkMarker.Middle && kv.Value.Checked)
+                {
+                    code += (int) kv.Key;
+                }
+            }
+
             return code;
         }
 
@@ -610,7 +699,7 @@ namespace DevPro_CardManager
             int atk;
             int def;
             int ot = (CardFormats.SelectedItem == null ? 0 : GetCardFormat());
-            if(chkPre.Checked)
+            if (chkPre.Checked)
                 ot |= 0x4;
 
             if (!Int32.TryParse(CardID.Text, out cardid))
@@ -655,13 +744,16 @@ namespace DevPro_CardManager
 
             newCardInfo.SetCardText(cardtextarray.ToArray());
 
+            if (CardTypeList.CheckedItems.Contains("Link"))
+                newCardInfo.Def = GetLinkMarkers();
+
             //check source DB
 
             if (CardManager.ContainsCard(cardid))
             {
                 if (CardManager.GetCard(cardid).source != newCardInfo.source)
                 {
-                    if(MessageBox.Show("Copy to new database?","",MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    if (MessageBox.Show("Copy to new database?", "", MessageBoxButtons.YesNo) != DialogResult.Yes)
                         return false;
                 }
             }
@@ -717,7 +809,7 @@ namespace DevPro_CardManager
             var connection = new SQLiteConnection("Data Source=" + dir);
             connection.Open();
 
-            if (SQLiteCommands.ContainsCard(cardid,connection))
+            if (SQLiteCommands.ContainsCard(cardid, connection))
             {
                 if (MessageBox.Show("Are you sure you want to delete " + CardManager.GetCard(cardid).Name + "?", "Found", MessageBoxButtons.YesNo) == DialogResult.No)
                 {
@@ -743,7 +835,7 @@ namespace DevPro_CardManager
                     if (CardManager.ContainsCard(m_loadedCard))
                     {
                         CardInfos card = CardManager.GetCard(m_loadedCard);
-                        string[] lines = { "--" + card.Name, "function c"+ m_loadedCard + ".initial_effect(c)", string.Empty, "end"};
+                        string[] lines = { "--" + card.Name, "function c" + m_loadedCard + ".initial_effect(c)", string.Empty, "end" };
                         File.WriteAllLines(file, lines);
                         Process.Start(file);
                     }
@@ -769,6 +861,32 @@ namespace DevPro_CardManager
             e.Graphics.FillRectangle(new SolidBrush(e.BackColor), e.Bounds);
             e.Graphics.DrawString(m_setCodes[(int)combobox.Items[index]], e.Font, new SolidBrush(e.ForeColor), e.Bounds);
             e.DrawFocusRectangle();
+        }
+
+        private void CardTypeList_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if ((((CheckedListBox)sender).Items[e.Index].ToString() == "Link" && e.NewValue == CheckState.Checked))
+            {
+                label5.Text = "Link Number";
+                linkMarkerPanel.Enabled = true;
+                DEF.Enabled = false;
+            }
+            else if (((CheckedListBox)sender).Items[e.Index].ToString() == "Link" && e.NewValue == CheckState.Unchecked)
+            {
+                label5.Text = "Level";
+                linkMarkerPanel.Enabled = false;
+                DEF.Enabled = true;
+            }
+        }
+
+        private void EffectList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (((ListBox)sender).SelectedItem != null)
+            {
+                EffectInput.Text = ((ListBox)sender).SelectedItem.ToString();
+                ((ListBox)sender).Items.Remove(((ListBox)sender).SelectedItem);
+                EffectInput.Focus();
+            }
         }
     }
 }

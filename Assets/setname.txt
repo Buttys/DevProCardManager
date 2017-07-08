@@ -32,7 +32,9 @@
 !setname 0x16 Roid
 !setname 0x1016 Vehicroid
 !setname 0x2016 Speedroid
-!setname 0x17 Synchron
+!setname 0x17 Synchro
+!setname 0x1017 Synchron
+!setname 0x2017 Synchro Dragon
 !setname 0x18 Cloudian
 !setname 0x19 Gladiator Beast
 !setname 0x1a Dark Scorpion
@@ -65,6 +67,7 @@
 !setname 0x1034 Crystal Beast
 !setname 0x2034 Rainbow
 !setname 0x93 Cyber
+!setname 0x4093 Cyberdark
 !setname 0x94 Cybernetic
 !setname 0x1093 Cyber Dragon
 !setname 0x2093 Cyber Angel
@@ -108,6 +111,7 @@
 !setname 0x4f Buster
 !setname 0x104f /Assault Mode
 !setname 0x50 Venom
+!setname 0x1050 Starving Venom
 !setname 0x51 Gadget
 !setname 0x52 Guardian
 !setname 0x53 Constellar
@@ -170,7 +174,7 @@
 !setname 0x1081 Fire King Avatar
 !setname 0x82 Dododo
 !setname 0x100 Synchron Synchos
-!setname 0x101 Syncro Fusions
+!setname 0x101 Synchro Fusions
 !setname 0x102 Evil Hero Fusions
 !setname 0x83 Gimmick Puppet
 !setname 0x101b Mecha Phantom Beast
@@ -197,6 +201,7 @@
 !setname 0x98 Magician
 !setname 0x99 Odd-Eyes
 !setname 0x9a Superheavy Samurai
+!setname 0x109a Superheavy Samurai Soul
 !setname 0x9b Melodious
 !setname 0x109b Melodious Maestra
 !setname 0x9c tellarknight
@@ -283,17 +288,46 @@
 !setname 0xdf Lunalight
 !setname 0xe0 Amorphage
 !setname 0xe1 Metalfoes
-!setname 0xe2 Tramid
+!setname 0xe2 Triamid
 !setname 0xe3 Cubic
 !setname 0xe4 Celtic Guard
 !setname 0xe5 Cipher
-!setname 0xe6 Cardian
+!setname 0xe6 Flower Cardian
 !setname 0xe7 Silent Swordsman
 !setname 0xe8 Silent Magician
 !setname 0xe9 Magna Warrior
-!setname 0x1ea Predator Plant
 !setname 0xea Crystron
-!setname 0xeb Chemical Beast
+!setname 0xeb Chemicritter
 !setname 0xec Abyss
 !setname 0x10ec Abyss Actor
 !setname 0x20ec Abyss Script
+!setname 0xef Darklord/Fallen One
+!setname 0xed Subterror
+!setname 0x10ed Subterror Behemoth
+!setname 0xee SPYRAL
+!setname 0x10ee SPYRAL GEAR
+!setname 0x20ee SPYRAL MISSION
+!setname 0xf0 Windwitch
+!setname 0xf1 Zoodiac
+!setname 0xf2 Pendulum
+!setname 0x10f2 Pendulum Dragon
+!setname 0x20f2 Pendulumgraph
+!setname 0xf3 Predap
+!setname 0x10f3 Predaplant
+!setname 0xf4 Invoked
+!setname 0xf5 Gandora
+!setname 0xf6 Skyscraper
+!setname 0x1046 Fusion Dragon
+!setname 0x2073 Xyz Dragon
+!setname 0x1f7 Pendulumgraph
+!setname 0xf7 Lyrilusc
+!setname 0xf8 Supreme King
+!setname 0x10f8 Supreme King Gate
+!setname 0x20f8 Supreme King Dragon
+!setname 0xf9 True King
+!setname 0xfa Phantasm Spiral
+!setname 0xfb Trickster
+!setname 0xfc Gouki
+!setname 0xfd Star Grail
+!setname 0xfe Star Relic
+!setname 0xff Clear Wing

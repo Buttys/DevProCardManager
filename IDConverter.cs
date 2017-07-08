@@ -136,8 +136,8 @@ namespace DevPro_CardManager
                     string mainDir = Directory.GetCurrentDirectory(); ;
                     const string picFolderName = "pics";
                     const string tumbnailFolderName = "pics\\thumbnail";
-                    string picName = updateCard[0] + ".jpg";
-                    string newPicName = updateCard[1] + ".jpg";
+                    string picName = updateCard[0] + ".png";
+                    string newPicName = updateCard[1] + ".png";
 
                     string imagePath = Path.Combine(mainDir, picFolderName, picName);
                     string newImagePath = Path.Combine(mainDir, picFolderName, newPicName);

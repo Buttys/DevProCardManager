@@ -24,7 +24,9 @@
         Union = 0x400,
         Xyz = 0x800000,
         Gemini = 0x800,
-        Pendulum = 0x1000000
+        Pendulum = 0x1000000,
+        SpecialSummon = 0x2000000,
+        Link = 0x4000000
     }
 }
 
